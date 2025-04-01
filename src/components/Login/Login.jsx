@@ -2,7 +2,7 @@ import React from 'react'
 
 export default function Login() {
   return (
-    <div className=' container mx auto p-4 bg-blue-400  justify-center'>
+    <div className=' container mx auto p-4 bg-blue-400  justify-center rounded-2xl ml-50  '>
           <div className="flex flex-wrap justify-center">
             <div className="w-full md:w-1/3 xl:w-1/3 p-4">
               <h4 className="text-lg font-bold mb-2">Login</h4>
