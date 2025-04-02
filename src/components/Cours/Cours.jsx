@@ -3,7 +3,7 @@ import { Link } from 'react-router-dom';
 
 function Tableau() {
   const cours = [
-    { id: 1, nom: 'React', image: '/src/Assets/react.png' },
+    { id: 1, nom: 'React', image: '../src/Assets/react.png' },
     { id: 2, nom: 'Angular', image: '/src/Assets/Angular.jpg' },
     { id: 3, nom: 'Vue.js', image: '/src/Assets/vue.jpg' }, 
     { id: 4, nom: 'React', image: '/src/Assets/react.png' },
