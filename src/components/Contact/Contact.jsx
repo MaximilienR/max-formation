@@ -15,7 +15,7 @@ export default function Contact() {
                 name="subject1"
                 id="subject1"
                 placeholder="Sujet"
-                className="block w-full rounded-md bg-white px-3 py-1.5 text-base text-gray-900 outline-1 -outline-offset-1 outline-gray-300 placeholder:text-gray-400 focus:outline-2 focus:-outline-offset-2 focus:outline-indigo-600 sm:text-sm/6 mt-4"
+                className="block w-full rounded-md bg-gray-100 px-3 py-1.5 text-white text-center outline-1 -outline-offset-1 outline-yellow-400 placeholder:text-yellow-400 focus:outline-2 focus:-outline-offset-2  sm:text-sm/6 mt-4"
               />
             </div>
             <div className="sm:col-span-3">  
@@ -24,7 +24,7 @@ export default function Contact() {
                 name="subject2"
                 id="subject2"
                 placeholder="Sujet"
-                className="block w-full rounded-md bg-white px-3 py-1.5 text-base text-gray-900 outline-1 -outline-offset-1 outline-gray-300 placeholder:text-gray-400 focus:outline-2 focus:-outline-offset-2 focus:outline-indigo-600 sm:text-sm/6 mt-4"
+                className="block w-full rounded-md bg-gray-100 px-3 py-1.5 text-white text-center outline-1 -outline-offset-1 outline-yellow-400 placeholder:text-yellow-400 focus:outline-2 focus:-outline-offset-2  sm:text-sm/6 mt-4"
               />
             </div>
             <div className="sm:col-span-6">  
@@ -33,8 +33,8 @@ export default function Contact() {
                   name="email"
                   id="email"
                   placeholder="Votre message"
-                  className="block w-full rounded-md bg-white px-3 py-1.5 text-base text-gray-900 outline-1 -outline-offset-1 outline-gray-300 placeholder:text-gray-400 focus:outline-2 focus:-outline-offset-2 focus:outline-indigo-600 sm:text-sm/6"
-                />
+                  className="block w-full rounded-md bg-gray-100 px-3 py-1.5 text-white text-center outline-1 -outline-offset-1 outline-yellow-400 placeholder:text-yellow-400 focus:outline-2 focus:-outline-offset-2  sm:text-sm/6 mt-4"
+                  />
               </div>
             </div>
           </div>

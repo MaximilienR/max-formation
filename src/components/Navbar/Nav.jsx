@@ -10,7 +10,7 @@ const Header = ({ login, toggleUserMethod }) => {
           </Link>
         </li>
         <li className="mr-6">
-          <Link to="/formation" className="text-white hover:text-gray-300">
+          <Link to="/cours" className="text-white hover:text-gray-300">
             Formation
           </Link>
         </li>
@@ -19,14 +19,16 @@ const Header = ({ login, toggleUserMethod }) => {
             Contact
           </Link>
         </li>
+        
+        <li>
+       
+            </li>
         {login === false ? (
           <nav className="flex space-x-6">
             <Link to="#" className="text-gray-600 hover:text-black" onClick={toggleUserMethod}>
               Connexion
             </Link>
-            <Link to="#" className="text-gray-600 hover:text-black">
-              Profil
-            </Link>
+      
           </nav>
         ) : null}
       </ul>

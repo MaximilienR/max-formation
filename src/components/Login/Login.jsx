@@ -17,6 +17,8 @@ export default function Login() {
                 </div>
                 <button type="submit" className="bg-yellow-400 text-black font-bold py-2 px-4 rounded">Me connecter</button>
               </form>
+              <span>mot de passe oublie ? <a href="#">Cliquez ici</a></span>
+
             </div>
           </div>
     </div>

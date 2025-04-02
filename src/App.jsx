@@ -8,6 +8,7 @@ import Footer from './components/Footer/Footer';
 import Home from './components/Home/Home';
 import Login from './components/Login/Login';
 import Contact from './components/Contact/Contact';
+import Register from './components/Register/Register';
   function App() {
     const [user, setUser] = useState(false);
 
@@ -23,6 +24,7 @@ import Contact from './components/Contact/Contact';
       <Route path="/Cours" element={<Cours/>}/>
      <Route path="/Login" element={<Login/>}/>
      <Route path='/Contact' element={<Contact/>}/>
+     <Route path='/register' element={<Register/>}/>
     </Routes>
     <Footer/>
     </BrowserRouter>
