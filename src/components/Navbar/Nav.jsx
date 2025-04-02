@@ -24,7 +24,9 @@ const Header = ({ login, toggleUserMethod }) => {
             <Link to="#" className="text-gray-600 hover:text-black" onClick={toggleUserMethod}>
               Connexion
             </Link>
-            
+            <Link to="#" className="text-gray-600 hover:text-black">
+              Profil
+            </Link>
           </nav>
         ) : null}
       </ul>
