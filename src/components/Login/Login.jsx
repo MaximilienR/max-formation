@@ -9,11 +9,11 @@ export default function Login() {
               <form  className="  ">
                 <div className="mb-4">
                   <label htmlFor="email" className="block text-white font-bold mb-2 bg-white-400">Email</label>
-                  <input type="email" id="email" className="w-full p-2 border rounded" />
+                  <input type="email" id="email" className="bg-gray-100 w-full p-2 border rounded" />
                 </div>
                 <div className="mb-4">
                   <label htmlFor="password" className="block text-white font-bold mb-2">Mot de passe</label>
-                  <input type="password" id="password" className="w-full p-2 border rounded" />
+                  <input type="password" id="password" className="bg-gray-100 w-full p-2 border rounded" />
                 </div>
                 <button type="submit" className="bg-yellow-400 text-black font-bold py-2 px-4 rounded">Me connecter</button>
               </form>
