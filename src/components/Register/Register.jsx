@@ -30,7 +30,7 @@ password: yup.string()
 
   return (
     <div>
-      <form onSubmit={handleSubmit(submit)} className="container mx auto p-4 bg-blue-400  justify-center rounded-2xl ml-50 ">
+      <form onSubmit={handleSubmit(submit)} className="container mx auto p-4 bg-blue-400  justify-center rounded-2xl ml-50 mt-10 mb-40">
         <div className="border-b border-gray-900/10 pb-12 space-y-12 ">
           <h2 className="text-base/7 font-semibold text-gray-900 text-center">Inscription</h2>
 
