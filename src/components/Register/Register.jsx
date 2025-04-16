@@ -1,80 +1,78 @@
 import React from 'react';
 import { useForm } from 'react-hook-form';
-import * as yup from "yup";
+import * as yup from "yup"
 import { yupResolver } from '@hookform/resolvers/yup';
 
-export default function register() {
+export default function Register() {
   const schema = yup.object({
-    pseudo: yup.string().required("champs obligatoire"),
-    email: yup.string().email("Veuillez respecter le format email").required("L'email est obligatoire"),
-    password: yup.string()
-      .min(10, "Le mot de passe doit avoir au moins 10 caractères")
-      .matches(/^(?=.*[a-z])(?=.*[A-Z])(?=.*[!@#$%^&*()_+\-=\]{};':"\\|,.<>/?])[a-zA-Z0-9!@#$%^&*()_+\-=\]{};':"\\|,.<>/?]{10,}$/, "Le mot de passe doit avoir au moins une majuscule, une minuscule et un caractère spécial")
-      .required("Le mot de passe est obligatoire"),
-    confirmPassword: yup.string().oneOf([yup.ref('password'), null], "Les mots de passe doivent être identiques").required("La confirmation du mot de passe est obligatoire"),
-  });
+    username: yup.string().required("le champ est obligatoire"),
+    email: yup.string().email("Format email non valide").required("le champ est obligatoire"),
+    password: yup.string().required("le champs est obligatoire").min(5, "trop cours").max(10, "trop long"),
+    confirmPassword: yup.string().required("le champs est obligatoire").oneOf([yup.ref("password")], "les mots de passes ne correspond pas "),
+    rgpd: yup.boolean().oneOf([true], "vous devez accepter ...")
+  })
 
   const { register, handleSubmit, formState: { errors }, reset } = useForm({
     resolver: yupResolver(schema),
     mode: "onChange",
     defaultValues: {
-      pseudo: "",
+      username: "",
       email: "",
       password: "",
       confirmPassword: "",
+      tel : "",
     }
-  });
+  })
 
-  const submit = async (data) => {
-    console.log(data);
-  };
+  function submit(values) {
+    console.log(values);
+    alert(`Inscription réussie, bonjour ${values.username}`);
+    handleLogin();
+  }
 
   return (
-    <div className="flex justify-center">
-      <form onSubmit={handleSubmit(submit)} className="container mx-auto p-4 bg-blue-400 rounded-2xl mt-10 mb-40">
-        <div className="border-b border-gray-900/10 pb-12 space-y-12">
-          <h2 className="text-base/7 font-semibold text-gray-900 text-center">Inscription</h2>
-
-          <div className="sm:col-span-3">
-            <input
-              {...register("pseudo")}
-              type="text"
-              name="pseudo"
-              id="pseudo"
-              placeholder="Veuillez saisir votre pseudo"
-              className="block w-full rounded-md bg-gray-100 px-3 py-1.5 text-white text-center outline-1 -outline-offset-1 outline-yellow-400 placeholder:text-yellow-400 focus:outline-2 focus:-outline-offset-2  sm:text-sm/6 mt-4"
-            />
-            {errors.pseudo && <p className="text-red-500">{errors.pseudo.message}</p>}
-
-            <input
-              {...register("email")}
-              type="email"
-              name="email"
-              id="email"
-              placeholder="Veuillez saisir votre email"
-              className="block w-full rounded-md bg-gray-100 px-3 py-1.5 text-white text-center outline-1 -outline-offset-1 outline-yellow-400 placeholder:text-yellow-400 focus:outline-2 focus:-outline-offset-2  sm:text-sm/6 mt-4"
-            />
-            {errors.email && <p className="text-red-500">{errors.email.message}</p>}
-
-            <input
-              {...register("password")}
-              type="password"
-              name="password"
-              id="password"
-              placeholder="Veuillez saisir votre mot de passe"
-              className="block w-full rounded-md bg-gray-100 px-3 py-1.5 text-white text-center outline-1 -outline-offset-1 outline-yellow-400 placeholder:text-yellow-400 focus:outline-2 focus:-outline-offset-2  sm:text-sm/6 mt-4"
-            />
-            {errors.confirmPassword && <p className="text-red-500">{errors.confirmPassword.message}</p>}
-          </div>
-          
-          <div className="mt-10 grid grid-cols-1 gap-x-6 gap-y-8 sm:grid-cols-6">
-            <div className="sm:col-span-3">    
-            </div>
-          </div>
-
-          <button type="submit" className="rounded-md bg-yellow-400 px-3 py-2 text-sm font-semibold text-white shadow-xs hover:bg-indigo-500 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600">S'inscrire</button>
+    <div className="container p-4 mx-auto md:p-6 lg:p-8">
+    <form onSubmit={handleSubmit(submit)} className="w-full p-4 mx-auto bg-blue-400 rounded shadow-md md:p-6 lg:p-8 border-radius-10">
+    <div className="flex flex-col mb-2">
+          <label htmlFor="username" className="mb-2 bg-white" >Pseudo</label>
+          <input {...register('username')} type="text" id="username" name="username" className="px-3 py-2 border border-gray-300 rounded focus:outline-none focus:outline-nonr focus:ring-blue-200" placeholder="Pseudo" />
+          {errors.username && <p className="text-red-500">{errors.username.message}</p>}
         </div>
+
+        <div className="flex flex-col mb-2">
+          <label htmlFor="email" className="mb-2">Email</label>
+          <input {...register('email')} type="email" id="email" name="email" className="px-3 py-2 border border-gray-300 rounded focus:outline-none focus:outline-nonr focus:ring-blue-200" placeholder="Email" />
+          {errors.tel && <p className="text-red-500">{errors.tel.message}</p>}
+        </div>
+
+        <div className="flex flex-col mb-2">
+        <label htmlFor="tel" className="mb-2">Tel</label>
+        <input {...register('tel')} type="text" id="tel" name="tel" className="px-3 py-2 border border-gray-300 rounded focus:outline-none focus:outline-nonr focus:ring-blue-200" placeholder="Tel" />
+        {errors.email && <p className="text-red-500">{errors.email.message}</p>}
+      </div>
+
+        <div className="flex flex-col mb-2">
+          <label htmlFor="password" className="mb-2">Mot de passe</label>
+          <input {...register('password')} type="password" id="password" name="password" className="px-3 py-2 border border-gray-300 rounded focus:outline-none focus:outline-nonr focus:ring-blue-200" placeholder="Password" />
+          {errors.password && <p className="text-red-500">{errors.password.message}</p>}
+        </div>
+
+        <div className="flex flex-col mb-2">
+          <label htmlFor="confirmPassword" className="mb-2">Confirmer Mot de passe</label>
+          <input {...register('confirmPassword')} type="password" id="confirmPassword" name="confirmPassword" className="px-3 py-2 border border-gray-300 rounded focus:outline-none focus:outline-nonr focus:ring-blue-200" placeholder="Password" />
+          {errors.confirmPassword && <p className="text-red-500">{errors.confirmPassword.message}</p>}
+        </div>
+
+        <div className="flex flex-col mb-2">
+          <label htmlFor="rgpd" className="mb-2">
+            <input type="checkbox" className="mb-4" id="rgpd" {...register('rgpd')} />
+            J'accepte...
+          </label>
+          {errors.rgpd && <p className="text-red-500">{errors.rgpd.message}</p>}
+        </div>
+
+        <button className="px-4 py-2 text-white bg-blue-500 rounded-2xl hover:bg-blue-600" type="submit">s'inscrire</button>
       </form>
     </div>
-  )
+  );
 }

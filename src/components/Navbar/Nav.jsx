@@ -1,5 +1,4 @@
 import { BrowserRouter, Routes, Route, Link } from 'react-router-dom';
-
 const Header = ({ login, toggleUserMethod }) => {
   return (
     <nav className="py-4 mb-3 text-white bg-yellow-400 rounded-2xl">
@@ -19,16 +18,14 @@ const Header = ({ login, toggleUserMethod }) => {
             Contact
           </Link>
         </li>
-        
-        <li>
-       
-            </li>
         {login === false ? (
           <nav className="flex space-x-6">
+            <Link to="/register" className="text-gray-600 hover:text-black">
+              Inscription
+            </Link>
             <Link to="#" className="text-gray-600 hover:text-black" onClick={toggleUserMethod}>
               Connexion
             </Link>
-      
           </nav>
         ) : null}
       </ul>
