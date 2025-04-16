@@ -1,12 +1,12 @@
-import React from 'react';
+import React from 'react'
 
 export default function Contact() {
   return (
     <div className="flex justify-center px-12">
-      <form className="container mx auto p-4 bg-blue-400  justify-center rounded-2xl ml-50 ">
+      <form className="container mx-auto p-4 bg-blue-400 rounded-2xl">
         <div className="border-b border-gray-900/10 pb-12 space-y-12">
-        <h2 className="text-base/7 font-semibold text-gray-900 text-center">Nous contacter</h2>
-        <p className="mt-1 text-sm/6 text-gray-600">Une question ? veuillez remplir le formulaire ci dessous</p>
+          <h2 className="text-base/7 font-semibold text-gray-900 text-center">Nous contacter</h2>
+          <p className="mt-1 text-sm/6 text-gray-600">Une question ? veuillez remplir le formulaire ci dessous</p>
 
           <div className="mt-10 grid grid-cols-1 gap-x-6 gap-y-8 sm:grid-cols-6">
             <div className="sm:col-span-3"> 

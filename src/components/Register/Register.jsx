@@ -7,10 +7,11 @@ export default function register() {
   const schema = yup.object({
     pseudo: yup.string().required("champs obligatoire"),
     email: yup.string().email("Veuillez respecter le format email").required("L'email est obligatoire"),
-password: yup.string()
-  .min(10, "Le mot de passe doit avoir au moins 10 caractères")
-  .matches(/^(?=.*[a-z])(?=.*[A-Z])(?=.*[!@#$%^&*()_+\-=\]{};':"\\|,.<>/?])[a-zA-Z0-9!@#$%^&*()_+\-=\]{};':"\\|,.<>/?]{10,}$/, "Le mot de passe doit avoir au moins une majuscule, une minuscule et un caractère spécial")
-  .required("Le mot de passe est obligatoire"),    confirmPassword: yup.string().oneOf([yup.ref('password'), null], "Les mots de passe doivent être identiques").required("La confirmation du mot de passe est obligatoire"),
+    password: yup.string()
+      .min(10, "Le mot de passe doit avoir au moins 10 caractères")
+      .matches(/^(?=.*[a-z])(?=.*[A-Z])(?=.*[!@#$%^&*()_+\-=\]{};':"\\|,.<>/?])[a-zA-Z0-9!@#$%^&*()_+\-=\]{};':"\\|,.<>/?]{10,}$/, "Le mot de passe doit avoir au moins une majuscule, une minuscule et un caractère spécial")
+      .required("Le mot de passe est obligatoire"),
+    confirmPassword: yup.string().oneOf([yup.ref('password'), null], "Les mots de passe doivent être identiques").required("La confirmation du mot de passe est obligatoire"),
   });
 
   const { register, handleSubmit, formState: { errors }, reset } = useForm({
@@ -29,12 +30,12 @@ password: yup.string()
   };
 
   return (
-    <div>
-      <form onSubmit={handleSubmit(submit)} className="container mx auto p-4 bg-blue-400  justify-center rounded-2xl ml-50 mt-10 mb-40">
-        <div className="border-b border-gray-900/10 pb-12 space-y-12 ">
+    <div className="flex justify-center">
+      <form onSubmit={handleSubmit(submit)} className="container mx-auto p-4 bg-blue-400 rounded-2xl mt-10 mb-40">
+        <div className="border-b border-gray-900/10 pb-12 space-y-12">
           <h2 className="text-base/7 font-semibold text-gray-900 text-center">Inscription</h2>
 
-          <div className="sm:col-span-3 ">
+          <div className="sm:col-span-3">
             <input
               {...register("pseudo")}
               type="text"
@@ -61,16 +62,6 @@ password: yup.string()
               name="password"
               id="password"
               placeholder="Veuillez saisir votre mot de passe"
-              className="block w-full rounded-md bg-gray-100 px-3 py-1.5 text-white text-center outline-1 -outline-offset-1 outline-yellow-400 placeholder:text-yellow-400 focus:outline-2 focus:-outline-offset-2  sm:text-sm/6 mt-4"
-            />
-            {errors.password && <p className="text-red-500">{errors.password.message}</p>}
-
-            <input
-              {...register("confirmPassword")}
-              type="password"
-              name="confirmPassword"
-              id="confirmPassword"
-              placeholder="Veuillez confirmer votre mot de passe"
               className="block w-full rounded-md bg-gray-100 px-3 py-1.5 text-white text-center outline-1 -outline-offset-1 outline-yellow-400 placeholder:text-yellow-400 focus:outline-2 focus:-outline-offset-2  sm:text-sm/6 mt-4"
             />
             {errors.confirmPassword && <p className="text-red-500">{errors.confirmPassword.message}</p>}
