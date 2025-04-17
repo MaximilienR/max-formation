@@ -9,6 +9,7 @@ import Home from './components/Home/Home';
 import Login from './components/Login/Login';
 import Contact from './components/Contact/Contact';
 import Register from './components/Register/Register';
+import Error from './components/404/Error';
   function App() {
     const [user, setUser] = useState(false);
 
@@ -25,7 +26,8 @@ import Register from './components/Register/Register';
      <Route path="/Login" element={<Login/>}/>
      <Route path='/Contact' element={<Contact/>}/>
      <Route path='/register' element={<Register/>}/>
-    </Routes>
+     <Route path="*" element={<Error/>}/>  
+     </Routes>
     <Footer/>
     </BrowserRouter>
    
