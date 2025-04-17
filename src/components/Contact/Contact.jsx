@@ -1,6 +1,22 @@
 import React from 'react'
+import { useForm } from 'react-hook-form';
+import * as yup from "yup"
+import { yupResolver } from '@hookform/resolvers/yup';
 
 export default function Contact() {
+
+  const schema = yup.object({
+    subject1: yup.string().required("le champ est obligatoire"),
+    subject2: yup.string().required("le champ est obligatoire"),
+    subject3: yup.string().required("le champ est obligatoire"),
+  })
+
+  const { register, handleSubmit, formState: { errors }, reset } = useForm({
+        resolver: yupResolver(schema),
+        mode: "onChange",
+        defaultValues: {
+              }
+      })
   return (
     <div className="flex justify-center px-12">
       <form className="container mx-auto p-4 bg-blue-400 rounded-2xl">
@@ -15,7 +31,7 @@ export default function Contact() {
                 name="subject1"
                 id="subject1"
                 placeholder="Sujet"
-                className="block w-full rounded-md bg-gray-100 px-3 py-1.5 text-white text-center outline-1 -outline-offset-1 outline-yellow-400 placeholder:text-yellow-400 focus:outline-2 focus:-outline-offset-2  sm:text-sm/6 mt-4"
+                className="block w-full rounded-md bg-gray-200 px-3 py-1.5 text-white text-center outline-1 -outline-offset-1 outline-yellow-400 placeholder:text-yellow-400 focus:outline-2 focus:-outline-offset-2  sm:text-sm/6 mt-4"
               />
             </div>
             <div className="sm:col-span-3">  
@@ -24,7 +40,7 @@ export default function Contact() {
                 name="subject2"
                 id="subject2"
                 placeholder="Sujet"
-                className="block w-full rounded-md bg-gray-100 px-3 py-1.5 text-white text-center outline-1 -outline-offset-1 outline-yellow-400 placeholder:text-yellow-400 focus:outline-2 focus:-outline-offset-2  sm:text-sm/6 mt-4"
+                className="block w-full rounded-md bg-gray-200 px-3 py-1.5 text-white text-center outline-1 -outline-offset-1 outline-yellow-400 placeholder:text-yellow-400 focus:outline-2 focus:-outline-offset-2  sm:text-sm/6 mt-4"
               />
             </div>
             <div className="sm:col-span-6">  
@@ -33,7 +49,7 @@ export default function Contact() {
                   name="email"
                   id="email"
                   placeholder="Votre message"
-                  className="block w-full rounded-md bg-gray-100 px-3 py-1.5 text-white text-center outline-1 -outline-offset-1 outline-yellow-400 placeholder:text-yellow-400 focus:outline-2 focus:-outline-offset-2  sm:text-sm/6 mt-4 h-80"
+                  className="block w-full rounded-md bg-gray-200 px-3 py-1.5 text-white text-center outline-1 -outline-offset-1 outline-yellow-400 placeholder:text-yellow-400 focus:outline-2 focus:-outline-offset-2  sm:text-sm/6 mt-4 h-80"
                   />
               </div>
             </div>

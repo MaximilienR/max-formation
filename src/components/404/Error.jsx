@@ -1,4 +1,5 @@
 import React from 'react'
+import { Link } from 'react-router-dom'
 
 function Error() {
   return (
@@ -8,7 +9,8 @@ function Error() {
         <p className="text-lg text-white">La page que vous cherchez n'existe pas.</p>
         <p className="text-sm text-white">Veuillez vérifier l'URL ou revenir à la page d'accueil.</p>
         <button className="bg-yellow-400 hover:bg-yellow-500 text-white font-bold py-2 px-4 rounded mt-4">
-          Revenir à la page d'accueil
+         
+          <Link to="/"> Revenir à la page d'accueil</Link>
         </button>
       </div>
     </div>

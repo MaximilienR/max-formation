@@ -33,6 +33,7 @@ export default function Register() {
   return (
     <div className="container p-4 mx-auto md:p-6 lg:p-8">
     <form onSubmit={handleSubmit(submit)} className="w-full p-4 mx-auto bg-blue-400 rounded shadow-md md:p-6 lg:p-8 border-radius-10">
+   
     <div className="flex flex-col mb-2">
           <label htmlFor="username" className="mb-2 bg-white" >Pseudo</label>
           <input {...register('username')} type="text" id="username" name="username" className="px-3 py-2 border border-gray-300 rounded focus:outline-none focus:outline-nonr focus:ring-blue-200" placeholder="Pseudo" />
@@ -41,7 +42,7 @@ export default function Register() {
 
         <div className="flex flex-col mb-2">
           <label htmlFor="email" className="mb-2">Email</label>
-          <input {...register('email')} type="email" id="email" name="email" className="px-3 py-2 border border-gray-300 rounded focus:outline-none focus:outline-nonr focus:ring-blue-200" placeholder="Email" />
+          <input {...register('email')} type="email" id="email" name="email" className="px-3 py-2 border border-gray-300 rounded focus:outline-none focus:outline-nonr focus:ring-blue-200 " placeholder="Email" />
           {errors.tel && <p className="text-red-500">{errors.tel.message}</p>}
         </div>
 

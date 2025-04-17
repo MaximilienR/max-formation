@@ -1,6 +1,17 @@
 import { BrowserRouter, Routes, Route, Link } from 'react-router-dom';
+import { useState } from "react";
 
-const Header = ({ login, toggleUserMethod }) => {
+const Header = () => {
+  const [userLogin, setUserLogin] = useState(false);
+
+  const handleLogin = () => {
+    setUserLogin(true);
+  };
+
+  const handleLogout = () => {
+    setUserLogin(false);
+  };
+
   return (
     <nav className="py-4 mb-3 text-white bg-yellow-400 rounded-2xl">
       <ul className="flex flex-col md:flex-row justify-center">
@@ -19,16 +30,22 @@ const Header = ({ login, toggleUserMethod }) => {
             Contact
           </Link>
         </li>
-        {login === false ? (
+        {userLogin === false ? (
           <nav className="flex flex-col md:flex-row space-x-6">
             <Link to="/register" className="text-gray-600 hover:text-black">
               Inscription
             </Link>
-            <Link to="#" className="text-gray-600 hover:text-black" onClick={toggleUserMethod}>
+            <Link to="#" className="text-gray-600 hover:text-black" onClick={handleLogin}>
               Connexion
             </Link>
           </nav>
-        ) : null}
+        ) : (
+          <nav className="flex flex-col md:flex-row space-x-6">
+            <Link to="#" className="text-gray-600 hover:text-black" onClick={handleLogout}>
+              Déconnexion
+            </Link>
+          </nav>
+        )}
       </ul>
     </nav>
   );
