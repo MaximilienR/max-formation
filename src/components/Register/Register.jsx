@@ -36,31 +36,55 @@ export default function Register() {
    
     <div className="flex flex-col mb-2">
           <label htmlFor="username" className="mb-2 bg-white" >Pseudo</label>
-          <input {...register('username')} type="text" id="username" name="username" className="px-3 py-2 border border-gray-300 rounded focus:outline-none focus:outline-nonr focus:ring-blue-200" placeholder="Pseudo" />
+          <input {...register('username')} 
+          type="text" 
+          id="username" 
+          name="username"
+          className="block w-full rounded-md bg-gray-200 px-3 py-1.5 text-white text-center outline-1 -outline-offset-1 outline-yellow-400 placeholder:text-yellow-400 focus:outline-2 focus:-outline-offset-2  sm:text-sm/6 mt-4"
+          placeholder="Pseudo" />
           {errors.username && <p className="text-red-500">{errors.username.message}</p>}
         </div>
 
         <div className="flex flex-col mb-2">
           <label htmlFor="email" className="mb-2">Email</label>
-          <input {...register('email')} type="email" id="email" name="email" className="px-3 py-2 border border-gray-300 rounded focus:outline-none focus:outline-nonr focus:ring-blue-200 " placeholder="Email" />
+          <input {...register('email')} 
+          type="email" 
+          id="email" 
+          name="email"
+          className="block w-full rounded-md bg-gray-200 px-3 py-1.5 text-white text-center outline-1 -outline-offset-1 outline-yellow-400 placeholder:text-yellow-400 focus:outline-2 focus:-outline-offset-2  sm:text-sm/6 mt-4"
+          placeholder="Email" />
           {errors.tel && <p className="text-red-500">{errors.tel.message}</p>}
         </div>
 
         <div className="flex flex-col mb-2">
         <label htmlFor="tel" className="mb-2">Tel</label>
-        <input {...register('tel')} type="text" id="tel" name="tel" className="px-3 py-2 border border-gray-300 rounded focus:outline-none focus:outline-nonr focus:ring-blue-200" placeholder="Tel" />
+        <input {...register('tel')} 
+        type="text" 
+        id="tel" name="tel" 
+        className="block w-full rounded-md bg-gray-200 px-3 py-1.5 text-white text-center outline-1 -outline-offset-1 outline-yellow-400 placeholder:text-yellow-400 focus:outline-2 focus:-outline-offset-2  sm:text-sm/6 mt-4"
+        placeholder="Tel" />
         {errors.email && <p className="text-red-500">{errors.email.message}</p>}
       </div>
 
         <div className="flex flex-col mb-2">
           <label htmlFor="password" className="mb-2">Mot de passe</label>
-          <input {...register('password')} type="password" id="password" name="password" className="px-3 py-2 border border-gray-300 rounded focus:outline-none focus:outline-nonr focus:ring-blue-200" placeholder="Password" />
+          <input {...register('password')} 
+          type="password"
+           id="password" 
+           name="password"
+           className="block w-full rounded-md bg-gray-200 px-3 py-1.5 text-white text-center outline-1 -outline-offset-1 outline-yellow-400 placeholder:text-yellow-400 focus:outline-2 focus:-outline-offset-2  sm:text-sm/6 mt-4"
+           placeholder="Password" />
           {errors.password && <p className="text-red-500">{errors.password.message}</p>}
         </div>
 
         <div className="flex flex-col mb-2">
           <label htmlFor="confirmPassword" className="mb-2">Confirmer Mot de passe</label>
-          <input {...register('confirmPassword')} type="password" id="confirmPassword" name="confirmPassword" className="px-3 py-2 border border-gray-300 rounded focus:outline-none focus:outline-nonr focus:ring-blue-200" placeholder="Password" />
+          <input {...register('confirmPassword')}
+           type="password"
+            id="confirmPassword" 
+            name="confirmPassword"
+            className="block w-full rounded-md bg-gray-200 px-3 py-1.5 text-white text-center outline-1 -outline-offset-1 outline-yellow-400 placeholder:text-yellow-400 focus:outline-2 focus:-outline-offset-2  sm:text-sm/6 mt-4"
+            placeholder="Password" />
           {errors.confirmPassword && <p className="text-red-500">{errors.confirmPassword.message}</p>}
         </div>
 

@@ -1,4 +1,4 @@
-import React from 'react'
+import React from 'react';
 import { useForm } from 'react-hook-form';
 import * as yup from "yup"
 import { yupResolver } from '@hookform/resolvers/yup';
@@ -7,19 +7,29 @@ export default function Contact() {
 
   const schema = yup.object({
     subject1: yup.string().required("le champ est obligatoire"),
-    subject2: yup.string().required("le champ est obligatoire"),
-    subject3: yup.string().required("le champ est obligatoire"),
+    message: yup.string().required("le champ est obligatoire"),
+    email: yup.string().email("Format email non valide").required("le champ est obligatoire"),
   })
 
+  function submit(values) {
+    console.log(values);
+    alert(`Message envoyé, merci ${values.email}`);
+    handleLogin();
+  }
+
   const { register, handleSubmit, formState: { errors }, reset } = useForm({
-        resolver: yupResolver(schema),
-        mode: "onChange",
-        defaultValues: {
-              }
-      })
+    resolver: yupResolver(schema),
+    mode: "onChange",
+    defaultValues: {
+      subject1: "",
+      message: "",
+      email: "",
+    }
+  })
+
   return (
     <div className="flex justify-center px-12">
-      <form className="container mx-auto p-4 bg-blue-400 rounded-2xl">
+      <form onSubmit={handleSubmit(submit)} className="container mx-auto p-4 bg-blue-400 rounded-2xl">
         <div className="border-b border-gray-900/10 pb-12 space-y-12">
           <h2 className="text-base/7 font-semibold text-gray-900 text-center">Nous contacter</h2>
           <p className="mt-1 text-sm/6 text-gray-600">Une question ? veuillez remplir le formulaire ci dessous</p>
@@ -32,25 +42,31 @@ export default function Contact() {
                 id="subject1"
                 placeholder="Sujet"
                 className="block w-full rounded-md bg-gray-200 px-3 py-1.5 text-white text-center outline-1 -outline-offset-1 outline-yellow-400 placeholder:text-yellow-400 focus:outline-2 focus:-outline-offset-2  sm:text-sm/6 mt-4"
+                {...register("subject1")}
               />
+              {errors.subject1 && <p className="text-red-500">{errors.subject1.message}</p>}
             </div>
-            <div className="sm:col-span-3">  
+            <div className="sm:col-span-3"> 
               <input
-                type="text"
-                name="subject2"
-                id="subject2"
-                placeholder="Sujet"
+                type="email"
+                name="email"
+                id="email"
+                placeholder="Email"
                 className="block w-full rounded-md bg-gray-200 px-3 py-1.5 text-white text-center outline-1 -outline-offset-1 outline-yellow-400 placeholder:text-yellow-400 focus:outline-2 focus:-outline-offset-2  sm:text-sm/6 mt-4"
+                {...register("email")}
               />
+              {errors.email && <p className="text-red-500">{errors.email.message}</p>}
             </div>
             <div className="sm:col-span-6">  
               <div className="mt-2">
                 <textarea
-                  name="email"
-                  id="email"
+                  name="message"
+                  id="message"
                   placeholder="Votre message"
                   className="block w-full rounded-md bg-gray-200 px-3 py-1.5 text-white text-center outline-1 -outline-offset-1 outline-yellow-400 placeholder:text-yellow-400 focus:outline-2 focus:-outline-offset-2  sm:text-sm/6 mt-4 h-80"
-                  />
+                  {...register("message")}
+                />
+                {errors.message && <p className="text-red-500">{errors.message.message}</p>}
               </div>
             </div>
           </div>

@@ -10,6 +10,7 @@ import Login from './components/Login/Login';
 import Contact from './components/Contact/Contact';
 import Register from './components/Register/Register';
 import Error from './components/404/Error';
+import Profil from './components/Profil/Profil';
   function App() {
     const [user, setUser] = useState(false);
 
@@ -26,6 +27,7 @@ import Error from './components/404/Error';
      <Route path="/Login" element={<Login/>}/>
      <Route path='/Contact' element={<Contact/>}/>
      <Route path='/register' element={<Register/>}/>
+     <Route path='/Profil' element={<Profil/>}/>
      <Route path="*" element={<Error/>}/>  
      </Routes>
     <Footer/>
