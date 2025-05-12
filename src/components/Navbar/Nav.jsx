@@ -30,19 +30,19 @@ const Header = () => {
             Contact
           </Link>
         </li>
-        {userLogin === false ? (
+        {userLogin ? (
+          <nav className="flex flex-col md:flex-row space-x-6">
+            <Link to="#" className="text-gray-600 hover:text-black" onClick={handleLogout}>
+              Déconnexion
+            </Link>
+          </nav>
+        ) : (
           <nav className="flex flex-col md:flex-row space-x-6">
             <Link to="/register" className="text-gray-600 hover:text-black">
               Inscription
             </Link>
             <Link to="#" className="text-gray-600 hover:text-black" onClick={handleLogin}>
               Connexion
-            </Link>
-          </nav>
-        ) : (
-          <nav className="flex flex-col md:flex-row space-x-6">
-            <Link to="#" className="text-gray-600 hover:text-black" onClick={handleLogout}>
-              Déconnexion
             </Link>
           </nav>
         )}
