@@ -5,7 +5,7 @@ function Home() {
   return (
     <div className="container p-4 mx-auto">
       <header>
-        <h1 className="mb-4 text-5xl font-bold text-center">L'aventureeeeeeeeeeeeeeeeeeeeeeeee commence ici</h1>
+        <h1 className="mb-4 text-5xl font-bold text-center">L'aventure commence ici</h1>
         <img src="../src/Assets/dev.jpg" alt="Image" className="object-cover w-full mb-4 h-1/2" />
       </header>
       <main>
