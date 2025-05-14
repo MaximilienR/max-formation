@@ -1,7 +1,7 @@
 import React from "react";
 import { createBrowserRouter } from "react-router-dom";
 import APP from "./App";
-import Error from "./components/404/Error";
+import Error from "./pages/Error";
  
 export const router = createBrowserRouter([
     {

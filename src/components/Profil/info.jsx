@@ -1,16 +1,12 @@
-import React from 'react';
+import React from 'react'
 
-function Profil() {
+export default function info() {
   return (
-    <div className="flex">
-      <aside className="w-64 bg-yellow-400 p-4">
-        <button className="bg-yellow-400 hover:bg-yellow-500 text-white font-bold py-2 px-4 rounded mt-4 block w-full text-left">Mes informations</button>
-        <button className="bg-yellow-400 hover:bg-yellow-500 text-white font-bold py-2 px-4 rounded mt-4 block w-full text-left">Mes achats </button>
-        <button className="bg-yellow-400 hover:bg-yellow-500 text-white font-bold py-2 px-4 rounded mt-4 block w-full text-left">Mon parcours </button>
-       </aside>
-      <main className="flex-1 p-4">
+    <div>
+    
+     <main className="bg-blue-500 w-full p-4">
         <h1 className="text-2xl font-bold mb-4 text-gray-700 text-center">Profil</h1>
-        <form className="space-y-4 bg-blue-500 p-4">
+        <form className=" ">
           <div>
             <label htmlFor="pseudo" className="block text-gray-700 text-sm font-bold mb-2">Pseudo:</label>
             <input
@@ -63,9 +59,6 @@ function Profil() {
             Enregistrer les modifications
           </button>
         </form>
-      </main>
-    </div>
-  );
+      </main></div>
+  )
 }
-
-export default Profil;

@@ -25,9 +25,11 @@ function Home() {
           </section>
           <section className="w-full p-4 md:w-1/2 xl:w-1/2">
             <h2 className="mb-2 text-3xl font-bold">Coatching personnalisé</h2>
+            <Link to="/Coaching">
             <button className="px-4 py-2 font-bold text-white bg-yellow-400 rounded hover:bg-yellow-500">
               Découvrir le coaching
             </button>
+            </Link>
             <ul>
               <li>Accès à un coach personnel</li>
               <li>Un plan de coaching personnalisé</li>
