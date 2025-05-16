@@ -1,5 +1,5 @@
 import React from 'react'
-
+import { NavLink } from 'react-router-dom'
 export default function Login() {
   return (
     <div className="container flex items-center justify-center p-4 mx-auto bg-blue-400 rounded-2xl">
@@ -16,8 +16,11 @@ export default function Login() {
           </div>
           <button type="submit" className="px-4 py-2 font-bold text-black bg-yellow-400 rounded">Me connecter</button>
         </form>
-        <span>mot de passe oublie ? <a href="#">Cliquez ici</a></span>
-      </div>
+  <label>
+              Mot passe oublié ?  <NavLink className="mr-4" to="/Password">
+              <span>Ici</span>
+            </NavLink>
+            </label>      </div>
     </div>
   )
 }

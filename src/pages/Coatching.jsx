@@ -1,6 +1,6 @@
 import React from 'react';
 
-export default function AProposCoachingInsertion() {
+export default function Coaching() {
   return (
     <div className="container mx-auto py-8 px-4 md:px-8 lg:px-12">
       <h1 className="text-3xl font-bold text-gray-900 mb-6 text-center">À Propos de Notre Coaching en Insertion Professionnelle</h1>

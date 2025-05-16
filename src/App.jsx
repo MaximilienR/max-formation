@@ -7,11 +7,12 @@ import Nav from './components/Navbar/Nav';
 import Footer from './components/Footer/Footer';
 import Home from './components/Home/Home';
 import Login from './pages/Login';
-import Contact from './components/Contact/Contact';
+import Contact from './pages/Contact';
 import Register from './components/Register/Register';
 import Error from './pages/Error';
 import Profil from './pages/Profil';
-import Coatching from './components/coatching/coatching';
+import Coaching from './pages/coatching';
+import Password from './pages/Password';
   function App() {
     const [user, setUser] = useState(false);
 
@@ -24,15 +25,16 @@ import Coatching from './components/coatching/coatching';
     <Routes>
      <Route path="/" element={<Home/>}/>
      <Route path="/Contenu" element={<Contenu/>}/>
-     <Route path="/Coaching" element={<Coatching/>}/>
-      <Route path="/Cours" element={<Cours/>}/>
+       <Route path="/Cours" element={<Cours/>}/>
      <Route path="/Login" element={<Login/>}/>
      <Route path='/Contact' element={<Contact/>}/>
+     <Route path='/Coatch' element={<Coaching/>}/>
      <Route path='/register' element={<Register/>}/>
      <Route path='/Profil' element={<Profil/>}/>
      <Route path='/Profil/informations' element={<Profil/>}/>
      <Route path='/Profil/achats' element={<Profil/>}/>
      <Route path='/Profil/parcours' element={<Profil/>}/>
+     <Route path='/Password' element={<Password/>}/>
      <Route path="*" element={<Error/>}/>  
      </Routes>
     <Footer/>
