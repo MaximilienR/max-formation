@@ -1,11 +1,8 @@
- 
- import { BASE_URL } from "../utils/url";
- 
- export async function contact(values) {
+import { BASE_URL } from "../utils/url";
+export async function signup(values) {
     console.log(values);
-    console.log(BASE_URL)
   try {
-    const response = await fetch(`${BASE_URL}/contact`, {
+    const response = await fetch(`${BASE_URL}/user/signup`, {
       method: "POST",
       body: JSON.stringify(values),
       headers: {
