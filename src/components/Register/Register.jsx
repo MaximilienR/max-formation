@@ -106,9 +106,9 @@ export default function Register() {
         onSubmit={handleSubmit(submit)}
         className="w-full max-w-md p-6 bg-blue-400 rounded-lg shadow-lg"
       >
-        <h1 className="text-3xl text-center mt-4 font-bold text-yellow-400">
+        <h2 className="mb-6 text-2xl font-bold text-center text-white">
           Créer un Compte
-        </h1>
+        </h2>
 
         {/* Pseudo */}
         <div className="mb-4">
@@ -123,7 +123,7 @@ export default function Register() {
             type="text"
             id="username"
             name="username"
-            className="block w-full rounded-md bg-white px-3 py-1.5 text-gray-700 outline-1 -outline-offset-1 outline-yellow-400 placeholder:text-gray-400 focus:outline-2 focus:-outline-offset-2 sm:text-sm/6"
+            className="block w-full rounded-md bg-white px-3 py-1.5 text-gray-700 outline outline-1 -outline-offset-1 outline-yellow-400 placeholder-yellow-400 focus:outline-2 focus:-outline-offset-2 sm:text-sm/6"
             placeholder="Votre pseudo"
           />
           {errors.username && (
@@ -146,7 +146,7 @@ export default function Register() {
             type="email"
             id="email"
             name="email"
-            className="block w-full rounded-md bg-white px-3 py-1.5 text-gray-700 outline-1 -outline-offset-1 outline-yellow-400 placeholder:text-gray-400 focus:outline-2 focus:-outline-offset-2 sm:text-sm/6"
+            className="block w-full rounded-md bg-white px-3 py-1.5 text-gray-700 outline outline-1 -outline-offset-1 outline-yellow-400 placeholder-yellow-400 focus:outline-2 focus:-outline-offset-2 sm:text-sm/6"
             placeholder="votre@email.com"
           />
           {errors.email && (
@@ -170,7 +170,7 @@ export default function Register() {
             type={showPassword ? "text" : "password"}
             id="password"
             name="password"
-            className="block w-full rounded-md bg-white px-3 py-1.5 text-gray-700 outline-1 -outline-offset-1 outline-yellow-400 placeholder:text-gray-400 focus:outline-2 focus:-outline-offset-2 sm:text-sm/6"
+            className="block w-full rounded-md bg-white px-3 py-1.5 text-gray-700 outline outline-1 -outline-offset-1 outline-yellow-400 placeholder-yellow-400 focus:outline-2 focus:-outline-offset-2 sm:text-sm/6"
             placeholder="Votre mot de passe"
           />
           {/* Icône d'œil */}
@@ -204,7 +204,7 @@ export default function Register() {
             type={showConfirmPassword ? "text" : "password"}
             id="confirmPassword"
             name="confirmPassword"
-            className="block w-full rounded-md bg-white px-3 py-1.5 text-gray-700 outline-1 -outline-offset-1 outline-yellow-400 placeholder:text-gray-400 focus:outline-2 focus:-outline-offset-2 sm:text-sm/6"
+            className="block w-full rounded-md bg-white px-3 py-1.5 text-gray-700 outline outline-1 -outline-offset-1 outline-yellow-400 placeholder-yellow-400 focus:outline-2 focus:-outline-offset-2 sm:text-sm/6"
             placeholder="Confirmez votre mot de passe"
           />
           {/* Icône d'œil pour la confirmation */}
