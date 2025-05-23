@@ -41,6 +41,12 @@ function Tableau() {
                       {"☆".repeat(5 - (cours.niveau || 0))}
                     </span>
                   </div>
+                  <div className="text-yellow-400 text-xl select-none flex items-center gap-2">
+                    <h2 className="text-base font-semibold text-black m-0">
+                      Prix :
+                    </h2>
+                    <span>GRATUIT</span>
+                  </div>
                 </div>
               ) : (
                 <img

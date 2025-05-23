@@ -1,5 +1,4 @@
 import React, { useState } from "react";
-import "./App.css"; // Importez vos styles CSS
 import { BrowserRouter, Routes, Route } from "react-router-dom";
 import Contenu from "./components/Contenu/Contenu";
 import Cours from "./components/Cours/Cours";
@@ -15,6 +14,7 @@ import Coaching from "./pages/coatching";
 import Password from "./pages/Password";
 import Quizz from "./pages/Quizz";
 import Detail from "./pages/details";
+
 function App() {
   const [user, setUser] = useState(false);
 
@@ -38,7 +38,7 @@ function App() {
         <Route path="/Profil/parcours" element={<Profil />} />
         <Route path="/Password" element={<Password />} />
         <Route path="/Quizz" element={<Quizz />} />
-        <Route path="/detail" element={<Detail />} />
+        <Route path="/detail" element={<Detail />}></Route>
         <Route path="*" element={<Error />} />
       </Routes>
       <Footer />
