@@ -2,7 +2,7 @@ import React from "react";
 import * as yup from "yup";
 import { useForm } from "react-hook-form";
 import { yupResolver } from "@hookform/resolvers/yup";
-import toast from "react-hot-toast"; // Importe toast (assurez-vous de l'avoir installé et configuré)
+import toast from "react-hot-toast";
 import { FaCheckCircle } from "react-icons/fa"; // Importe l'icône de succès
 
 import { contact } from "../api/contact.api";
@@ -48,9 +48,10 @@ export default function Contact() {
       const feedback = await contact(values);
 
       if (feedback && feedback.success) {
-        console.log("message envoye" + " " + values);
-        toast.success(feedback.message || "Message envoyé avec succès !");
-        reset();
+        console.log("message envoye");
+        toast.success(
+          "Email envoyé avec succès ! Veuillez vérifier votre boîte de réception."
+        );
       } else if (feedback && feedback.error) {
         toast.error(feedback.error);
       } else {

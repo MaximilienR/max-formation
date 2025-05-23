@@ -106,9 +106,9 @@ export default function Register() {
         onSubmit={handleSubmit(submit)}
         className="w-full max-w-md p-6 bg-blue-400 rounded-lg shadow-lg"
       >
-        <h2 className="mb-6 text-2xl font-bold text-center text-white">
-          Créer un Compte
-        </h2>
+        <h1 className="text-3xl text-center mt-4 font-bold text-yellow-400">
+          Créer un compte
+        </h1>
 
         {/* Pseudo */}
         <div className="mb-4">
