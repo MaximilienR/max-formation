@@ -69,9 +69,9 @@ export default function Contact() {
         className="container mx-auto p-4 bg-blue-400 rounded-2xl"
       >
         <div className="border-b border-gray-900/10 pb-12 space-y-12">
-          <h2 className="text-base/7 font-semibold text-gray-900 text-center">
+          <h1 className="text-3xl text-center mt-4 font-bold text-yellow-400">
             Nous contacter
-          </h2>
+          </h1>
           <p className="mt-1 text-sm/6 text-gray-600">
             Une question ? veuillez remplir le formulaire ci dessous
           </p>
@@ -139,12 +139,8 @@ export default function Contact() {
           )}
         </div>
 
-        <div className="mt-6 flex items-center justify-end gap-x-6">
-          <button
-            type="submit"
-            className="rounded-md bg-indigo-600 px-3 py-2 text-sm font-semibold text-white shadow-xs hover:bg-indigo-500 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600"
-          >
-            {" "}
+        <div className="flex justify-center mt-4">
+          <button className="rounded-md bg-[#A3DC7F] px-4 py-2 text-sm font-semibold text-white shadow hover:bg-[#8ccf64] focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-600">
             Envoyer
           </button>
         </div>

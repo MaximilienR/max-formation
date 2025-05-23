@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-
+import { Link } from "react-router-dom";
 function HistoireInternet({ isAuthenticated }) {
   return (
     <div className="container mx-auto p-4">
@@ -84,6 +84,12 @@ function HistoireInternet({ isAuthenticated }) {
           </p>
         )}
       </div>
+
+      <Link to="/quizz">
+        <button className="bg-yellow-400 text-black font-bold py-2 px-4 rounded">
+          Suivant
+        </button>
+      </Link>
     </div>
   );
 }

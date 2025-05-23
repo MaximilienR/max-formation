@@ -106,9 +106,9 @@ export default function Register() {
         onSubmit={handleSubmit(submit)}
         className="w-full max-w-md p-6 bg-blue-400 rounded-lg shadow-lg"
       >
-        <h2 className="mb-6 text-2xl font-bold text-center text-white">
+        <h1 className="text-3xl text-center mt-4 font-bold text-yellow-400">
           Créer un Compte
-        </h2>
+        </h1>
 
         {/* Pseudo */}
         <div className="mb-4">
@@ -241,12 +241,11 @@ export default function Register() {
           )}
         </div>
 
-        <button
-          className="w-full px-4 py-2 text-white transition duration-150 ease-in-out bg-blue-600 rounded-md hover:bg-blue-700 focus:outline-none focus:shadow-outline"
-          type="submit"
-        >
-          S'inscrire
-        </button>
+        <div className="flex justify-center mt-4">
+          <button className="rounded-md bg-[#A3DC7F] px-4 py-2 text-sm font-semibold text-white shadow hover:bg-[#8ccf64] focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-600">
+            Envoyer
+          </button>
+        </div>
       </form>
     </div>
   );
