@@ -13,7 +13,7 @@ function Tableau() {
   const [hoveredCourse, setHoveredCourse] = useState(null);
 
   return (
-    <div className="container mx-auto p-4 bg-blue-400 min-h-screen">
+    <div className="container mx-auto p-4 bg-sky-900  min-h-screen">
       <h1 className="text-3xl text-center mt-4 font-bold text-yellow-400">
         Nos formations
       </h1>
@@ -25,7 +25,7 @@ function Tableau() {
             className="relative w-full sm:w-1/2 md:w-1/3 lg:w-1/4 p-4 flex flex-col items-center text-center"
           >
             <div
-              className="relative w-full h-48 overflow-hidden rounded-lg shadow-lg cursor-pointer flex items-center justify-center p-4 bg-white text-black text-sm transition-all duration-300"
+              className="relative w-full h-48 overflow-hidden rounded-lg shadow-lg cursor-pointer flex items-center justify-center p-4 bg-white text-amber-50 text-sm transition-all duration-300"
               onMouseEnter={() => setHoveredCourse(cours.id)}
               onMouseLeave={() => setHoveredCourse(null)}
             >
@@ -33,7 +33,7 @@ function Tableau() {
                 <div className="relative z-10 flex flex-col items-center">
                   <p className="mb-2 overflow-auto">{cours.description}</p>
                   <div className="text-yellow-400 text-xl select-none flex items-center gap-2">
-                    <h2 className="text-base font-semibold text-black m-0">
+                    <h2 className="text-base font-semibold text-amber-50 m-0">
                       Niveau :
                     </h2>
                     <span>
@@ -42,7 +42,7 @@ function Tableau() {
                     </span>
                   </div>
                   <div className="text-yellow-400 text-xl select-none flex items-center gap-2">
-                    <h2 className="text-base font-semibold text-black m-0">
+                    <h2 className="text-base font-semibold text-amber-50  m-0">
                       Prix :
                     </h2>
                     <span>GRATUIT</span>
@@ -56,7 +56,7 @@ function Tableau() {
                 />
               )}
             </div>
-            <h2 className="mt-3 text-lg font-semibold text-white">
+            <h2 className="mt-3 text-lg font-semibold text-yellow-400">
               {cours.nom}
             </h2>
             <Link to="/detail">

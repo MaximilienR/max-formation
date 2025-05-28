@@ -104,7 +104,7 @@ export default function Register() {
     <div className="container flex items-center justify-center min-h-screen p-4 mx-auto md:p-6 lg:p-8">
       <form
         onSubmit={handleSubmit(submit)}
-        className="w-full max-w-md p-6 bg-blue-400 rounded-lg shadow-lg"
+        className="w-full max-w-md p-6 bg-sky-900 rounded-lg shadow-lg"
       >
         <h1 className="text-3xl text-center mt-4 font-bold text-yellow-400">
           Créer un compte
@@ -114,7 +114,7 @@ export default function Register() {
         <div className="mb-4">
           <label
             htmlFor="username"
-            className="block mb-2 text-sm font-bold text-white"
+            className="block mb-2 text-sm font-bold text-amber-50"
           >
             Pseudo
           </label>
@@ -137,7 +137,7 @@ export default function Register() {
         <div className="mb-4">
           <label
             htmlFor="email"
-            className="block mb-2 text-sm font-bold text-white"
+            className="block mb-2 text-sm font-bold text-amber-50"
           >
             E-mail
           </label>
@@ -160,7 +160,7 @@ export default function Register() {
           {/* Ajout de 'relative' pour positionner l'icône */}
           <label
             htmlFor="password"
-            className="block mb-2 text-sm font-bold text-white"
+            className="block mb-2 text-sm font-bold text-amber-50"
           >
             Mot de passe
           </label>
@@ -194,7 +194,7 @@ export default function Register() {
           {/* Ajout de 'relative' */}
           <label
             htmlFor="confirmPassword"
-            className="block mb-2 text-sm font-bold text-white"
+            className="block mb-2 text-sm font-bold text-amber-50"
           >
             Confirmer le mot de passe
           </label>
@@ -225,7 +225,7 @@ export default function Register() {
         <div className="mb-6">
           <label
             htmlFor="rgpd"
-            className="block mb-2 text-sm font-bold text-white cursor-pointer"
+            className="block mb-2 text-sm font-bold text-amber-50 cursor-pointer"
           >
             <input
               type="checkbox"

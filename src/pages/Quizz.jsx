@@ -4,7 +4,7 @@ export default function Quizz() {
   const { question: intitule, reponses } = question;
 
   return (
-    <div className="min-h-screen bg-slate-800 text-[#dfe4ea] grid place-items-center font-['Josefin_Sans']">
+    <div className="min-h-screen bg-sky-900  text-[#dfe4ea] grid place-items-center font-['Josefin_Sans']">
       <div className="container mx-auto px-4">
         <h1 className="text-5xl font-bold uppercase text-center mb-12">
           Quizz <span className="text-[#ffa502]">JS</span>
