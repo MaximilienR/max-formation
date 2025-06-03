@@ -4,10 +4,15 @@ export default function Login() {
   return (
     <div className="container flex items-center justify-center p-4 mx-auto bg-sky-900 rounded-2xl">
       <div className="w-full p-4 md:w-1/2 xl:w-1/3">
-        <h4 className="mb-2 text-lg font-bold">Login</h4>
+        <h1 className="text-3xl text-center mt-4 font-bold text-yellow-400">
+          Connexion
+        </h1>
         <form className="flex flex-col">
           <div className="mb-4">
-            <label htmlFor="email" className="block mb-2 font-bold text-white">
+            <label
+              htmlFor="email"
+              className="block mb-2 text-sm font-bold text-amber-50"
+            >
               Email
             </label>
             <input
@@ -19,7 +24,7 @@ export default function Login() {
           <div className="mb-4">
             <label
               htmlFor="password"
-              className="block mb-2 font-bold text-white"
+              className="block mb-2 text-sm font-bold text-amber-50"
             >
               Mot de passe
             </label>

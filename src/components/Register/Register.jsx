@@ -123,7 +123,7 @@ export default function Register() {
             type="text"
             id="username"
             name="username"
-            className="block w-full rounded-md bg-white px-3 py-1.5 text-gray-700 outline outline-1 -outline-offset-1 outline-yellow-400 placeholder-yellow-400 focus:outline-2 focus:-outline-offset-2 sm:text-sm/6"
+            className="block w-full rounded-md bg-white px-3 py-1.5 text-amber-50 outline outline-1 -outline-offset-1 outline-yellow-400 placeholder-yellow-400 focus:outline-2 focus:-outline-offset-2 sm:text-sm/6"
             placeholder="Votre pseudo"
           />
           {errors.username && (
@@ -146,7 +146,7 @@ export default function Register() {
             type="email"
             id="email"
             name="email"
-            className="block w-full rounded-md bg-white px-3 py-1.5 text-gray-700 outline outline-1 -outline-offset-1 outline-yellow-400 placeholder-yellow-400 focus:outline-2 focus:-outline-offset-2 sm:text-sm/6"
+            className="block w-full rounded-md bg-white px-3 py-1.5 text-amber-50 outline outline-1 -outline-offset-1 outline-yellow-400 placeholder-yellow-400 focus:outline-2 focus:-outline-offset-2 sm:text-sm/6"
             placeholder="votre@email.com"
           />
           {errors.email && (
@@ -170,13 +170,13 @@ export default function Register() {
             type={showPassword ? "text" : "password"}
             id="password"
             name="password"
-            className="block w-full rounded-md bg-white px-3 py-1.5 text-gray-700 outline outline-1 -outline-offset-1 outline-yellow-400 placeholder-yellow-400 focus:outline-2 focus:-outline-offset-2 sm:text-sm/6"
+            className="block w-full rounded-md bg-white px-3 py-1.5 text-amber-50 outline outline-1 -outline-offset-1 outline-yellow-400 placeholder-yellow-400 focus:outline-2 focus:-outline-offset-2 sm:text-sm/6"
             placeholder="Votre mot de passe"
           />
           {/* Icône d'œil */}
           <span
             onClick={togglePasswordVisibility}
-            className="absolute inset-y-0 right-0 flex items-center pr-3 text-gray-700 cursor-pointer top-6"
+            className="absolute inset-y-0 right-0 flex items-center pr-3 text-amber-50 cursor-pointer top-6"
           >
             {showPassword ? <FaEyeSlash /> : <FaEye />}{" "}
             {/* Affiche l'icône appropriée */}
@@ -204,13 +204,13 @@ export default function Register() {
             type={showConfirmPassword ? "text" : "password"}
             id="confirmPassword"
             name="confirmPassword"
-            className="block w-full rounded-md bg-white px-3 py-1.5 text-gray-700 outline outline-1 -outline-offset-1 outline-yellow-400 placeholder-yellow-400 focus:outline-2 focus:-outline-offset-2 sm:text-sm/6"
+            className="block w-full rounded-md bg-white px-3 py-1.5 text-amber-50 outline outline-1 -outline-offset-1 outline-yellow-400 placeholder-yellow-400 focus:outline-2 focus:-outline-offset-2 sm:text-sm/6"
             placeholder="Confirmez votre mot de passe"
           />
           {/* Icône d'œil pour la confirmation */}
           <span
             onClick={toggleConfirmPasswordVisibility}
-            className="absolute inset-y-0 right-0 flex items-center pr-3 text-gray-700 cursor-pointer top-6"
+            className="absolute inset-y-0 right-0 flex items-center pr-3 text-amber-50 cursor-pointer top-6"
           >
             {showConfirmPassword ? <FaEyeSlash /> : <FaEye />}
           </span>

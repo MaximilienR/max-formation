@@ -14,7 +14,7 @@ import Coaching from "./pages/coatching";
 import Password from "./pages/Password";
 import Quizz from "./pages/Quizz";
 import Detail from "./pages/details";
-
+import Certificat from "./components/Certificat/certificat";
 function App() {
   const [user, setUser] = useState(false);
 
@@ -38,7 +38,8 @@ function App() {
         <Route path="/Profil/parcours" element={<Profil />} />
         <Route path="/Password" element={<Password />} />
         <Route path="/Quizz" element={<Quizz />} />
-        <Route path="/detail" element={<Detail />}></Route>
+        <Route path="/Certificat" element={<Certificat />} />
+        <Route path="/detail" element={<Detail />} />
         <Route path="*" element={<Error />} />
       </Routes>
       <Footer />

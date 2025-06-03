@@ -124,13 +124,13 @@ export default function Contact() {
         <div className="mb-6">
           <label
             htmlFor="rgpd"
-            className="block mb-2 text-sm font-bold text-white cursor-pointer"
+            className="block mb-2 text-sm font-bold text-amber-50 cursor-pointer"
           >
             <input
               type="checkbox"
               id="rgpd"
               {...register("rgpd")}
-              className="mr-2 leading-tight"
+              className="mr-2 leading-tight text-amber-50"
             />
             J'accepte les conditions d'utilisation et la politique de
             confidentialité

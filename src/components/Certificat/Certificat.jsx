@@ -1,0 +1,39 @@
+import React from "react";
+
+export default function Certificat() {
+  return (
+    <div className="flex items-center justify-center min-h-screen bg-sky-900 p-4">
+      <div className="bg-white rounded-2xl shadow-xl p-10 max-w-3xl w-full text-center border-8 border-yellow-400">
+        <h1 className="text-4xl font-extrabold text-yellow-500 mb-6 uppercase">
+          Certificat de Réussite
+        </h1>
+
+        <p className="text-lg mb-8text-amber-50 ">
+          Ce certificat est décerné à
+        </p>
+
+        <h2 className="text-3xl font-bold text-sky-900 mb-4 underline">
+          [Nom de l'étudiant]
+        </h2>
+
+        <p className="text-amber-50  text-lg mb-10">
+          Pour avoir complété avec succès la formation{" "}
+          <span className="font-semibold text-sky-800">
+            "[Nom de la formation]"
+          </span>
+          , démontrant engagement et excellence.
+        </p>
+
+        <div className="flex justify-between items-center mt-8 px-6 text-gray-600 text-sm">
+          <div>
+            <p>Fait le : 03 juin 2025</p>
+          </div>
+          <div className="text-right">
+            <p className="font-semibold">Signature</p>
+            <div className="w-32 h-0.5 bg-gray-400 mx-auto mt-2"></div>
+          </div>
+        </div>
+      </div>
+    </div>
+  );
+}
