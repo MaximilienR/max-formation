@@ -15,6 +15,8 @@ import Password from "./pages/Password";
 import Quizz from "./pages/Quizz";
 import Detail from "./pages/details";
 import Certificat from "./components/Certificat/certificat";
+import "@fontsource/montserrat";
+
 function App() {
   const [user, setUser] = useState(false);
 

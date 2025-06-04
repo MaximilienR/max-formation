@@ -1,10 +1,17 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import logo from "../../Assets/logo.png";
-
+import signature from "../../Assets/mysign.png";
 export default function Certificat() {
+  const [certificateId, setCertificateId] = useState("");
+
+  useEffect(() => {
+    const uniqueId = crypto.randomUUID();
+    setCertificateId(uniqueId);
+  }, []);
+
   return (
     <div className="flex items-center justify-center min-h-screen bg-sky-900 p-4">
-      <div className="bg-white rounded-2xl shadow-xl p-10 max-w-3xl w-full text-center border-8 border-yellow-400">
+      <div className="bg-white rounded-2xl shadow-xl p-10 max-w-3xl w-full text-center border-8 border-yellow-400 bg-gray-900">
         <h1 className="text-4xl font-extrabold text-yellow-500 mb-6 uppercase">
           Certificat de Réussite
         </h1>
@@ -21,14 +28,24 @@ export default function Certificat() {
           </span>
           , démontrant engagement et excellence.
         </p>
+
+        {/* Numéro de certificat */}
+        <p className="text-sm text-amber-100 mt-4">
+          <strong>Numéro du certificat :</strong> {certificateId}
+        </p>
+
         <div className="flex justify-between items-center mt-8 px-6 text-sm">
           <div className="text-orange-500 text-base">
             <p>
               <span className="font-medium">Fait le :</span> 03 juin 2025
             </p>
+            <img
+              src={signature}
+              alt="Logo de l'entreprise"
+              className="h-20 mx-auto mb-6"
+            />
           </div>
           <div className="text-right text-gray-600">
-            <p className="font-semibold">Signature</p>
             <div className="w-32 h-0.5 bg-gray-400 mx-auto mt-2"></div>
             <img
               src={logo}
