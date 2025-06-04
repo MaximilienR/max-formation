@@ -101,124 +101,88 @@ export default function Register() {
   }
 
   return (
-    <div className="container flex items-center justify-center min-h-screen p-4 mx-auto md:p-6 lg:p-8">
+    <div className="flex justify-center px-12">
       <form
         onSubmit={handleSubmit(submit)}
-        className="w-full max-w-md p-6 bg-sky-900 rounded-lg shadow-lg"
+        className="container mx-auto p-4 bg-sky-900 rounded-2xl"
       >
-        <h1 className="text-3xl text-center mt-4 font-bold text-yellow-400">
-          Créer un compte
-        </h1>
+        <div className="border-b border-gray-900/10 pb-12 space-y-12">
+          <h1 className="text-3xl text-center mt-4 font-bold text-yellow-400">
+            Créer un compte
+          </h1>
+          <p className="mt-1 text-sm/6 text-amber-50 text-center">
+            Remplissez les champs ci-dessous pour vous inscrire
+          </p>
 
-        {/* Pseudo */}
-        <div className="mb-4">
-          <label
-            htmlFor="username"
-            className="block mb-2 text-sm font-bold text-amber-50"
-          >
-            Pseudo
-          </label>
-          <input
-            {...register("username")}
-            type="text"
-            id="username"
-            name="username"
-            className="block w-full rounded-md bg-white px-3 py-1.5 text-amber-50 outline outline-1 -outline-offset-1 outline-yellow-400 placeholder-yellow-400 focus:outline-2 focus:-outline-offset-2 sm:text-sm/6"
-            placeholder="Votre pseudo"
-          />
-          {errors.username && (
-            <p className="mt-1 text-xs text-red-600">
-              {errors.username.message}
-            </p>
-          )}
-        </div>
+          <div className="mt-10 grid grid-cols-1 gap-x-6 gap-y-8 sm:grid-cols-6">
+            {/* Pseudo */}
+            <div className="sm:col-span-6">
+              <input
+                {...register("username")}
+                type="text"
+                id="username"
+                placeholder="Votre pseudo"
+                className="block w-full rounded-md bg-gray-200 px-3 py-1.5 text-white text-center outline-1 -outline-offset-1 outline-yellow-400 placeholder:text-yellow-400 focus:outline-2 focus:-outline-offset-2 sm:text-sm/6 mt-4"
+              />
+              {errors.username && (
+                <p className="text-red-500">{errors.username.message}</p>
+              )}
+            </div>
 
-        {/* E-mail */}
-        <div className="mb-4">
-          <label
-            htmlFor="email"
-            className="block mb-2 text-sm font-bold text-amber-50"
-          >
-            E-mail
-          </label>
-          <input
-            {...register("email")}
-            type="email"
-            id="email"
-            name="email"
-            className="block w-full rounded-md bg-white px-3 py-1.5 text-amber-50 outline outline-1 -outline-offset-1 outline-yellow-400 placeholder-yellow-400 focus:outline-2 focus:-outline-offset-2 sm:text-sm/6"
-            placeholder="votre@email.com"
-          />
-          {errors.email && (
-            <p className="mt-1 text-xs text-red-600">{errors.email.message}</p>
-          )}
-        </div>
+            {/* E-mail */}
+            <div className="sm:col-span-6">
+              <input
+                {...register("email")}
+                type="email"
+                id="email"
+                placeholder="votre@email.com"
+                className="block w-full rounded-md bg-gray-200 px-3 py-1.5 text-white text-center outline-1 -outline-offset-1 outline-yellow-400 placeholder:text-yellow-400 focus:outline-2 focus:-outline-offset-2 sm:text-sm/6 mt-4"
+              />
+              {errors.email && (
+                <p className="text-red-500">{errors.email.message}</p>
+              )}
+            </div>
 
-        {/* Mot de passe */}
-        <div className="relative mb-4">
-          {" "}
-          {/* Ajout de 'relative' pour positionner l'icône */}
-          <label
-            htmlFor="password"
-            className="block mb-2 text-sm font-bold text-amber-50"
-          >
-            Mot de passe
-          </label>
-          <input
-            {...register("password")}
-            // Bascule le type de l'input en fonction de l'état showPassword
-            type={showPassword ? "text" : "password"}
-            id="password"
-            name="password"
-            className="block w-full rounded-md bg-white px-3 py-1.5 text-amber-50 outline outline-1 -outline-offset-1 outline-yellow-400 placeholder-yellow-400 focus:outline-2 focus:-outline-offset-2 sm:text-sm/6"
-            placeholder="Votre mot de passe"
-          />
-          {/* Icône d'œil */}
-          <span
-            onClick={togglePasswordVisibility}
-            className="absolute inset-y-0 right-0 flex items-center pr-3 text-amber-50 cursor-pointer top-6"
-          >
-            {showPassword ? <FaEyeSlash /> : <FaEye />}{" "}
-            {/* Affiche l'icône appropriée */}
-          </span>
-          {errors.password && (
-            <p className="mt-1 text-xs text-red-600">
-              {errors.password.message}
-            </p>
-          )}
-        </div>
+            {/* Mot de passe */}
+            <div className="relative sm:col-span-6">
+              <input
+                {...register("password")}
+                type={showPassword ? "text" : "password"}
+                id="password"
+                placeholder="Mot de passe"
+                className="block w-full rounded-md bg-gray-200 px-3 py-1.5 text-white text-center outline-1 -outline-offset-1 outline-yellow-400 placeholder:text-yellow-400 focus:outline-2 focus:-outline-offset-2 sm:text-sm/6 mt-4"
+              />
+              <span
+                onClick={togglePasswordVisibility}
+                className="absolute inset-y-0 right-0 flex items-center pr-3 text-white cursor-pointer top-6"
+              >
+                {showPassword ? <FaEyeSlash /> : <FaEye />}
+              </span>
+              {errors.password && (
+                <p className="text-red-500">{errors.password.message}</p>
+              )}
+            </div>
 
-        {/* Confirmer le mot de passe */}
-        <div className="relative mb-4">
-          {" "}
-          {/* Ajout de 'relative' */}
-          <label
-            htmlFor="confirmPassword"
-            className="block mb-2 text-sm font-bold text-amber-50"
-          >
-            Confirmer le mot de passe
-          </label>
-          <input
-            {...register("confirmPassword")}
-            // Bascule le type de l'input en fonction de l'état showConfirmPassword
-            type={showConfirmPassword ? "text" : "password"}
-            id="confirmPassword"
-            name="confirmPassword"
-            className="block w-full rounded-md bg-white px-3 py-1.5 text-amber-50 outline outline-1 -outline-offset-1 outline-yellow-400 placeholder-yellow-400 focus:outline-2 focus:-outline-offset-2 sm:text-sm/6"
-            placeholder="Confirmez votre mot de passe"
-          />
-          {/* Icône d'œil pour la confirmation */}
-          <span
-            onClick={toggleConfirmPasswordVisibility}
-            className="absolute inset-y-0 right-0 flex items-center pr-3 text-amber-50 cursor-pointer top-6"
-          >
-            {showConfirmPassword ? <FaEyeSlash /> : <FaEye />}
-          </span>
-          {errors.confirmPassword && (
-            <p className="mt-1 text-xs text-red-600">
-              {errors.confirmPassword.message}
-            </p>
-          )}
+            {/* Confirmation mot de passe */}
+            <div className="relative sm:col-span-6">
+              <input
+                {...register("confirmPassword")}
+                type={showConfirmPassword ? "text" : "password"}
+                id="confirmPassword"
+                placeholder="Confirmez le mot de passe"
+                className="block w-full rounded-md bg-gray-200 px-3 py-1.5 text-white text-center outline-1 -outline-offset-1 outline-yellow-400 placeholder:text-yellow-400 focus:outline-2 focus:-outline-offset-2 sm:text-sm/6 mt-4"
+              />
+              <span
+                onClick={toggleConfirmPasswordVisibility}
+                className="absolute inset-y-0 right-0 flex items-center pr-3 text-white cursor-pointer top-6"
+              >
+                {showConfirmPassword ? <FaEyeSlash /> : <FaEye />}
+              </span>
+              {errors.confirmPassword && (
+                <p className="text-red-500">{errors.confirmPassword.message}</p>
+              )}
+            </div>
+          </div>
         </div>
 
         {/* RGPD */}

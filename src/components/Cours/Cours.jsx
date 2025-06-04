@@ -13,7 +13,7 @@ function Tableau() {
   const [hoveredCourse, setHoveredCourse] = useState(null);
 
   return (
-    <div className="container mx-auto p-4 bg-sky-900  min-h-screen">
+    <div className="container mx-auto p-4 bg-sky-900 rounded-2xl">
       <h1 className="text-3xl text-center mt-4 font-bold text-yellow-400">
         Nos formations
       </h1>

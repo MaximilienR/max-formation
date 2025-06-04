@@ -1,16 +1,20 @@
 import questions from "../data/quizz.json";
+
 export default function Quizz() {
   const question = questions[0]; // Tu pourras le rendre dynamique plus tard
   const { question: intitule, reponses } = question;
 
   return (
-    <div className="min-h-screen bg-sky-900  text-[#dfe4ea] grid place-items-center font-['Josefin_Sans']">
-      <div className="container mx-auto px-4">
-        <h1 className="text-5xl font-bold uppercase text-center mb-12">
-          Quizz <span className="text-[#ffa502]">JS</span>
+    <div className="flex justify-center px-12">
+      <div className="container mx-auto p-4 bg-sky-900 rounded-2xl font-['Josefin_Sans'] text-[#dfe4ea]">
+        <h1 className="text-3xl text-center mt-4 font-bold text-yellow-400">
+          Quizz
         </h1>
+        <p className="mt-1 text-sm text-amber-50 text-center">
+          Répondez à la question ci-dessous
+        </p>
 
-        <h2 className="text-2xl font-bold text-[#ffa502] text-center mb-8">
+        <h2 className="text-2xl font-bold text-[#ffa502] text-center mt-10 mb-8">
           {intitule}
         </h2>
 
@@ -25,7 +29,7 @@ export default function Quizz() {
           ))}
         </div>
 
-        <p id="progress" className="text-[#ffa502] text-lg mt-8">
+        <p id="progress" className="text-[#ffa502] text-lg mt-8 text-center">
           Question 1 sur {questions.length}
         </p>
       </div>
