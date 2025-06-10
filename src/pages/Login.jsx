@@ -2,7 +2,7 @@ import React from "react";
 import { NavLink } from "react-router-dom";
 export default function Login() {
   return (
-    <div className="container flex items-center justify-center p-4 mx-auto bg-sky-900 rounded-2xl">
+    <div className="container flex items-center justify-center p-4 mx-auto bg-sky-900 rounded-2xl mt-50 mb-50">
       <div className="w-full p-4 md:w-1/2 xl:w-1/3">
         <h1 className="text-3xl text-center mt-4 font-bold text-yellow-400">
           Connexion
