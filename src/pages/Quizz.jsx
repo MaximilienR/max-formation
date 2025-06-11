@@ -6,7 +6,7 @@ export default function Quizz() {
 
   return (
     <div className="flex justify-center px-12">
-      <div className="container mx-auto p-4 bg-sky-900 rounded-2xl font-['Josefin_Sans'] text-[#dfe4ea]">
+      <div className="container mx-auto p-4 bg-sky-900 rounded-2xl font-['Josefin_Sans'] text-[#dfe4ea] mt-30 mb-30">
         <h1 className="text-3xl text-center mt-4 font-bold text-yellow-400">
           Quizz
         </h1>
