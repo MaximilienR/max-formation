@@ -101,10 +101,10 @@ export default function Register() {
   }
 
   return (
-    <div className="flex justify-center px-12">
+    <div className="f">
       <form
         onSubmit={handleSubmit(submit)}
-        className="container mx-auto p-4 bg-sky-900 rounded-2xl"
+        className="container mx-auto p-12 bg-sky-900 rounded-2xl"
       >
         <div className="border-b border-gray-900/10 pb-12 space-y-12">
           <h1 className="text-3xl text-center mt-4 font-bold text-yellow-400">
