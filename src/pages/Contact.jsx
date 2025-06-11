@@ -88,7 +88,7 @@ export default function Contact() {
                 {...register("subject")}
               />
               {errors.subject && (
-                <p className="text-orange-400">{errors.subject.message}</p>
+                <p className="text-orange-300">{errors.subject.message}</p>
               )}
             </div>
             <div className="sm:col-span-3">
@@ -101,7 +101,7 @@ export default function Contact() {
                 {...register("email")}
               />
               {errors.email && (
-                <p className="text-orange-400">{errors.email.message}</p>
+                <p className="text-orange-300">{errors.email.message}</p>
               )}
             </div>
             <div className="sm:col-span-6">
@@ -114,7 +114,7 @@ export default function Contact() {
                   {...register("message")}
                 />
                 {errors.message && (
-                  <p className="text-orange-400">{errors.message.message}</p>
+                  <p className="text-orange-300">{errors.message.message}</p>
                 )}
               </div>
             </div>
@@ -136,7 +136,7 @@ export default function Contact() {
             confidentialité
           </label>
           {errors.rgpd && (
-            <p className="mt-1 text-xs text-orange-400">
+            <p className="mt-1 text-xs text-orange-300">
               {errors.rgpd.message}
             </p>
           )}

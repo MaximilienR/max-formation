@@ -55,7 +55,7 @@ export default function Login() {
               placeholder="veuillez saisir votre email"
             />
             {errors.email && (
-              <p className="text-orange-400">{errors.email.message}</p>
+              <p className="text-orange-200">{errors.email.message}</p>
             )}
           </div>
           <div className="mb-4">
@@ -73,7 +73,7 @@ export default function Login() {
               {...register("password")}
             />
             {errors.password && (
-              <p className="text-orange-400">{errors.password.message}</p>
+              <p className="text-orange-200">{errors.password.message}</p>
             )}
           </div>
           <label className="text-gray-100 ">

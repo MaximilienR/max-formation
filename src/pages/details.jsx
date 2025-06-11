@@ -93,8 +93,8 @@ export default function Detail() {
         {/* Bouton */}
         <div className="flex justify-center">
           <Link to="/contenu">
-            <button className="rounded-md  bg-[#8ccf64]   px-4 py-2 text-sm font-semibold text-white shadow hover: bg-[#0DFFD3] focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-600">
-              Acheter
+            <button className="rounded-md bg-yellow-400 px-4 py-2 text-sm font-semibold text-black shadow hover:bg-[#8ccf64] focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-600">
+              Envoyer
             </button>
           </Link>
         </div>

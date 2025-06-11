@@ -22,18 +22,18 @@ function Tableau() {
         {cours.map((cours) => (
           <div
             key={cours.id}
-            className="relative w-full sm:w-1/2 md:w-1/3 lg:w-1/4 p-4 flex flex-col items-center text-center"
+            className="relative w-full sm:w-1/2 md:w-1/3 lg:w-1/4 p-4 flex flex-col items-center text-center "
           >
             <div
-              className="relative w-full h-48 overflow-hidden rounded-lg shadow-lg cursor-pointer flex items-center justify-center p-4 bg-white text-amber-50 text-sm transition-all duration-300"
+              className="relative w-full h-48 overflow-hidden rounded-lg shadow-lg cursor-pointer flex items-center justify-center p-4 bg-amber-50 text-black text-sm transition-all duration-300"
               onMouseEnter={() => setHoveredCourse(cours.id)}
               onMouseLeave={() => setHoveredCourse(null)}
             >
               {hoveredCourse === cours.id ? (
-                <div className="relative z-10 flex flex-col items-center">
+                <div className="relative z-10 flex flex-col items-center bg-amber-50">
                   <p className="mb-2 overflow-auto">{cours.description}</p>
                   <div className="text-yellow-400 text-xl select-none flex items-center gap-2">
-                    <h2 className="text-base font-semibold text-amber-50 m-0">
+                    <h2 className="text-base font-semibold text-black m-0">
                       Niveau :
                     </h2>
                     <span>
@@ -42,7 +42,7 @@ function Tableau() {
                     </span>
                   </div>
                   <div className="text-yellow-400 text-xl select-none flex items-center gap-2">
-                    <h2 className="text-base font-semibold text-amber-50  m-0">
+                    <h2 className="text-base font-semibold text-black  m-0">
                       Prix :
                     </h2>
                     <span>GRATUIT</span>
@@ -60,8 +60,8 @@ function Tableau() {
               {cours.nom}
             </h2>
             <Link to="/detail">
-              <button className="mt-2 bg-yellow-400 text-black font-bold py-2 px-4 rounded">
-                En savoir plus
+              <button className="rounded-md bg-yellow-400 px-4 py-2 text-sm font-semibold text-black shadow hover:bg-[#8ccf64] focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-600">
+                En savoir +
               </button>
             </Link>
           </div>

@@ -86,7 +86,7 @@ function HistoireInternet({ isAuthenticated }) {
       </div>
 
       <Link to="/quizz">
-        <button className="bg-yellow-400 text-black font-bold py-2 px-4 rounded">
+        <button className="rounded-md bg-yellow-400 px-4 py-2 text-sm font-semibold text-black shadow hover:bg-[#8ccf64] focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-600">
           Suivant
         </button>
       </Link>

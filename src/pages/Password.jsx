@@ -50,7 +50,7 @@ export default function Password() {
               placeholder="veuillez saisir votre texte"
             />
             {errors.email && (
-              <p className="text-orange-400">{errors.email.message}</p>
+              <p className="text-orange-200">{errors.email.message}</p>
             )}
           </div>
 

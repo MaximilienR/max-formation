@@ -101,7 +101,7 @@ export default function Register() {
   }
 
   return (
-    <div className="f">
+    <>
       <form
         onSubmit={handleSubmit(submit)}
         className="container mx-auto p-12 bg-sky-900 rounded-2xl"
@@ -131,7 +131,7 @@ export default function Register() {
                 className="w-full p-2 bg-gray-100 border rounded"
               />
               {errors.username && (
-                <p className="text-orange-400">{errors.username.message}</p>
+                <p className="text-orange-200">{errors.username.message}</p>
               )}
             </div>
 
@@ -151,7 +151,7 @@ export default function Register() {
                 className="w-full p-2 bg-gray-100 border rounded"
               />
               {errors.email && (
-                <p className="text-orange-400">{errors.email.message}</p>
+                <p className="text-orange-200">{errors.email.message}</p>
               )}
             </div>
 
@@ -177,7 +177,7 @@ export default function Register() {
                 {showPassword ? <FaEyeSlash /> : <FaEye />}
               </span>
               {errors.password && (
-                <p className="text-orange-400">{errors.password.message}</p>
+                <p className="text-orange-200">{errors.password.message}</p>
               )}
             </div>
 
@@ -203,7 +203,7 @@ export default function Register() {
                 {showConfirmPassword ? <FaEyeSlash /> : <FaEye />}
               </span>
               {errors.confirmPassword && (
-                <p className="text-orange-400">
+                <p className="text-orange-200">
                   {errors.confirmPassword.message}
                 </p>
               )}
@@ -227,7 +227,7 @@ export default function Register() {
             confidentialité
           </label>
           {errors.rgpd && (
-            <p className="mt-1 text-xs text-orange-400">
+            <p className="mt-1 text-xs text-orange-200">
               {errors.rgpd.message}
             </p>
           )}
@@ -239,6 +239,6 @@ export default function Register() {
           </button>
         </div>
       </form>
-    </div>
+    </>
   );
 }
