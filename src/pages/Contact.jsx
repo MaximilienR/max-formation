@@ -84,11 +84,11 @@ export default function Contact() {
                 name="subject"
                 id="subject"
                 placeholder="Sujet"
-                className="block w-full rounded-md bg-gray-200 px-3 py-1.5 text-white text-center outline-1 -outline-offset-1 outline-yellow-400 placeholder:text-yellow-400 focus:outline-2 focus:-outline-offset-2  sm:text-sm/6 mt-4"
+                className="w-full p-2 bg-gray-100 border rounded"
                 {...register("subject")}
               />
               {errors.subject && (
-                <p className="text-red-500">{errors.subject.message}</p>
+                <p className="text-orange-400">{errors.subject.message}</p>
               )}
             </div>
             <div className="sm:col-span-3">
@@ -97,11 +97,11 @@ export default function Contact() {
                 name="email"
                 id="email"
                 placeholder="Email"
-                className="block w-full rounded-md bg-gray-200 px-3 py-1.5 text-white text-center outline-1 -outline-offset-1 outline-yellow-400 placeholder:text-yellow-400 focus:outline-2 focus:-outline-offset-2  sm:text-sm/6 mt-4"
+                className="w-full p-2 bg-gray-100 border rounded"
                 {...register("email")}
               />
               {errors.email && (
-                <p className="text-red-500">{errors.email.message}</p>
+                <p className="text-orange-400">{errors.email.message}</p>
               )}
             </div>
             <div className="sm:col-span-6">
@@ -110,11 +110,11 @@ export default function Contact() {
                   name="message"
                   id="message"
                   placeholder="Votre message"
-                  className="block w-full rounded-md bg-gray-200 px-3 py-1.5 text-white text-center outline-1 -outline-offset-1 outline-yellow-400 placeholder:text-yellow-400 focus:outline-2 focus:-outline-offset-2  sm:text-sm/6 mt-4 h-80"
+                  className="block w-full rounded-md bg-gray-200 px-3 py-1.5 text-white text-center outline-1 -outline-offset-1  focus:outline-2 focus:-outline-offset-2  sm:text-sm/6 mt-4 h-80"
                   {...register("message")}
                 />
                 {errors.message && (
-                  <p className="text-red-500">{errors.message.message}</p>
+                  <p className="text-orange-400">{errors.message.message}</p>
                 )}
               </div>
             </div>
@@ -136,12 +136,17 @@ export default function Contact() {
             confidentialité
           </label>
           {errors.rgpd && (
-            <p className="mt-1 text-xs text-red-600">{errors.rgpd.message}</p>
+            <p className="mt-1 text-xs text-orange-400">
+              {errors.rgpd.message}
+            </p>
           )}
         </div>
 
         <div className="flex justify-center mt-4">
-          <button className="rounded-md bg-[#A3DC7F] px-4 py-2 text-sm font-semibold text-white shadow hover:bg-[#8ccf64] focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-600">
+          <button
+            type="submit"
+            className="rounded-md bg-yellow-400  px-4 py-2 text-sm font-semibold text-white shadow hover:bg-[#8ccf64] focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-600"
+          >
             Envoyer
           </button>
         </div>

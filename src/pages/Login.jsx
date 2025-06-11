@@ -52,9 +52,10 @@ export default function Login() {
               id="email"
               className="w-full p-2 bg-gray-100 border rounded"
               {...register("email")}
+              placeholder="veuillez saisir votre email"
             />
             {errors.email && (
-              <p className="text-red-500">{errors.email.message}</p>
+              <p className="text-orange-400">{errors.email.message}</p>
             )}
           </div>
           <div className="mb-4">
@@ -68,25 +69,28 @@ export default function Login() {
               type="password"
               id="password"
               className="w-full p-2 bg-gray-100 border rounded"
+              placeholder="veuillez saisir votre mot de passe"
               {...register("password")}
             />
             {errors.password && (
-              <p className="text-red-500">{errors.password.message}</p>
+              <p className="text-orange-400">{errors.password.message}</p>
             )}
           </div>
-          <button
-            type="submit"
-            className="px-4 py-2 font-bold text-black bg-yellow-400 rounded"
-          >
-            Me connecter
-          </button>
+          <label className="text-gray-100 ">
+            Mot de passe oublié ?{" "}
+            <NavLink className="mr-4" to="/Password">
+              <span className="text-yellow-400">Ici</span>
+            </NavLink>
+          </label>
+          <div className="flex justify-center mt-4">
+            <button
+              type="submit"
+              className="rounded-md bg-yellow-400  px-4 py-2 text-sm font-semibold text-white shadow hover:bg-[#8ccf64] focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-600"
+            >
+              Me connecter
+            </button>
+          </div>
         </form>
-        <label className="text-gray-100 ">
-          Mot de passe oublié ?{" "}
-          <NavLink className="mr-4" to="/Password">
-            <span className="text-yellow-400">Ici</span>
-          </NavLink>
-        </label>
       </div>
     </div>
   );

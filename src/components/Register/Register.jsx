@@ -117,40 +117,58 @@ export default function Register() {
           <div className="mt-10 grid grid-cols-1 gap-x-6 gap-y-8 sm:grid-cols-6">
             {/* Pseudo */}
             <div className="sm:col-span-6">
+              <label
+                htmlFor="password"
+                className="block mb-2 text-sm font-bold text-amber-50"
+              >
+                Pseudo
+              </label>
               <input
                 {...register("username")}
                 type="text"
                 id="username"
                 placeholder="Votre pseudo"
-                className="block w-full rounded-md bg-gray-200 px-3 py-1.5 text-white text-center outline-1 -outline-offset-1 outline-yellow-400 placeholder:text-yellow-400 focus:outline-2 focus:-outline-offset-2 sm:text-sm/6 mt-4"
+                className="w-full p-2 bg-gray-100 border rounded"
               />
               {errors.username && (
-                <p className="text-red-500">{errors.username.message}</p>
+                <p className="text-orange-400">{errors.username.message}</p>
               )}
             </div>
 
             {/* E-mail */}
             <div className="sm:col-span-6">
+              <label
+                htmlFor="password"
+                className="block mb-2 text-sm font-bold text-amber-50"
+              >
+                Email
+              </label>
               <input
                 {...register("email")}
                 type="email"
                 id="email"
                 placeholder="votre@email.com"
-                className="block w-full rounded-md bg-gray-200 px-3 py-1.5 text-white text-center outline-1 -outline-offset-1 outline-yellow-400 placeholder:text-yellow-400 focus:outline-2 focus:-outline-offset-2 sm:text-sm/6 mt-4"
+                className="w-full p-2 bg-gray-100 border rounded"
               />
               {errors.email && (
-                <p className="text-red-500">{errors.email.message}</p>
+                <p className="text-orange-400">{errors.email.message}</p>
               )}
             </div>
 
             {/* Mot de passe */}
             <div className="relative sm:col-span-6">
+              <label
+                htmlFor="password"
+                className="block mb-2 text-sm font-bold text-amber-50"
+              >
+                Mot de passe
+              </label>
               <input
                 {...register("password")}
                 type={showPassword ? "text" : "password"}
                 id="password"
                 placeholder="Mot de passe"
-                className="block w-full rounded-md bg-gray-200 px-3 py-1.5 text-white text-center outline-1 -outline-offset-1 outline-yellow-400 placeholder:text-yellow-400 focus:outline-2 focus:-outline-offset-2 sm:text-sm/6 mt-4"
+                className="w-full p-2 bg-gray-100 border rounded"
               />
               <span
                 onClick={togglePasswordVisibility}
@@ -159,18 +177,24 @@ export default function Register() {
                 {showPassword ? <FaEyeSlash /> : <FaEye />}
               </span>
               {errors.password && (
-                <p className="text-red-500">{errors.password.message}</p>
+                <p className="text-orange-400">{errors.password.message}</p>
               )}
             </div>
 
             {/* Confirmation mot de passe */}
             <div className="relative sm:col-span-6">
+              <label
+                htmlFor="password"
+                className="block mb-2 text-sm font-bold text-amber-50"
+              >
+                ConfirmerMot de passe
+              </label>
               <input
                 {...register("confirmPassword")}
                 type={showConfirmPassword ? "text" : "password"}
                 id="confirmPassword"
                 placeholder="Confirmez le mot de passe"
-                className="block w-full rounded-md bg-gray-200 px-3 py-1.5 text-white text-center outline-1 -outline-offset-1 outline-yellow-400 placeholder:text-yellow-400 focus:outline-2 focus:-outline-offset-2 sm:text-sm/6 mt-4"
+                className="w-full p-2 bg-gray-100 border rounded"
               />
               <span
                 onClick={toggleConfirmPasswordVisibility}
@@ -179,7 +203,9 @@ export default function Register() {
                 {showConfirmPassword ? <FaEyeSlash /> : <FaEye />}
               </span>
               {errors.confirmPassword && (
-                <p className="text-red-500">{errors.confirmPassword.message}</p>
+                <p className="text-orange-400">
+                  {errors.confirmPassword.message}
+                </p>
               )}
             </div>
           </div>
@@ -201,12 +227,14 @@ export default function Register() {
             confidentialité
           </label>
           {errors.rgpd && (
-            <p className="mt-1 text-xs text-red-600">{errors.rgpd.message}</p>
+            <p className="mt-1 text-xs text-orange-400">
+              {errors.rgpd.message}
+            </p>
           )}
         </div>
 
         <div className="flex justify-center mt-4">
-          <button className="rounded-md bg-[#A3DC7F] px-4 py-2 text-sm font-semibold text-white shadow hover:bg-[#8ccf64] focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-600">
+          <button className="rounded-md bg-yellow-400  px-4 py-2 text-sm font-semibold text-white shadow hover:bg-[#8ccf64] focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-600">
             Envoyer
           </button>
         </div>
