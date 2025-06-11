@@ -1,13 +1,45 @@
 import React from "react";
 import { NavLink } from "react-router-dom";
+import * as yup from "yup";
+import toast from "react-hot-toast";
+
+import { yupResolver } from "@hookform/resolvers/yup";
+import { useForm } from "react-hook-form";
+
+// Schéma de validation
+const schema = yup.object({
+  email: yup
+    .string()
+    .email("Format email non valide")
+    .required("Le champ est obligatoire"),
+  password: yup.string().required("Le mot de passe est obligatoire"),
+});
+
 export default function Login() {
+  const {
+    register,
+    handleSubmit,
+    formState: { errors },
+  } = useForm({
+    resolver: yupResolver(schema),
+    mode: "onChange",
+    defaultValues: {
+      email: "",
+      password: "",
+    },
+  });
+
+  const submit = (data) => {
+    console.log("Connexion avec :", data);
+  };
+
   return (
     <div className="container flex items-center justify-center p-4 mx-auto bg-sky-900 rounded-2xl mt-50 mb-50">
       <div className="w-full p-4 md:w-1/2 xl:w-1/3">
         <h1 className="text-3xl text-center mt-4 font-bold text-yellow-400">
           Connexion
         </h1>
-        <form className="flex flex-col">
+        <form className="flex flex-col" onSubmit={handleSubmit(submit)}>
           <div className="mb-4">
             <label
               htmlFor="email"
@@ -19,7 +51,11 @@ export default function Login() {
               type="email"
               id="email"
               className="w-full p-2 bg-gray-100 border rounded"
+              {...register("email")}
             />
+            {errors.email && (
+              <p className="text-red-500">{errors.email.message}</p>
+            )}
           </div>
           <div className="mb-4">
             <label
@@ -32,7 +68,11 @@ export default function Login() {
               type="password"
               id="password"
               className="w-full p-2 bg-gray-100 border rounded"
+              {...register("password")}
             />
+            {errors.password && (
+              <p className="text-red-500">{errors.password.message}</p>
+            )}
           </div>
           <button
             type="submit"
@@ -41,12 +81,12 @@ export default function Login() {
             Me connecter
           </button>
         </form>
-        <label>
-          Mot passe oublié ?{" "}
+        <label className="text-gray-100 ">
+          Mot de passe oublié ?{" "}
           <NavLink className="mr-4" to="/Password">
-            <span>Ici</span>
+            <span className="text-yellow-400">Ici</span>
           </NavLink>
-        </label>{" "}
+        </label>
       </div>
     </div>
   );
