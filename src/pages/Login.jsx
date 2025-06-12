@@ -2,9 +2,10 @@ import React from "react";
 import { NavLink } from "react-router-dom";
 import * as yup from "yup";
 import toast from "react-hot-toast";
-
 import { yupResolver } from "@hookform/resolvers/yup";
 import { useForm } from "react-hook-form";
+import { login } from "../api/auth.api";
+import { BASE_URL } from "../utils/url"; // adapte le chemin si nécessaire
 
 // Schéma de validation
 const schema = yup.object({
@@ -29,8 +30,31 @@ export default function Login() {
     },
   });
 
-  const submit = (data) => {
+  const submit = async (data) => {
     console.log("Connexion avec :", data);
+    try {
+      console.log("Données envoyées :", data);
+      console.log("Payload JSON :", JSON.stringify(data));
+      const response = await fetch(`${BASE_URL}/user/login`, {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify(data),
+      });
+
+      const result = await response.json();
+      console.log("Réponse backend :", result);
+
+      if (!response.ok) {
+        throw new Error(result.msg || "Erreur de connexion");
+      }
+
+      toast.success("Connexion réussie !");
+    } catch (error) {
+      console.error("Erreur :", error.message);
+      toast.error(error.message);
+    }
   };
 
   return (

@@ -91,7 +91,6 @@ export default function Register() {
         successData.messageOk ||
           "Inscription réussie ! Veuillez vérifier vos e-mails."
       ); // Correction du messageOk pour la réponse backend
-      reset();
     } catch (error) {
       console.error("Erreur lors de l'appel API pour l'inscription :", error);
       toast.error(
