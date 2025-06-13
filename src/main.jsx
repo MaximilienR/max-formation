@@ -19,6 +19,7 @@ import Contenu from "./components/Contenu/Contenu";
 import Coaching from "./pages/Coatching";
 import Profil from "./pages/Profil";
 import Quizz from "./pages/Quizz";
+import Achat from "./pages/Achat";
 import Certificat from "./pages/Certificat";
 import "./index.css";
 
@@ -34,11 +35,7 @@ const router = createBrowserRouter([
 
       {
         path: "login",
-        element: (
-          <UserNotConnected>
-            <Login />
-          </UserNotConnected>
-        ),
+        element: <Login />,
       },
       { path: "cours", element: <Cours /> },
       { path: "password", element: <Password /> },
@@ -54,11 +51,11 @@ const router = createBrowserRouter([
       { path: "detail", element: <Detail /> },
       {
         path: "profil",
-        element: (
-          <UserConnected>
-            <Profil />
-          </UserConnected>
-        ),
+        element: <Profil />,
+      },
+      {
+        path: "achat",
+        element: <Achat />,
       },
       {
         path: "quizz",
@@ -70,11 +67,7 @@ const router = createBrowserRouter([
       },
       {
         path: "certificat",
-        element: (
-          <UserConnected>
-            <Certificat />
-          </UserConnected>
-        ),
+        element: <Certificat />,
       },
     ],
   },

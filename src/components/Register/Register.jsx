@@ -12,7 +12,7 @@ export default function Register() {
   // Schéma de validation avec Yup (inchangé, sauf si vous voulez ajouter d'autres règles)
   const schema = yup
     .object({
-      username: yup.string().required("Le pseudo est obligatoire"),
+      pseudo: yup.string().required("Le pseudo est obligatoire"),
       email: yup
         .string()
         .email("Format d'e-mail non valide")
@@ -49,7 +49,7 @@ export default function Register() {
     resolver: yupResolver(schema),
     mode: "onChange",
     defaultValues: {
-      username: "",
+      pseudo: "",
       email: "",
       password: "",
       confirmPassword: "",
@@ -123,14 +123,14 @@ export default function Register() {
                 Pseudo
               </label>
               <input
-                {...register("username")}
+                {...register("pseudo")} // ✅ Correspond à ton schéma Yup + backend
                 type="text"
-                id="username"
+                id="pseudo"
                 placeholder="Votre pseudo"
                 className="w-full p-2 bg-gray-100 border rounded"
               />
-              {errors.username && (
-                <p className="text-orange-200">{errors.username.message}</p>
+              {errors.pseudo && (
+                <p className="text-orange-200">{errors.pseudo.message}</p>
               )}
             </div>
 
