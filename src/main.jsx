@@ -1,6 +1,10 @@
 // main.jsx
+
+import { UserProvider } from "./components/Context/userContext";
 import React from "react";
 import ReactDOM from "react-dom/client";
+import UserNotConnected from "./components/secure/UserNotConnected";
+import UserConnected from "./components/secure/UserConnected";
 import { RouterProvider, createBrowserRouter } from "react-router-dom";
 import App from "./App";
 import Contact from "../src/pages/Contact";
@@ -27,21 +31,58 @@ const router = createBrowserRouter([
       { index: true, element: <Home /> },
       { path: "contact", element: <Contact /> },
       { path: "register", element: <Register /> },
-      { path: "login", element: <Login /> },
+
+      {
+        path: "login",
+        element: (
+          <UserNotConnected>
+            <Login />
+          </UserNotConnected>
+        ),
+      },
       { path: "cours", element: <Cours /> },
       { path: "password", element: <Password /> },
-      { path: "contenu", element: <Contenu /> },
+      {
+        path: "contenu",
+        element: (
+          <UserConnected>
+            <Contenu />
+          </UserConnected>
+        ),
+      },
       { path: "Coatch", element: <Coaching /> },
       { path: "detail", element: <Detail /> },
-      { path: "profil", element: <Profil /> },
-      { path: "quizz", element: <Quizz /> },
-      { path: "certificat", element: <Certificat /> },
+      {
+        path: "profil",
+        element: (
+          <UserConnected>
+            <Profil />
+          </UserConnected>
+        ),
+      },
+      {
+        path: "quizz",
+        element: (
+          <UserConnected>
+            <Quizz />
+          </UserConnected>
+        ),
+      },
+      {
+        path: "certificat",
+        element: (
+          <UserConnected>
+            <Certificat />
+          </UserConnected>
+        ),
+      },
     ],
   },
 ]);
-
 ReactDOM.createRoot(document.getElementById("root")).render(
   <React.StrictMode>
-    <RouterProvider router={router} />
+    <UserProvider>
+      <RouterProvider router={router} />
+    </UserProvider>
   </React.StrictMode>
 );

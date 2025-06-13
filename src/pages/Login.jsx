@@ -1,11 +1,11 @@
-import React from "react";
-import { NavLink } from "react-router-dom";
+import React, { useContext } from "react";
+import { NavLink, useNavigate, useLocation } from "react-router-dom";
 import * as yup from "yup";
 import toast from "react-hot-toast";
 import { yupResolver } from "@hookform/resolvers/yup";
 import { useForm } from "react-hook-form";
-import { login } from "../api/auth.api";
-import { BASE_URL } from "../utils/url"; // adapte le chemin si nécessaire
+import { UserContext } from "../components/Context/userContext";
+import { BASE_URL } from "../utils/url";
 
 // Schéma de validation
 const schema = yup.object({
@@ -30,11 +30,14 @@ export default function Login() {
     },
   });
 
+  const { setUser } = useContext(UserContext);
+  const navigate = useNavigate();
+  const location = useLocation();
+
+  const from = location.state?.from?.pathname || "/contenu";
+
   const submit = async (data) => {
-    console.log("Connexion avec :", data);
     try {
-      console.log("Données envoyées :", data);
-      console.log("Payload JSON :", JSON.stringify(data));
       const response = await fetch(`${BASE_URL}/user/login`, {
         method: "POST",
         headers: {
@@ -44,13 +47,20 @@ export default function Login() {
       });
 
       const result = await response.json();
-      console.log("Réponse backend :", result);
 
       if (!response.ok) {
         throw new Error(result.msg || "Erreur de connexion");
       }
 
+      // Stockage du token et de l'utilisateur
+      localStorage.setItem("token", result.token);
+      localStorage.setItem("user", JSON.stringify(result.user));
+
+      // Mise à jour du contexte utilisateur
+      setUser(result.user);
+
       toast.success("Connexion réussie !");
+      navigate(from);
     } catch (error) {
       console.error("Erreur :", error.message);
       toast.error(error.message);
@@ -100,7 +110,7 @@ export default function Login() {
               <p className="text-orange-200">{errors.password.message}</p>
             )}
           </div>
-          <label className="text-gray-100 ">
+          <label className="text-gray-100">
             Mot de passe oublié ?{" "}
             <NavLink className="mr-4" to="/Password">
               <span className="text-yellow-400">Ici</span>
@@ -109,7 +119,7 @@ export default function Login() {
           <div className="flex justify-center mt-4">
             <button
               type="submit"
-              className="rounded-md bg-yellow-400  px-4 py-2 text-sm font-semibold text-white shadow hover:bg-[#8ccf64] focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-600"
+              className="rounded-md bg-yellow-400 px-4 py-2 text-sm font-semibold text-white shadow hover:bg-[#8ccf64] focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-600"
             >
               Me connecter
             </button>

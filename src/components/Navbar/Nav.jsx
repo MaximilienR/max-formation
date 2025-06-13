@@ -1,19 +1,23 @@
-import { BrowserRouter, Routes, Route, Link } from "react-router-dom";
-import { useState } from "react";
-import { FaUserCircle } from "react-icons/fa"; // Icons from react-icons
+import { useEffect, useState } from "react";
+import { Link, useNavigate } from "react-router-dom";
+import { FaUserCircle } from "react-icons/fa";
 
 const Header = () => {
   const [userLogin, setUserLogin] = useState(false);
   const [menuOpen, setMenuOpen] = useState(false);
+  const navigate = useNavigate();
 
-  const handleLogin = () => {
-    setUserLogin(true);
-    setMenuOpen(false);
-  };
+  // Vérifie si un token est présent au montage
+  useEffect(() => {
+    const token = localStorage.getItem("token");
+    setUserLogin(!!token); // true si token existe
+  }, []);
 
   const handleLogout = () => {
+    localStorage.removeItem("token");
     setUserLogin(false);
     setMenuOpen(false);
+    navigate("/login");
   };
 
   const toggleMenu = () => {
@@ -24,7 +28,6 @@ const Header = () => {
     <nav className="py-4 mb-3 text-white bg-yellow-400 rounded-b-2xl relative">
       <div className="container mx-auto px-4">
         <div className="flex justify-center items-center">
-          {/* Liens centrés */}
           <ul className="flex space-x-6">
             <li>
               <Link to="/" className="text-white hover:text-gray-300">
@@ -45,7 +48,7 @@ const Header = () => {
         </div>
       </div>
 
-      {/* Icône utilisateur absolument positionnée à droite */}
+      {/* Icône utilisateur */}
       <div className="absolute top-1/2 right-4 -translate-y-1/2">
         <button
           onClick={toggleMenu}
