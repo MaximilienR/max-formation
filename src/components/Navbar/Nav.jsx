@@ -1,22 +1,18 @@
-import { useEffect, useState } from "react";
+import { useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import { FaUserCircle } from "react-icons/fa";
+import { UserAuth } from "../Context/userContext";
 
 const Header = () => {
-  const [userLogin, setUserLogin] = useState(false);
+  const { user, setUser } = UserAuth(); // ← utilise le contexte
+  const isLoggedIn = !!user;
   const [menuOpen, setMenuOpen] = useState(false);
   const navigate = useNavigate();
-
-  // Vérifie si un token est présent au montage
-  useEffect(() => {
-    const token = localStorage.getItem("token");
-    setUserLogin(!!token); // true si token existe
-  }, []);
 
   const handleLogout = () => {
     localStorage.removeItem("token");
     localStorage.removeItem("user");
-    setUserLogin(false);
+    setUser(null); // ← mets à jour le contexte
     setMenuOpen(false);
     navigate("/login");
   };
@@ -31,37 +27,27 @@ const Header = () => {
         <div className="flex items-center justify-center">
           <ul className="flex space-x-6">
             <li>
-              <Link to="/" className="text-white hover:text-gray-300">
-                Accueil
-              </Link>
+              <Link to="/" className="text-white hover:text-gray-300">Accueil</Link>
             </li>
             <li>
-              <Link to="/cours" className="text-white hover:text-gray-300">
-                Formation
-              </Link>
+              <Link to="/cours" className="text-white hover:text-gray-300">Formation</Link>
             </li>
             <li>
-              <Link to="/contact" className="text-white hover:text-gray-300">
-                Contact
-              </Link>
+              <Link to="/contact" className="text-white hover:text-gray-300">Contact</Link>
             </li>
           </ul>
         </div>
       </div>
 
-      {/* Icône utilisateur */}
       <div className="absolute -translate-y-1/2 top-1/2 right-4">
-        <button
-          onClick={toggleMenu}
-          className="text-3xl text-white focus:outline-none"
-        >
+        <button onClick={toggleMenu} className="text-3xl text-white focus:outline-none">
           <FaUserCircle />
         </button>
 
         {menuOpen && (
           <div className="absolute right-0 z-50 w-40 mt-4 text-gray-800 bg-white rounded-md shadow-lg">
             <ul>
-              {userLogin ? (
+              {isLoggedIn ? (
                 <li>
                   <button
                     onClick={handleLogout}
