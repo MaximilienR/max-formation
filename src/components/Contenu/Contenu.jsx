@@ -1,107 +1,131 @@
-import React, { useState } from "react";
+import React from "react";
 import { Link } from "react-router-dom";
-function HistoireInternet({ isAuthenticated }) {
+
+function CoursHTMLCSS() {
   return (
-    <div className="container mx-auto p-4 bg-sky-900 rounded-2xl font-['Josefin_Sans'] text-[#dfe4ea]">
+    <div className="container mx-auto p-6 bg-sky-900 rounded-2xl font-['Josefin_Sans'] text-[#dfe4ea]">
       <h1 className="text-3xl text-center mt-4 font-bold">
-        L'Histoire d'Internet
+        Cours Complet sur HTML & CSS
       </h1>
-      <p className="mt-1 text-sm text-amber-50 text-center">
-        Internet, tel que nous le connaissons aujourd'hui, est le fruit d'une
-        évolution complexe et fascinante. Voici un aperçu de son histoire :
+
+      <p className="mt-4 text-lg text-amber-50 text-center max-w-3xl mx-auto">
+        Ce cours vous apprendra les bases du HTML et du CSS, les langages
+        essentiels pour créer et styliser des pages web.
       </p>
 
-      <div className="flex-col justify-center mt-4">
-        <div className="w-full md:w-1/2 xl:w-1/3 p-4">
-          <h2 className="text-2xl  text-amber-50  font-bold">
-            Les Origines (Années 1960)
-          </h2>
-          <p className="text-lg  text-amber-50 mt-2">
-            Tout a commencé avec ARPANET, un projet de l'Agence pour les projets
-            de recherche avancée de la Défense (DARPA) aux États-Unis.
-            L'objectif était de créer un réseau informatique décentralisé
-            capable de résister à une attaque nucléaire.
-          </p>
-          <ul className="list-disc list-inside text-lg  text-amber-50  mt-2">
-            <li>
-              1969 : Première connexion ARPANET entre l'Université de Californie
-              à Los Angeles (UCLA) et l'Université de Stanford.
-            </li>
-            <li>Développement du protocole TCP/IP, la base d'Internet.</li>
-          </ul>
-        </div>
+      <section className="mt-8">
+        <h2 className="text-2xl font-bold text-amber-50 mb-3">Introduction au HTML</h2>
+        <p className="text-lg text-amber-50">
+          Le HTML (HyperText Markup Language) est un langage de balisage utilisé pour structurer le contenu sur le web.
+          Il se compose d'éléments appelés "tags" qui définissent des titres, paragraphes, images, liens, etc.
+        </p>
+        <ul className="list-disc list-inside mt-2 text-amber-50 text-lg">
+          <li>Les balises courantes : &lt;h1&gt;, &lt;p&gt;, &lt;a&gt;, &lt;img&gt;, &lt;div&gt;.</li>
+          <li>Les attributs HTML : href, src, alt, id, class.</li>
+          <li>Structure de base d'une page HTML.</li>
+        </ul>
 
-        <div className="w-full md:w-1/2 xl:w-1/3 p-4">
-          <h2 className="text-2xl  text-amber-50  font-bold">
-            L'Expansion (Années 1970-1980)
-          </h2>
-          <p className="text-lg  text-amber-50  mt-2">
-            Internet s'étend au-delà des institutions gouvernementales et
-            universitaires.
-          </p>
-          <ul className="list-disc list-inside text-lg text-amber-50  mt-2">
-            <li>1971 : Envoi du premier e-mail par Ray Tomlinson.</li>
-            <li>
-              1983 : Adoption du protocole TCP/IP, marquant la naissance
-              officielle d'Internet.
-            </li>
-            <li>
-              1989 : Tim Berners-Lee invente le World Wide Web (WWW) au CERN.
-            </li>
-          </ul>
+        {/* Tableau des balises HTML */}
+        <div className="overflow-x-auto mt-6">
+          <table className="min-w-full table-auto border-collapse border border-gray-600 text-amber-50">
+            <thead>
+              <tr className="bg-yellow-400 text-black">
+                <th className="border border-gray-400 px-4 py-2 text-left">Balise</th>
+                <th className="border border-gray-400 px-4 py-2 text-left">Description</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr className="even:bg-sky-800">
+                <td className="border border-gray-400 px-4 py-2">&lt;h1&gt; à &lt;h6&gt;</td>
+                <td className="border border-gray-400 px-4 py-2">Titres de différents niveaux, de 1 (plus important) à 6 (moins important)</td>
+              </tr>
+              <tr className="even:bg-sky-800">
+                <td className="border border-gray-400 px-4 py-2">&lt;p&gt;</td>
+                <td className="border border-gray-400 px-4 py-2">Paragraphe de texte</td>
+              </tr>
+              <tr className="even:bg-sky-800">
+                <td className="border border-gray-400 px-4 py-2">&lt;a&gt;</td>
+                <td className="border border-gray-400 px-4 py-2">Lien hypertexte</td>
+              </tr>
+              <tr className="even:bg-sky-800">
+                <td className="border border-gray-400 px-4 py-2">&lt;img&gt;</td>
+                <td className="border border-gray-400 px-4 py-2">Image (avec attributs src et alt)</td>
+              </tr>
+              <tr className="even:bg-sky-800">
+                <td className="border border-gray-400 px-4 py-2">&lt;div&gt;</td>
+                <td className="border border-gray-400 px-4 py-2">Conteneur générique pour structurer la page</td>
+              </tr>
+              <tr className="even:bg-sky-800">
+                <td className="border border-gray-400 px-4 py-2">&lt;span&gt;</td>
+                <td className="border border-gray-400 px-4 py-2">Conteneur en ligne pour styliser une partie du texte</td>
+              </tr>
+              <tr className="even:bg-sky-800">
+                <td className="border border-gray-400 px-4 py-2">&lt;ul&gt;, &lt;ol&gt;</td>
+                <td className="border border-gray-400 px-4 py-2">Listes non ordonnée (ul) et ordonnée (ol)</td>
+              </tr>
+              <tr className="even:bg-sky-800">
+                <td className="border border-gray-400 px-4 py-2">&lt;li&gt;</td>
+                <td className="border border-gray-400 px-4 py-2">Élément de liste</td>
+              </tr>
+              <tr className="even:bg-sky-800">
+                <td className="border border-gray-400 px-4 py-2">&lt;form&gt;</td>
+                <td className="border border-gray-400 px-4 py-2">Formulaire pour collecter des données utilisateur</td>
+              </tr>
+              <tr className="even:bg-sky-800">
+                <td className="border border-gray-400 px-4 py-2">&lt;input&gt;</td>
+                <td className="border border-gray-400 px-4 py-2">Champ de saisie dans un formulaire</td>
+              </tr>
+              <tr className="even:bg-sky-800">
+                <td className="border border-gray-400 px-4 py-2">&lt;button&gt;</td>
+                <td className="border border-gray-400 px-4 py-2">Bouton cliquable</td>
+              </tr>
+              <tr className="even:bg-sky-800">
+                <td className="border border-gray-400 px-4 py-2">&lt;table&gt;</td>
+                <td className="border border-gray-400 px-4 py-2">Tableau de données</td>
+              </tr>
+              <tr className="even:bg-sky-800">
+                <td className="border border-gray-400 px-4 py-2">&lt;tr&gt;</td>
+                <td className="border border-gray-400 px-4 py-2">Ligne d’un tableau</td>
+              </tr>
+              <tr className="even:bg-sky-800">
+                <td className="border border-gray-400 px-4 py-2">&lt;td&gt;, &lt;th&gt;</td>
+                <td className="border border-gray-400 px-4 py-2">Cellule de données (td) et cellule d’en-tête (th)</td>
+              </tr>
+            </tbody>
+          </table>
         </div>
+      </section>
 
-        <div className="w-full md:w-1/2 xl:w-1/3 p-4">
-          <h2 className="text-2xl  text-amber-50  font-bold">
-            Le Web (Années 1990)
-          </h2>
-          <p className="text-lg  text-amber-50  mt-2">
-            Le World Wide Web révolutionne Internet, le rendant accessible au
-            grand public.
-          </p>
-          <ul className="list-disc list-inside text-lg  text-amber-50  mt-2">
-            <li>
-              1991 : Lancement du WWW, permettant la navigation avec des liens
-              hypertextes.
-            </li>
-            <li>
-              1993 : Création de Mosaic, le premier navigateur web graphique.
-            </li>
-            <li>Essor des moteurs de recherche comme Yahoo! et Google.</li>
-          </ul>
-        </div>
+      <section className="mt-8">
+        <h2 className="text-2xl font-bold text-amber-50 mb-3">Introduction au CSS</h2>
+        <p className="text-lg text-amber-50">
+          Le CSS (Cascading Style Sheets) est utilisé pour styliser et mettre en forme les pages HTML.
+          Il permet de modifier couleurs, polices, espacements, disposition et bien plus.
+        </p>
+        <ul className="list-disc list-inside mt-2 text-amber-50 text-lg">
+          <li>Sélecteurs CSS : par type, classe, id, attributs.</li>
+          <li>Propriétés de base : color, background, font-size, margin, padding.</li>
+          <li>Modèle de boîte CSS (box model).</li>
+          <li>Flexbox et Grid pour la mise en page.</li>
+        </ul>
+      </section>
+
+      <section className="mt-8 text-center">
+       <video width="560" height="315" controls className="mx-auto rounded-lg shadow-lg">
+  <source src="https://drive.google.com/uc?export=download&id=1AF8Zs7wkOkkII7UGXzjnFC1H3butZJkR" type="video/mp4" />
+  Votre navigateur ne supporte pas la lecture de vidéos HTML5.
+</video>
+      </section>
+
+      <div className="mt-8 text-center">
+        <Link to="/quizz">
+          <button className="rounded-md bg-yellow-400 px-6 py-3 text-sm font-semibold text-black shadow hover:bg-[#8ccf64] focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-600">
+            Passer au Quizz
+          </button>
+        </Link>
       </div>
-
-      <div className="mt-6 text-center">
-        {isAuthenticated ? (
-          <video width="560" height="315" controls>
-            <source src="src/Assets/video.mp4" type="video/mp4" />
-            Votre navigateur ne supporte pas la lecture de vidéos HTML5.
-          </video>
-        ) : (
-          <p className="text-red-500 text-lg font-semibold">
-            🔒 Veuillez vous connecter pour voir la vidéo.
-          </p>
-        )}
-      </div>
-
-      <Link to="/quizz">
-        <button className="rounded-md bg-yellow-400 px-4 py-2 text-sm font-semibold text-black shadow hover:bg-[#8ccf64] focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-600">
-          Suivant
-        </button>
-      </Link>
     </div>
   );
 }
 
-function App() {
-  const [isAuthenticated, setIsAuthenticated] = useState(true);
-
-  return (
-    <div>
-      <HistoireInternet isAuthenticated={isAuthenticated} />
-    </div>
-  );
-}
-
-export default App;
+export default CoursHTMLCSS;
