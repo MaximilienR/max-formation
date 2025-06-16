@@ -21,6 +21,31 @@ export default function Info() {
   const toggleConfirmPasswordVisibility = () => {
     setShowConfirmPassword((prev) => !prev);
   };
+const handleDeleteAccount = async () => {
+  if (!window.confirm("Es-tu sûr de vouloir supprimer ton compte ? Cette action est irréversible.")) {
+    return;
+  }
+  try {
+    const token = localStorage.getItem("token");
+    const response = await fetch("/user/delete", {
+      method: "POST", // ou DELETE si tu changes backend
+      headers: {
+        "Content-Type": "application/json",
+        Authorization: `Bearer ${token}`,
+      },
+     });
+    const data = await response.json();
+    if (response.ok) {
+      localStorage.removeItem("user");
+      localStorage.removeItem("token");
+      window.location.href = "/login";
+    } else {
+      alert(data.msg || "Erreur lors de la suppression.");
+    }
+  } catch (error) {
+    alert("Erreur serveur, réessaye plus tard.");
+  }
+};
 
   return (
     <div>
@@ -116,9 +141,10 @@ export default function Info() {
   </button>
 
   <button
-    type="submit"
+    type="button"
     className="px-4 py-2 text-sm font-semibold text-black bg-red-400 rounded-md shadow hover:bg-red-800 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-600"
-  >
+    onClick={handleDeleteAccount}
+    >
     Supprimer le compte
   </button>
 </div>
