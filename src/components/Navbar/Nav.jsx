@@ -48,14 +48,25 @@ const Header = () => {
           <div className="absolute right-0 z-50 w-40 mt-4 text-gray-800 bg-white rounded-md shadow-lg">
             <ul>
               {isLoggedIn ? (
-                <li>
-                  <button
-                    onClick={handleLogout}
-                    className="block w-full px-4 py-2 text-left hover:bg-yellow-400 hover:text-white"
-                  >
-                    Déconnexion
-                  </button>
-                </li>
+                <>
+                  <li>
+                    <button
+                      onClick={handleLogout}
+                      className="block w-full px-4 py-2 text-left hover:bg-yellow-400 hover:text-white"
+                    >
+                      Déconnexion
+                    </button>
+                  </li>
+
+                  <li>
+                    <button
+                      onClick={() => navigate("/profil")}
+                      className="block w-full px-4 py-2 text-left hover:bg-yellow-400 hover:text-white"
+                    >
+                      Profil
+                    </button>
+                  </li>
+                </>
               ) : (
                 <>
                   <li>
