@@ -1,27 +1,51 @@
 import React from "react";
-import { Link } from "react-router-dom";
 import { useForm } from "react-hook-form";
+import { toast } from "react-hot-toast";  
+import { shop } from "../api/shop.api";
+import { useNavigate } from "react-router-dom";
 
 export default function Detail() {
   const niveau = 4;
   const totalStars = 5;
+  const navigate = useNavigate();
 
   const {
     register,
+    handleSubmit,
     formState: { errors },
   } = useForm();
+
+  // Fonction appelée au clic sur "acheter"
+  async function handleBuy(data) {
+    try {
+      const response = await shop(data); 
+
+      if (response && response.success) {
+        toast.success("Achat effectué avec succès !");
+        // Redirection vers la page contenu après succès
+        navigate("/contenu");
+      } else if (response && response.error) {
+        toast.error(response.error);
+      } else {
+        toast.error("Erreur inconnue lors de l'achat.");
+      }
+    } catch (error) {
+      console.error("Erreur lors de l'achat:", error);
+      toast.error("Échec de l'achat. Veuillez réessayer.");
+    }
+  }
 
   return (
     <div className="flex justify-center px-12">
       <div className="container mx-auto p-4 bg-sky-900 rounded-2xl font-['Josefin_Sans'] text-[#dfe4ea]">
-        <h1 className="text-3xl text-center mt-4 font-bold text-yellow-400">
+        <h1 className="mt-4 text-3xl font-bold text-center text-yellow-400">
           À propos du cours
         </h1>
 
         {/* Niveau */}
-        <section className="mb-8 mt-6">
-          <h2 className="text-xl font-semibold text-white mb-2">Niveau :</h2>
-          <div className="text-yellow-400 text-2xl">
+        <section className="mt-6 mb-8">
+          <h2 className="mb-2 text-xl font-semibold text-white">Niveau :</h2>
+          <div className="text-2xl text-yellow-400">
             {"★".repeat(niveau)}
             {"☆".repeat(totalStars - niveau)}
           </div>
@@ -29,33 +53,32 @@ export default function Detail() {
 
         {/* Prix */}
         <section className="mb-8">
-          <h2 className="text-xl font-semibold text-white mb-2">Prix :</h2>
-          <div className="text-green-400 text-2xl font-bold">GRATUIT</div>
+          <h2 className="mb-2 text-xl font-semibold text-white">Prix :</h2>
+          <div className="text-2xl font-bold text-green-400">GRATUIT</div>
         </section>
 
         {/* Langage */}
         <section className="mb-8">
-          <h2 className="text-xl font-semibold text-white mb-2">
+          <h2 className="mb-2 text-xl font-semibold text-white">
             Langage utilisé :
           </h2>
-          <p className="text-amber-100 leading-relaxed">
+          <p className="leading-relaxed text-amber-100">
             Ce cours utilise <strong>JavaScript</strong> et{" "}
-            <strong>React</strong> pour vous enseigner le développement
-            front-end.
+            <strong>React</strong> pour vous enseigner le développement front-end.
           </p>
         </section>
 
         {/* Apprentissage */}
         <section className="mb-8">
-          <h2 className="text-xl font-semibold text-white mb-2">
+          <h2 className="mb-2 text-xl font-semibold text-white">
             Ce que vous allez apprendre :
           </h2>
-          <ul className="list-disc list-inside text-amber-100 leading-relaxed space-y-2">
+          <ul className="space-y-2 leading-relaxed list-disc list-inside text-amber-100">
             <li>Les bases du développement web avec HTML, CSS, JavaScript.</li>
             <li>Créer des composants réutilisables avec React.</li>
             <li>
               Bonnes pratiques pour améliorer l'employabilité :
-              <ul className="list-disc list-inside ml-6 mt-2 space-y-1">
+              <ul className="mt-2 ml-6 space-y-1 list-disc list-inside">
                 <li>Rédiger un CV efficace et personnalisé.</li>
                 <li>Écrire une lettre de motivation convaincante.</li>
                 <li>Préparer des entretiens techniques.</li>
@@ -69,36 +92,39 @@ export default function Detail() {
         </section>
 
         {/* RGPD */}
-        <div className="mb-6">
-          <label
-            htmlFor="rgpd"
-            className="block mb-2 text-sm font-bold text-amber-50 cursor-pointer"
-          >
-            <input
-              type="checkbox"
-              id="rgpd"
-              {...register("rgpd", {
-                required: "Vous devez accepter les conditions.",
-              })}
-              className="mr-2 leading-tight text-amber-50"
-            />
-            J'accepte les conditions d'utilisation et la politique de
-            confidentialité
-          </label>
-          {errors.rgpd && (
-            <p className="mt-1 text-xs text-red-600">{errors.rgpd.message}</p>
-          )}
-        </div>
+        <form onSubmit={handleSubmit(handleBuy)}>
+          <div className="mb-6">
+            <label
+              htmlFor="rgpd"
+              className="block mb-2 text-sm font-bold cursor-pointer text-amber-50"
+            >
+              <input
+                type="checkbox"
+                id="rgpd"
+                {...register("rgpd", {
+                  required: "Vous devez accepter les conditions.",
+                })}
+                className="mr-2 leading-tight text-amber-50"
+              />
+              J'accepte les conditions d'utilisation et la politique de confidentialité
+            </label>
+            {errors.rgpd && (
+              <p className="mt-1 text-xs text-red-600">{errors.rgpd.message}</p>
+            )}
+          </div>
 
-        {/* Bouton */}
-        <div className="flex justify-center">
-          <Link to="/contenu">
-            <button className="rounded-md bg-yellow-400 px-4 py-2 text-sm font-semibold text-black shadow hover:bg-[#8ccf64] focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-600">
-              Envoyer
+          {/* Bouton */}
+          <div className="flex justify-center">
+            <button
+              type="submit"
+              className="rounded-md bg-yellow-400 px-4 py-2 text-sm font-semibold text-black shadow hover:bg-[#8ccf64] focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-600"
+            >
+              Acheter
             </button>
-          </Link>
-        </div>
+          </div>
+        </form>
       </div>
     </div>
   );
 }
+

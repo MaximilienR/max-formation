@@ -17,7 +17,25 @@ export async function signup(values) {
     throw error;
   }
 }
+export async function deleteAccount() {
+  const token = localStorage.getItem("token");
 
+  try {
+    const response = await fetch(`${BASE_URL}/user/delete`, {
+      method: "DELETE",
+      headers: {
+        "Content-Type": "application/json",
+        Authorization: `Bearer ${token}`, // 🔐 très important
+      },
+    });
+
+    const data = await response.json();
+    return { ok: response.ok, data };
+  } catch (error) {
+    console.error("Erreur suppression :", error.message);
+    throw error;
+  }
+}
 export async function login(values) {
   console.log(" voila les valeur " + values);
 

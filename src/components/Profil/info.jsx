@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react";
 import { FaEye, FaEyeSlash } from "react-icons/fa";
-
+import { deleteAccount} from "../../api/auth.api";
 export default function Info() {
   const [email, setEmail] = useState("");
   const [pseudo, setPseudo] = useState("");
@@ -20,22 +20,12 @@ export default function Info() {
 
   const toggleConfirmPasswordVisibility = () => {
     setShowConfirmPassword((prev) => !prev);
-  };
-const handleDeleteAccount = async () => {
-  if (!window.confirm("Es-tu sûr de vouloir supprimer ton compte ? Cette action est irréversible.")) {
-    return;
-  }
+  };const handleDeleteAccount = async () => {
+  if (!window.confirm("Es-tu sûr de vouloir supprimer ton compte ?")) return;
+
   try {
-    const token = localStorage.getItem("token");
-    const response = await fetch("/user/delete", {
-      method: "POST", // ou DELETE si tu changes backend
-      headers: {
-        "Content-Type": "application/json",
-        Authorization: `Bearer ${token}`,
-      },
-     });
-    const data = await response.json();
-    if (response.ok) {
+    const { ok, data } = await deleteAccount();
+    if (ok) {
       localStorage.removeItem("user");
       localStorage.removeItem("token");
       window.location.href = "/login";

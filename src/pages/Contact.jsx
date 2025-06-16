@@ -67,17 +67,17 @@ export default function Contact() {
     <div className="flex justify-center px-12">
       <form
         onSubmit={handleSubmit(submit)}
-        className="container mx-auto p-12 bg-sky-900 rounded-2xl"
+        className="container p-12 mx-auto bg-sky-900 rounded-2xl"
       >
-        <div className="border-b border-gray-900/10 pb-12 space-y-12">
-          <h1 className="text-3xl text-center mt-4 font-bold text-yellow-400">
+        <div className="pb-12 space-y-12 border-b border-gray-900/10">
+          <h1 className="mt-4 text-3xl font-bold text-center text-yellow-400">
             Nous contacter
           </h1>
           <p className="mt-1 text-sm/6 text-amber-50">
             Une question ? veuillez remplir le formulaire ci dessous
           </p>
 
-          <div className="mt-10 grid grid-cols-1 gap-x-6 gap-y-8 sm:grid-cols-6">
+          <div className="grid grid-cols-1 mt-10 gap-x-6 gap-y-8 sm:grid-cols-6">
             <div className="sm:col-span-3">
               <input
                 type="text"
@@ -124,7 +124,7 @@ export default function Contact() {
         <div className="mb-6">
           <label
             htmlFor="rgpd"
-            className="block mb-2 text-sm font-bold text-amber-50 cursor-pointer"
+            className="block mb-2 text-sm font-bold cursor-pointer text-amber-50"
           >
             <input
               type="checkbox"
