@@ -15,6 +15,7 @@ const Header = () => {
 
   const handleLogout = () => {
     localStorage.removeItem("token");
+    localStorage.removeItem("user");
     setUserLogin(false);
     setMenuOpen(false);
     navigate("/login");
@@ -25,9 +26,9 @@ const Header = () => {
   };
 
   return (
-    <nav className="py-4 mb-3 text-white bg-yellow-400 rounded-b-2xl relative">
-      <div className="container mx-auto px-4">
-        <div className="flex justify-center items-center">
+    <nav className="relative py-4 mb-3 text-white bg-yellow-400 rounded-b-2xl">
+      <div className="container px-4 mx-auto">
+        <div className="flex items-center justify-center">
           <ul className="flex space-x-6">
             <li>
               <Link to="/" className="text-white hover:text-gray-300">
@@ -49,22 +50,22 @@ const Header = () => {
       </div>
 
       {/* Icône utilisateur */}
-      <div className="absolute top-1/2 right-4 -translate-y-1/2">
+      <div className="absolute -translate-y-1/2 top-1/2 right-4">
         <button
           onClick={toggleMenu}
-          className="text-white text-3xl focus:outline-none"
+          className="text-3xl text-white focus:outline-none"
         >
           <FaUserCircle />
         </button>
 
         {menuOpen && (
-          <div className="absolute right-0 mt-4 w-40 bg-white rounded-md shadow-lg text-gray-800 z-50">
+          <div className="absolute right-0 z-50 w-40 mt-4 text-gray-800 bg-white rounded-md shadow-lg">
             <ul>
               {userLogin ? (
                 <li>
                   <button
                     onClick={handleLogout}
-                    className="block w-full text-left px-4 py-2 hover:bg-yellow-400 hover:text-white"
+                    className="block w-full px-4 py-2 text-left hover:bg-yellow-400 hover:text-white"
                   >
                     Déconnexion
                   </button>

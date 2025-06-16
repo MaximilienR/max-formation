@@ -24,15 +24,15 @@ export default function Info() {
 
   return (
     <div>
-      <main className="bg-sky-900 w-full p-4">
-        <h1 className="text-2xl font-bold mb-4 text-amber-50 text-center">
+      <main className="w-full p-4 bg-sky-900">
+        <h1 className="mb-4 text-2xl font-bold text-center text-amber-50">
           Profil
         </h1>
         <form>
           <div>
             <label
               htmlFor="pseudo"
-              className="block text-amber-50 text-sm font-bold mb-2"
+              className="block mb-2 text-sm font-bold text-amber-50"
             >
               Pseudo:
             </label>
@@ -49,7 +49,7 @@ export default function Info() {
           <div>
             <label
               htmlFor="email"
-              className="block text-amber-50 text-sm font-bold mb-2"
+              className="block mb-2 text-sm font-bold text-amber-50"
             >
               Email:
             </label>
@@ -66,7 +66,7 @@ export default function Info() {
           <div>
             <label
               htmlFor="motDePasse"
-              className="block text-amber-50 text-sm font-bold mb-2"
+              className="block mb-2 text-sm font-bold text-amber-50"
             >
               Mot de passe:
             </label>
@@ -102,18 +102,26 @@ export default function Info() {
               {showConfirmPassword ? <FaEyeSlash /> : <FaEye />}
             </span>
             {errors.confirmPassword && (
-              <p className="text-orange-200 text-sm mt-1">
+              <p className="mt-1 text-sm text-orange-200">
                 {errors.confirmPassword}
               </p>
             )}
           </div>
+<div className="flex justify-center gap-4 mt-6">
+  <button
+    type="submit"
+    className="rounded-md bg-yellow-400 px-4 py-2 text-sm font-semibold text-black shadow hover:bg-[#8ccf64] focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-600"
+  >
+    Enregistrer les modifications
+  </button>
 
-          <button
-            type="submit"
-            className="mt-4 rounded-md bg-yellow-400 px-4 py-2 text-sm font-semibold text-black shadow hover:bg-[#8ccf64] focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-600"
-          >
-            Enregistrer les modifications
-          </button>
+  <button
+    type="submit"
+    className="px-4 py-2 text-sm font-semibold text-black bg-red-400 rounded-md shadow hover:bg-red-800 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-600"
+  >
+    Supprimer le compte
+  </button>
+</div>
         </form>
       </main>
     </div>

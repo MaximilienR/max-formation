@@ -3,19 +3,19 @@ import { Link } from "react-router-dom";
 
 export default function Aside() {
   return (
-    <aside className="w-64 bg-yellow-400 p-4">
-      <Link to="/profil/informations" className="block">
-        <button className="bg-yellow-400 hover:bg-yellow-500 text-white font-bold py-2 px-4 rounded mt-4 w-full text-left">
+    <aside className="w-64 p-4 bg-yellow-400">
+      <Link to="/profil" className="block">
+        <button className="w-full px-4 py-2 mt-4 font-bold text-left text-white bg-yellow-400 rounded hover:bg-yellow-500">
           Mes informations
         </button>
       </Link>
       <Link to="/achat" className="block">
-        <button className="bg-yellow-400 hover:bg-yellow-500 text-white font-bold py-2 px-4 rounded mt-4 w-full text-left">
+        <button className="w-full px-4 py-2 mt-4 font-bold text-left text-white bg-yellow-400 rounded hover:bg-yellow-500">
           Mes achats
         </button>
       </Link>
       <Link to="/profil/parcours" className="block">
-        <button className="bg-yellow-400 hover:bg-yellow-500 text-white font-bold py-2 px-4 rounded mt-4 w-full text-left">
+        <button className="w-full px-4 py-2 mt-4 font-bold text-left text-white bg-yellow-400 rounded hover:bg-yellow-500">
           Mon parcours
         </button>
       </Link>
