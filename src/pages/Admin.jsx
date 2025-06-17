@@ -1,25 +1,18 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import Aside from "../components/Profil/aside";
+import { createCours } from "../api/cours.api"; // ✅ appelle l'API ici
 
 export default function Admin() {
   const [showModal, setShowModal] = useState(false);
-
-  // Etats pour inputs du modal
   const [coursName, setCoursName] = useState("");
   const [description, setDescription] = useState("");
-  const [file, setFile] = useState(null);
-
-  // Etat pour stocker les cours ajoutés
   const [cours, setCours] = useState([]);
-
-  // Etat pour savoir si on modifie un cours (id sinon null)
   const [editingCoursId, setEditingCoursId] = useState(null);
 
   const openAddModal = () => {
     setEditingCoursId(null);
     setCoursName("");
     setDescription("");
-    setFile(null);
     setShowModal(true);
   };
 
@@ -27,7 +20,6 @@ export default function Admin() {
     setEditingCoursId(cours.id);
     setCoursName(cours.name);
     setDescription(cours.description);
-    setFile(cours.file || null);
     setShowModal(true);
   };
 
@@ -43,43 +35,30 @@ export default function Admin() {
     };
 
     try {
-      const res = await fetch("/api/cours", {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify(body),
-      });
-
-      if (!res.ok) {
-        const data = await res.json();
-        alert(data.message || "Erreur lors de la sauvegarde");
-        return;
-      }
-
-      const newCours = await res.json();
-
-      // Mise à jour locale de la liste des cours
+      const newCours = await createCours(body); // ✅ utilise la fonction API
       setCours((prev) => [...prev, newCours]);
-
-      // Réinitialisation et fermeture modal
       setCoursName("");
       setDescription("");
       setShowModal(false);
     } catch (error) {
-      alert("Erreur réseau, réessaye plus tard.");
+      alert("Erreur lors de la création du cours : " + error.message);
     }
   };
+
   const handleDelete = (id) => {
     setCours((prev) => prev.filter((cours) => cours.id !== id));
   };
 
+  // Exemple de chargement initial (optionnel)
+  useEffect(() => {
+    // Tu peux créer une fonction getCours() dans cours.api.js si tu veux charger les cours
+  }, []);
+
   return (
     <div className="flex min-h-screen">
-      {/* Sidebar */}
       <Aside className="min-w-[200px] bg-yellow-400 p-4" />
 
-      {/* Main content */}
       <div className="flex-1 p-8">
-        {/* Header */}
         <div className="flex items-center justify-between mb-6">
           <h1 className="text-2xl font-bold text-sky-900">Panel Admin</h1>
           <button
@@ -90,13 +69,10 @@ export default function Admin() {
           </button>
         </div>
 
-        {/* Table */}
         <table className="table-auto border-collapse border border-gray-300 w-full">
           <thead>
             <tr className="bg-sky-900 text-white">
-              <th className="border border-gray-300 px-4 py-2">
-                Nom de l'article
-              </th>
+              <th className="border border-gray-300 px-4 py-2">Nom du cours</th>
               <th className="border border-gray-300 px-4 py-2">Action</th>
             </tr>
           </thead>
@@ -138,7 +114,7 @@ export default function Admin() {
 
         {/* Modal */}
         {showModal && (
-          <div className="fixed inset-0 flex items-center justify-center   bg-opacity-50 z-50">
+          <div className="fixed inset-0 flex items-center justify-center bg-opacity-50 z-50">
             <div className="bg-white rounded shadow-lg p-6 w-3/4 max-w-xl">
               <h2 className="text-xl font-bold mb-4">
                 {editingCoursId ? "Modifier le cours" : "Ajouter un cours"}
@@ -181,23 +157,6 @@ export default function Admin() {
                     className="w-full border rounded px-2 py-1"
                     rows={4}
                   />
-                </div>
-                <div className="mb-4">
-                  <label className="block mb-1 font-semibold" htmlFor="file">
-                    Importer un fichier
-                  </label>
-                  <input
-                    id="file"
-                    type="file"
-                    onChange={(e) => setFile(e.target.files[0])}
-                    className="w-full"
-                  />
-                  {/* Afficher nom du fichier si existant */}
-                  {file && (
-                    <p className="mt-2 text-sm text-gray-600">
-                      Fichier sélectionné : {file.name || "Aucun"}
-                    </p>
-                  )}
                 </div>
 
                 <div className="flex justify-end space-x-4">
