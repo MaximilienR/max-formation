@@ -85,6 +85,8 @@ export default function Login() {
       localStorage.setItem("user", JSON.stringify(result.user));
       setUser(result.user);
       toast.success("Connexion réussie !");
+      console.log("Utilisateur connecté :", result.user);
+
       navigate(from);
     } catch (error) {
       console.error("Erreur :", error.message);

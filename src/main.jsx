@@ -20,8 +20,10 @@ import Profil from "./pages/Profil";
 import Quizz from "./pages/Quizz";
 import Achat from "./pages/Achat";
 import Certificat from "./pages/Certificat";
+import Admin from "./pages/Admin";
 import "./index.css";
-
+import UserIsAdmin from "./components/secure/UserIsAdmin";
+import Authorized from "./pages/Authorized";
 const router = createBrowserRouter([
   {
     path: "/",
@@ -69,9 +71,18 @@ const router = createBrowserRouter([
         ),
       },
       {
+        path: "admin",
+        element: (
+          <UserIsAdmin>
+            <Admin />
+          </UserIsAdmin>
+        ),
+      },
+      {
         path: "certificat",
         element: <Certificat />,
       },
+      { path: "Authorized", element: <Authorized /> },
     ],
   },
 ]);
