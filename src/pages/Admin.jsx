@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from "react";
 import Aside from "../components/Profil/aside";
-import { createCours } from "../api/cours.api"; // ✅ appelle l'API ici
+import { createCours, getCours } from "../api/cours.api"; // ✅ ajoute getCours
 
 export default function Admin() {
   const [showModal, setShowModal] = useState(false);
@@ -17,7 +17,7 @@ export default function Admin() {
   };
 
   const openEditModal = (cours) => {
-    setEditingCoursId(cours.id);
+    setEditingCoursId(cours._id); // _id ici
     setCoursName(cours.name);
     setDescription(cours.description);
     setShowModal(true);
@@ -35,7 +35,7 @@ export default function Admin() {
     };
 
     try {
-      const newCours = await createCours(body); // ✅ utilise la fonction API
+      const newCours = await createCours(body);
       setCours((prev) => [...prev, newCours]);
       setCoursName("");
       setDescription("");
@@ -46,12 +46,20 @@ export default function Admin() {
   };
 
   const handleDelete = (id) => {
-    setCours((prev) => prev.filter((cours) => cours.id !== id));
+    setCours((prev) => prev.filter((cours) => cours._id !== id)); // _id ici aussi
   };
 
-  // Exemple de chargement initial (optionnel)
+  // Chargement initial des cours
   useEffect(() => {
-    // Tu peux créer une fonction getCours() dans cours.api.js si tu veux charger les cours
+    async function fetchCours() {
+      try {
+        const data = await getCours();
+        setCours(data);
+      } catch (error) {
+        alert("Erreur lors du chargement des cours : " + error.message);
+      }
+    }
+    fetchCours();
   }, []);
 
   return (
@@ -88,7 +96,7 @@ export default function Admin() {
               </tr>
             ) : (
               cours.map((cours) => (
-                <tr key={cours.id} className="hover:bg-gray-100">
+                <tr key={cours._id} className="hover:bg-gray-100">
                   <td className="border border-gray-300 px-4 py-2">
                     {cours.name}
                   </td>
@@ -100,7 +108,7 @@ export default function Admin() {
                       Modifier
                     </button>
                     <button
-                      onClick={() => handleDelete(cours.id)}
+                      onClick={() => handleDelete(cours._id)}
                       className="bg-red-600 text-white font-semibold px-3 py-1 rounded hover:bg-red-700"
                     >
                       Supprimer

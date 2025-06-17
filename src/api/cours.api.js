@@ -1,5 +1,6 @@
 import { BASE_URL } from "../utils/url";
 
+// Fonction pour créer un cours (POST)
 export async function createCours(values) {
   try {
     const response = await fetch(`${BASE_URL}/cours`, {
@@ -11,7 +12,6 @@ export async function createCours(values) {
     });
 
     if (!response.ok) {
-      // Si la réponse HTTP n'est pas 2xx, on récupère le message d'erreur du backend
       const errorData = await response.json();
       throw new Error(errorData.message || "Erreur inconnue du serveur");
     }
@@ -20,6 +20,15 @@ export async function createCours(values) {
     return data;
   } catch (error) {
     console.error("Erreur API createCours:", error);
-    throw error; // on relance l'erreur pour que le catch du composant React la récupère
+    throw error;
   }
+}
+
+// Fonction pour récupérer les cours (GET)
+export async function getCours() {
+  const response = await fetch(`${BASE_URL}/cours`);
+  if (!response.ok) throw new Error("Erreur lors du chargement des cours");
+  console.log("Cours reçus :", data); // Ajoute ce log
+
+  return response.json();
 }
