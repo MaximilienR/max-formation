@@ -1,6 +1,7 @@
 [
   {
     "question": "À quelle date le premier mail a-t-il été envoyé ?",
-    "reponses": ["1971", "1973", "1984", "2001"]
+    "reponses": ["1971", "1973", "1984", "2001"],
+    "bonneReponse": 1971
   }
 ]
