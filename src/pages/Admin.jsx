@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from "react";
 import Aside from "../components/Profil/aside";
-import { createCours, getCours } from "../api/cours.api"; // ✅ ajoute getCours
+import { createCours, getCours, deleteCours } from "../api/cours.api"; // ✅ ajoute getCours
 
 export default function Admin() {
   const [showModal, setShowModal] = useState(false);
@@ -45,10 +45,16 @@ export default function Admin() {
     }
   };
 
-  const handleDelete = (id) => {
-    setCours((prev) => prev.filter((cours) => cours._id !== id)); // _id ici aussi
+  const handleDelete = async (id) => {
+    if (window.confirm("Êtes-vous sûr de vouloir supprimer ce cours ?")) {
+      try {
+        await deleteCours(id);
+        setCours((prev) => prev.filter((cours) => cours._id !== id));
+      } catch (error) {
+        alert("Erreur lors de la suppression du cours : " + error.message);
+      }
+    }
   };
-
   // Chargement initial des cours
   useEffect(() => {
     async function fetchCours() {

@@ -32,3 +32,22 @@ export async function getCours() {
 
   return response.json();
 }
+
+// Fonction pour supprimer un cours (DELETE)
+export async function deleteCours(id) {
+  try {
+    const response = await fetch(`${BASE_URL}/cours/${id}`, {
+      method: "DELETE",
+    });
+
+    if (!response.ok) {
+      const errorData = await response.json();
+      throw new Error(errorData.message || "Erreur lors de la suppression");
+    }
+
+    return await response.json(); // optionnel, selon ce que ton backend renvoie
+  } catch (error) {
+    console.error("Erreur API deleteCours:", error);
+    throw error;
+  }
+}
