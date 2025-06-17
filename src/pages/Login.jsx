@@ -1,4 +1,4 @@
-import React, { useContext } from "react";
+import React, { useContext, useState, useEffect } from "react";
 import { NavLink, useNavigate, useLocation } from "react-router-dom";
 import * as yup from "yup";
 import toast from "react-hot-toast";
@@ -36,6 +36,27 @@ export default function Login() {
 
   const from = location.state?.from?.pathname || "/profil";
 
+  const [isLocked, setIsLocked] = useState(false);
+  const [remainingTime, setRemainingTime] = useState(0); // en ms
+
+  // Décompte dynamique (optionnel mais utile)
+  useEffect(() => {
+    if (!isLocked || remainingTime <= 0) return;
+
+    const interval = setInterval(() => {
+      setRemainingTime((prev) => {
+        if (prev <= 1000) {
+          setIsLocked(false);
+          clearInterval(interval);
+          return 0;
+        }
+        return prev - 1000;
+      });
+    }, 1000);
+
+    return () => clearInterval(interval);
+  }, [isLocked, remainingTime]);
+
   const submit = async (data) => {
     try {
       const response = await fetch(`${BASE_URL}/user/login`, {
@@ -49,16 +70,20 @@ export default function Login() {
       const result = await response.json();
 
       if (!response.ok) {
+        if (response.status === 403 && result.remainingTime) {
+          setIsLocked(true);
+          setRemainingTime(result.remainingTime);
+          toast.error("Compte bloqué temporairement.");
+          return;
+        }
+
         throw new Error(result.msg || "Erreur de connexion");
       }
 
-      // Stockage du token et de l'utilisateur
+      // Connexion réussie
       localStorage.setItem("token", result.token);
       localStorage.setItem("user", JSON.stringify(result.user));
-
-      // Mise à jour du contexte utilisateur
       setUser(result.user);
-
       toast.success("Connexion réussie !");
       navigate(from);
     } catch (error) {
@@ -87,6 +112,7 @@ export default function Login() {
               className="w-full p-2 bg-gray-100 border rounded"
               {...register("email")}
               placeholder="veuillez saisir votre email"
+              disabled={isLocked}
             />
             {errors.email && (
               <p className="text-orange-200">{errors.email.message}</p>
@@ -105,23 +131,36 @@ export default function Login() {
               className="w-full p-2 bg-gray-100 border rounded"
               placeholder="veuillez saisir votre mot de passe"
               {...register("password")}
+              disabled={isLocked}
             />
             {errors.password && (
               <p className="text-orange-200">{errors.password.message}</p>
             )}
           </div>
+
           <label className="text-gray-100">
             Mot de passe oublié ?{" "}
             <NavLink className="mr-4" to="/Password">
               <span className="text-yellow-400">Ici</span>
             </NavLink>
           </label>
+
+          {isLocked && (
+            <p className="text-center text-red-200 mt-2">
+              Compte bloqué. Veuillez réessayer dans{" "}
+              <strong>{Math.ceil(remainingTime / 60000)} min</strong>.
+            </p>
+          )}
+
           <div className="flex justify-center mt-4">
             <button
               type="submit"
-              className="rounded-md bg-yellow-400 px-4 py-2 text-sm font-semibold text-white shadow hover:bg-[#8ccf64] focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-600"
+              className="rounded-md bg-yellow-400 px-4 py-2 text-sm font-semibold text-white shadow hover:bg-[#8ccf64] focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-600 disabled:opacity-50"
+              disabled={isLocked}
             >
-              Me connecter
+              {isLocked
+                ? `Bloqué (${Math.ceil(remainingTime / 1000)}s)`
+                : "Me connecter"}
             </button>
           </div>
         </form>
