@@ -1,8 +1,12 @@
 import React from "react";
 import { useForm } from "react-hook-form";
 import { useNavigate } from "react-router-dom";
+import { shop } from "../api/shop.api"; // si ce n'est pas encore importé
 export default function Detail() {
   const navigate = useNavigate();
+
+  const user = JSON.parse(localStorage.getItem("user"));
+  const email = user?.email;
 
   const niveau = 4;
   const totalStars = 5;
@@ -14,8 +18,29 @@ export default function Detail() {
   } = useForm();
 
   async function handleBuy(data) {
-    alert("Merci pour votre achat !");
-    navigate("/contenu");
+    if (!email) {
+      alert("Utilisateur non connecté.");
+      return;
+    }
+
+    try {
+      const payload = {
+        ...data,
+        email,
+      };
+
+      const response = await shop(payload);
+
+      if (response?.success) {
+        alert("Merci pour votre achat !");
+        navigate("/contenu");
+      } else {
+        alert(response?.error || "Une erreur s'est produite.");
+      }
+    } catch (error) {
+      console.error("Erreur :", error);
+      alert(error);
+    }
   }
 
   return (
