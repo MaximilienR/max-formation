@@ -1,5 +1,21 @@
 import { BASE_URL } from "../utils/url";
 
+export async function updateUser(updatedData) {
+  const token = localStorage.getItem("token");
+
+  const response = await fetch(`${BASE_URL}/user/update`, {
+    method: "PUT",
+    headers: {
+      "Content-Type": "application/json",
+      Authorization: `Bearer ${token}`,
+    },
+    body: JSON.stringify(updatedData),
+  });
+
+  const data = await response.json();
+  return { ok: response.ok, data };
+}
+
 export async function signup(values) {
   console.log(values);
   try {

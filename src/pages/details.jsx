@@ -19,7 +19,7 @@ export default function Detail() {
 
   async function handleBuy(data) {
     if (!email) {
-      alert("Utilisateur non connecté.");
+      alert("Veuillez vous  connecter .");
       return;
     }
 

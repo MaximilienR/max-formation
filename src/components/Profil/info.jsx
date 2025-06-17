@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from "react";
 import { FaEye, FaEyeSlash } from "react-icons/fa";
-import { deleteAccount} from "../../api/auth.api";
+import { deleteAccount, updateUser } from "../../api/auth.api";
+
 export default function Info() {
   const [email, setEmail] = useState("");
   const [pseudo, setPseudo] = useState("");
@@ -20,22 +21,47 @@ export default function Info() {
 
   const toggleConfirmPasswordVisibility = () => {
     setShowConfirmPassword((prev) => !prev);
-  };const handleDeleteAccount = async () => {
-  if (!window.confirm("Es-tu sûr de vouloir supprimer ton compte ?")) return;
+  };
 
-  try {
-    const { ok, data } = await deleteAccount();
-    if (ok) {
-      localStorage.removeItem("user");
-      localStorage.removeItem("token");
-      window.location.href = "/login";
-    } else {
-      alert(data.msg || "Erreur lors de la suppression.");
+  const handleDeleteAccount = async () => {
+    if (!window.confirm("Es-tu sûr de vouloir supprimer ton compte ?")) return;
+
+    try {
+      const { ok, data } = await deleteAccount();
+      if (ok) {
+        localStorage.removeItem("user");
+        localStorage.removeItem("token");
+        window.location.href = "/login";
+      } else {
+        alert(data.msg || "Erreur lors de la suppression.");
+      }
+    } catch (error) {
+      alert("Erreur serveur, réessaye plus tard.");
     }
-  } catch (error) {
-    alert("Erreur serveur, réessaye plus tard.");
-  }
-};
+  };
+
+  const handleUpdateProfile = async (e) => {
+    e.preventDefault();
+
+    try {
+      const updatedData = {
+        pseudo,
+        email,
+      };
+
+      const { ok, data } = await updateUser(updatedData);
+
+      if (ok) {
+        localStorage.setItem("user", JSON.stringify(data.user));
+        alert("Profil mis à jour !");
+      } else {
+        alert(data.msg || "Erreur lors de la mise à jour.");
+      }
+    } catch (error) {
+      alert("Erreur serveur.");
+      console.error("Update error:", error);
+    }
+  };
 
   return (
     <div>
@@ -43,7 +69,7 @@ export default function Info() {
         <h1 className="mb-4 text-2xl font-bold text-center text-amber-50">
           Profil
         </h1>
-        <form>
+        <form onSubmit={handleUpdateProfile}>
           <div>
             <label
               htmlFor="pseudo"
@@ -122,22 +148,23 @@ export default function Info() {
               </p>
             )}
           </div>
-<div className="flex justify-center gap-4 mt-6">
-  <button
-    type="submit"
-    className="rounded-md bg-yellow-400 px-4 py-2 text-sm font-semibold text-black shadow hover:bg-[#8ccf64] focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-600"
-  >
-    Enregistrer les modifications
-  </button>
 
-  <button
-    type="button"
-    className="px-4 py-2 text-sm font-semibold text-black bg-red-400 rounded-md shadow hover:bg-red-800 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-600"
-    onClick={handleDeleteAccount}
-    >
-    Supprimer le compte
-  </button>
-</div>
+          <div className="flex justify-center gap-4 mt-6">
+            <button
+              type="submit"
+              className="rounded-md bg-yellow-400 px-4 py-2 text-sm font-semibold text-black shadow hover:bg-[#8ccf64] focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-600"
+            >
+              Enregistrer les modifications
+            </button>
+
+            <button
+              type="button"
+              className="px-4 py-2 text-sm font-semibold text-black bg-red-400 rounded-md shadow hover:bg-red-800 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-600"
+              onClick={handleDeleteAccount}
+            >
+              Supprimer le compte
+            </button>
+          </div>
         </form>
       </main>
     </div>
