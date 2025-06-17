@@ -5,69 +5,71 @@ export default function Admin() {
   const [showModal, setShowModal] = useState(false);
 
   // Etats pour inputs du modal
-  const [courseName, setCourseName] = useState("");
+  const [coursName, setCoursName] = useState("");
   const [description, setDescription] = useState("");
   const [file, setFile] = useState(null);
 
   // Etat pour stocker les cours ajoutés
-  const [courses, setCourses] = useState([]);
+  const [cours, setCours] = useState([]);
 
   // Etat pour savoir si on modifie un cours (id sinon null)
-  const [editingCourseId, setEditingCourseId] = useState(null);
+  const [editingCoursId, setEditingCoursId] = useState(null);
 
   const openAddModal = () => {
-    setEditingCourseId(null);
-    setCourseName("");
+    setEditingCoursId(null);
+    setCoursName("");
     setDescription("");
     setFile(null);
     setShowModal(true);
   };
 
-  const openEditModal = (course) => {
-    setEditingCourseId(course.id);
-    setCourseName(course.name);
-    setDescription(course.description);
-    setFile(course.file || null);
+  const openEditModal = (cours) => {
+    setEditingCoursId(cours.id);
+    setCoursName(cours.name);
+    setDescription(cours.description);
+    setFile(cours.file || null);
     setShowModal(true);
   };
 
-  const handleSave = () => {
-    if (!courseName.trim()) {
+  const handleSave = async () => {
+    if (!coursName.trim()) {
       alert("Le nom du cours est obligatoire.");
       return;
     }
 
-    if (editingCourseId) {
-      // Modification : on remplace le cours dans la liste
-      setCourses((prev) =>
-        prev.map((course) =>
-          course.id === editingCourseId
-            ? { ...course, name: courseName, description, file }
-            : course
-        )
-      );
-    } else {
-      // Ajout
-      setCourses((prev) => [
-        ...prev,
-        {
-          id: Date.now(),
-          name: courseName,
-          description,
-          file,
-        },
-      ]);
+    const body = {
+      name: coursName,
+      description,
+    };
+
+    try {
+      const res = await fetch("/api/cours", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify(body),
+      });
+
+      if (!res.ok) {
+        const data = await res.json();
+        alert(data.message || "Erreur lors de la sauvegarde");
+        return;
+      }
+
+      const newCours = await res.json();
+
+      // Mise à jour locale de la liste des cours
+      setCours((prev) => [...prev, newCours]);
+
+      // Réinitialisation et fermeture modal
+      setCoursName("");
+      setDescription("");
+      setShowModal(false);
+    } catch (error) {
+      alert("Erreur réseau, réessaye plus tard.");
     }
-
-    setShowModal(false);
-    setEditingCourseId(null);
-    setCourseName("");
-    setDescription("");
-    setFile(null);
   };
-
   const handleDelete = (id) => {
-    setCourses((prev) => prev.filter((course) => course.id !== id));
+    setCours((prev) => prev.filter((cours) => cours.id !== id));
   };
 
   return (
@@ -99,7 +101,7 @@ export default function Admin() {
             </tr>
           </thead>
           <tbody>
-            {courses.length === 0 ? (
+            {cours.length === 0 ? (
               <tr>
                 <td
                   className="border border-gray-300 px-4 py-4 text-center text-gray-500"
@@ -109,20 +111,20 @@ export default function Admin() {
                 </td>
               </tr>
             ) : (
-              courses.map((course) => (
-                <tr key={course.id} className="hover:bg-gray-100">
+              cours.map((cours) => (
+                <tr key={cours.id} className="hover:bg-gray-100">
                   <td className="border border-gray-300 px-4 py-2">
-                    {course.name}
+                    {cours.name}
                   </td>
                   <td className="border border-gray-300 px-4 py-2 text-center">
                     <button
-                      onClick={() => openEditModal(course)}
+                      onClick={() => openEditModal(cours)}
                       className="bg-yellow-400 text-white font-semibold px-3 py-1 rounded mr-2 hover:bg-yellow-500"
                     >
                       Modifier
                     </button>
                     <button
-                      onClick={() => handleDelete(course.id)}
+                      onClick={() => handleDelete(cours.id)}
                       className="bg-red-600 text-white font-semibold px-3 py-1 rounded hover:bg-red-700"
                     >
                       Supprimer
@@ -139,7 +141,7 @@ export default function Admin() {
           <div className="fixed inset-0 flex items-center justify-center   bg-opacity-50 z-50">
             <div className="bg-white rounded shadow-lg p-6 w-3/4 max-w-xl">
               <h2 className="text-xl font-bold mb-4">
-                {editingCourseId ? "Modifier le cours" : "Ajouter un cours"}
+                {editingCoursId ? "Modifier le cours" : "Ajouter un cours"}
               </h2>
               <form
                 onSubmit={(e) => {
@@ -158,8 +160,8 @@ export default function Admin() {
                     id="courseName"
                     type="text"
                     placeholder="Nom du cours"
-                    value={courseName}
-                    onChange={(e) => setCourseName(e.target.value)}
+                    value={coursName}
+                    onChange={(e) => setCoursName(e.target.value)}
                     className="w-full border rounded px-2 py-1"
                     required
                   />
@@ -210,7 +212,7 @@ export default function Admin() {
                     type="submit"
                     className="px-4 py-2 rounded bg-yellow-400 hover:bg-yellow-500 text-white font-semibold"
                   >
-                    {editingCourseId
+                    {editingCoursId
                       ? "Enregistrer les modifications"
                       : "Sauvegarder"}
                   </button>
