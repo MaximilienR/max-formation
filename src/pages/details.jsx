@@ -1,13 +1,11 @@
 import React from "react";
 import { useForm } from "react-hook-form";
-import { toast } from "react-hot-toast";  
-import { shop } from "../api/shop.api";
 import { useNavigate } from "react-router-dom";
-
 export default function Detail() {
+  const navigate = useNavigate();
+
   const niveau = 4;
   const totalStars = 5;
-  const navigate = useNavigate();
 
   const {
     register,
@@ -15,24 +13,9 @@ export default function Detail() {
     formState: { errors },
   } = useForm();
 
-  // Fonction appelée au clic sur "acheter"
   async function handleBuy(data) {
-    try {
-      const response = await shop(data); 
-
-      if (response && response.success) {
-        toast.success("Achat effectué avec succès !");
-        // Redirection vers la page contenu après succès
-        navigate("/contenu");
-      } else if (response && response.error) {
-        toast.error(response.error);
-      } else {
-        toast.error("Erreur inconnue lors de l'achat.");
-      }
-    } catch (error) {
-      console.error("Erreur lors de l'achat:", error);
-      toast.error("Échec de l'achat. Veuillez réessayer.");
-    }
+    alert("Merci pour votre achat !");
+    navigate("/contenu");
   }
 
   return (
@@ -64,7 +47,8 @@ export default function Detail() {
           </h2>
           <p className="leading-relaxed text-amber-100">
             Ce cours utilise <strong>JavaScript</strong> et{" "}
-            <strong>React</strong> pour vous enseigner le développement front-end.
+            <strong>React</strong> pour vous enseigner le développement
+            front-end.
           </p>
         </section>
 
@@ -106,7 +90,8 @@ export default function Detail() {
                 })}
                 className="mr-2 leading-tight text-amber-50"
               />
-              J'accepte les conditions d'utilisation et la politique de confidentialité
+              J'accepte les conditions d'utilisation et la politique de
+              confidentialité
             </label>
             {errors.rgpd && (
               <p className="mt-1 text-xs text-red-600">{errors.rgpd.message}</p>
@@ -127,4 +112,3 @@ export default function Detail() {
     </div>
   );
 }
-
