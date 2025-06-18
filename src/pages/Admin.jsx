@@ -1,11 +1,12 @@
 import React, { useState, useEffect } from "react";
 import Aside from "../components/Profil/aside";
-import { createCours, getCours, deleteCours } from "../api/cours.api"; // ✅ ajoute getCours
+import { createCours, getCours, deleteCours } from "../api/cours.api";
 
 export default function Admin() {
   const [showModal, setShowModal] = useState(false);
   const [coursName, setCoursName] = useState("");
   const [description, setDescription] = useState("");
+  const [link, setLink] = useState("");
   const [cours, setCours] = useState([]);
   const [editingCoursId, setEditingCoursId] = useState(null);
 
@@ -13,13 +14,15 @@ export default function Admin() {
     setEditingCoursId(null);
     setCoursName("");
     setDescription("");
+    setLink("");
     setShowModal(true);
   };
 
   const openEditModal = (cours) => {
-    setEditingCoursId(cours._id); // _id ici
+    setEditingCoursId(cours._id);
     setCoursName(cours.name);
     setDescription(cours.description);
+    setLink(cours.link || "");
     setShowModal(true);
   };
 
@@ -32,6 +35,7 @@ export default function Admin() {
     const body = {
       name: coursName,
       description,
+      link: link.trim() !== "" ? link : undefined,
     };
 
     try {
@@ -39,6 +43,7 @@ export default function Admin() {
       setCours((prev) => [...prev, newCours]);
       setCoursName("");
       setDescription("");
+      setLink("");
       setShowModal(false);
     } catch (error) {
       alert("Erreur lors de la création du cours : " + error.message);
@@ -55,7 +60,7 @@ export default function Admin() {
       }
     }
   };
-  // Chargement initial des cours
+
   useEffect(() => {
     async function fetchCours() {
       try {
@@ -128,66 +133,93 @@ export default function Admin() {
 
         {/* Modal */}
         {showModal && (
-          <div className="fixed inset-0 flex items-center justify-center bg-opacity-50 z-50">
-            <div className="bg-white rounded shadow-lg p-6 w-3/4 max-w-xl">
-              <h2 className="text-xl font-bold mb-4">
-                {editingCoursId ? "Modifier le cours" : "Ajouter un cours"}
-              </h2>
+          <div className="fixed inset-0 bg-sky-900 text-[#dfe4ea] z-50 overflow-auto font-['Josefin_Sans']">
+            <div className="max-w-4xl mx-auto p-8">
+              <h1 className="text-4xl text-center font-bold mb-6">
+                {editingCoursId
+                  ? "Modifier le cours"
+                  : "Ajouter un nouveau cours"}
+              </h1>
+
+              <p className="text-lg text-center mb-10 max-w-2xl mx-auto">
+                Remplis les champs ci-dessous pour créer ou modifier un cours dans
+                ta plateforme.
+              </p>
+
               <form
                 onSubmit={(e) => {
                   e.preventDefault();
                   handleSave();
                 }}
+                className="space-y-6 bg-sky-800 p-8 rounded-2xl shadow-xl"
               >
-                <div className="mb-4">
+                <div>
                   <label
-                    className="block mb-1 font-semibold"
                     htmlFor="courseName"
+                    className="block text-xl font-semibold mb-2"
                   >
                     Nom du cours
                   </label>
                   <input
                     id="courseName"
                     type="text"
-                    placeholder="Nom du cours"
                     value={coursName}
                     onChange={(e) => setCoursName(e.target.value)}
-                    className="w-full border rounded px-2 py-1"
+                    className="w-full px-4 py-2 rounded-lg bg-white text-black focus:outline-none focus:ring-4 focus:ring-yellow-400"
+                    placeholder="Ex : HTML & CSS - Débutant"
                     required
                   />
                 </div>
-                <div className="mb-4">
+
+                <div>
                   <label
-                    className="block mb-1 font-semibold"
                     htmlFor="description"
+                    className="block text-xl font-semibold mb-2"
                   >
-                    Description
+                    Description du cours
                   </label>
                   <textarea
                     id="description"
-                    placeholder="Description du cours"
+                    rows={6}
                     value={description}
                     onChange={(e) => setDescription(e.target.value)}
-                    className="w-full border rounded px-2 py-1"
-                    rows={4}
+                    className="w-full px-4 py-2 rounded-lg bg-white text-black focus:outline-none focus:ring-4 focus:ring-yellow-400"
+                    placeholder="Décris le contenu du cours, les objectifs, etc."
                   />
                 </div>
 
-                <div className="flex justify-end space-x-4">
+                <div>
+                  <label
+                    htmlFor="link"
+                    className="block text-xl font-semibold mb-2"
+                  >
+                    Lien du cours (optionnel)
+                  </label>
+                  <input
+                    id="link"
+                    type="url"
+                    value={link}
+                    onChange={(e) => setLink(e.target.value)}
+                    className="w-full px-4 py-2 rounded-lg bg-white text-black focus:outline-none focus:ring-4 focus:ring-yellow-400"
+                    placeholder="https://exemple.com/ton-cours"
+                  />
+                </div>
+
+                <div className="flex justify-center gap-6 pt-6">
                   <button
                     type="button"
                     onClick={() => setShowModal(false)}
-                    className="px-4 py-2 rounded bg-gray-300 hover:bg-gray-400"
+                    className="px-6 py-2 bg-gray-300 text-black font-semibold rounded hover:bg-gray-400"
                   >
-                    Fermer
+                    Annuler
                   </button>
                   <button
                     type="submit"
-                    className="px-4 py-2 rounded bg-yellow-400 hover:bg-yellow-500 text-white font-semibold"
+                    className="px-6 py-2 bg-yellow-400 text-black font-semibold rounded hover:bg-yellow-500"
                   >
                     {editingCoursId
                       ? "Enregistrer les modifications"
-                      : "Sauvegarder"}
+                      : "Créer le cours"}
                   </button>
                 </div>
               </form>
