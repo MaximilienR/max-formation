@@ -26,11 +26,11 @@ export async function createCours(values) {
 
 // Fonction pour récupérer les cours (GET)
 export async function getCours() {
-  const response = await fetch(`${BASE_URL}/cours`);
+  const response = await fetch(`${BASE_URL}/cours`); // Vérifie que BASE_URL est défini correctement
   if (!response.ok) throw new Error("Erreur lors du chargement des cours");
-  console.log("Cours reçus :", data); // Ajoute ce log
-
-  return response.json();
+  const data = await response.json();
+  console.log("Cours reçus :", data); // pour debug
+  return data;
 }
 
 // Fonction pour supprimer un cours (DELETE)
