@@ -68,3 +68,13 @@ export async function updateCours(id, body) {
 
   return await response.json();
 }
+export async function getCoursById(id) {
+  const response = await fetch(`${BASE_URL}/cours/${id}`);
+
+  if (!response.ok) {
+    throw new Error("Erreur lors de la récupération du cours.");
+  }
+
+  const data = await response.json();
+  return data;
+}

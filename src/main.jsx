@@ -24,6 +24,7 @@ import Admin from "./pages/Admin";
 import "./index.css";
 import UserIsAdmin from "./components/secure/UserIsAdmin";
 import Authorized from "./pages/Authorized";
+
 const router = createBrowserRouter([
   {
     path: "/",
@@ -49,12 +50,15 @@ const router = createBrowserRouter([
         ),
       },
       { path: "Coatch", element: <Coaching /> },
-      { path: "detail", element: <Detail /> },
+
+      // <-- ici la route detail avec paramètre id
+{ path: "cours/:id", element: <Detail /> },
+
       {
         path: "profil",
         element: (
           <UserConnected>
-            <Profil />,
+            <Profil />
           </UserConnected>
         ),
       },
@@ -86,6 +90,7 @@ const router = createBrowserRouter([
     ],
   },
 ]);
+
 ReactDOM.createRoot(document.getElementById("root")).render(
   <React.StrictMode>
     <UserProvider>
