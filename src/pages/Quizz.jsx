@@ -5,17 +5,30 @@ import confetti from "canvas-confetti";
 import Certificat from "./Certificat"; // 🔹 Vérifie le chemin
 
 export default function Quizz() {
+  const [currentQuestionIndex, setCurrentQuestionIndex] = useState(0);
   const [selectedAnswer, setSelectedAnswer] = useState(null);
-  const [score, setScore] = useState(null);
+  const [score, setScore] = useState(0);
+  const [finished, setFinished] = useState(false);
   const certificateRef = useRef(null);
 
-  const question = questions[0];
+  const question = questions[currentQuestionIndex];
   const { question: intitule, reponses, bonneReponse } = question;
 
   const handleAnswerClick = (reponseChoisie) => {
     setSelectedAnswer(reponseChoisie);
-    const isCorrect = Number(reponseChoisie) === bonneReponse;
-    setScore(isCorrect ? 1 : 0);
+
+    const isCorrect = reponseChoisie === bonneReponse || Number(reponseChoisie) === bonneReponse;
+    if (isCorrect) setScore((prev) => prev + 1);
+  };
+
+  const handleNext = () => {
+    setSelectedAnswer(null);
+
+    if (currentQuestionIndex + 1 < questions.length) {
+      setCurrentQuestionIndex(currentQuestionIndex + 1);
+    } else {
+      setFinished(true);
+    }
   };
 
   const handleDownload = () => {
@@ -23,9 +36,9 @@ export default function Quizz() {
     html2pdf().from(element).save("certificat.pdf");
   };
 
-  // 🎆 Feux d’artifice si score = 1
+  // 🎆 Feux d’artifice si score parfait et quiz fini
   useEffect(() => {
-    if (score === 1) {
+    if (finished && score === questions.length) {
       const duration = 2 * 1000;
       const animationEnd = Date.now() + duration;
 
@@ -50,23 +63,49 @@ export default function Quizz() {
 
       frame();
     }
-  }, [score]);
+  }, [finished, score]);
+
+  if (finished) {
+    return (
+      <div className="flex flex-col items-center px-12">
+        <div className="container mx-auto p-4 bg-sky-900 rounded-2xl font-['Josefin_Sans'] text-[#dfe4ea] mt-30 mb-30 text-center">
+          <h1 className="mb-6 text-3xl font-bold text-yellow-400">Quiz Terminé !</h1>
+          <p className="mb-4 text-2xl text-white">
+            Votre score final est {score} / {questions.length}
+          </p>
+          {score === questions.length && (
+            <>
+              <div ref={certificateRef}>
+                <Certificat />
+              </div>
+              <button
+                onClick={handleDownload}
+                className="px-4 py-2 mt-6 font-bold text-white transition bg-yellow-500 rounded hover:bg-yellow-600"
+              >
+                Télécharger le certificat
+              </button>
+            </>
+          )}
+        </div>
+      </div>
+    );
+  }
 
   return (
     <div className="flex flex-col items-center px-12">
       <div className="container mx-auto p-4 bg-sky-900 rounded-2xl font-['Josefin_Sans'] text-[#dfe4ea] mt-30 mb-30">
-        <h1 className="text-3xl text-center mt-4 font-bold text-yellow-400">
+        <h1 className="mt-4 text-3xl font-bold text-center text-yellow-400">
           Quizz
         </h1>
-        <p className="mt-1 text-sm text-amber-50 text-center">
-          Répondez à la question ci-dessous
+        <p className="mt-1 text-sm text-center text-amber-50">
+          Question {currentQuestionIndex + 1} sur {questions.length}
         </p>
 
         <h2 className="text-2xl font-bold text-[#ffa502] text-center mt-10 mb-8">
           {intitule}
         </h2>
 
-        <div className="flex flex-wrap justify-center gap-4 max-w-xl mx-auto">
+        <div className="flex flex-wrap justify-center max-w-xl gap-4 mx-auto">
           {reponses.map((reponse, index) => (
             <button
               key={index}
@@ -75,7 +114,7 @@ export default function Quizz() {
               className={`flex-1 basis-[45%] min-w-[200px] h-20 rounded px-4 py-2 font-semibold text-lg transition duration-500 active:scale-90
                 ${
                   selectedAnswer
-                    ? Number(reponse) === bonneReponse
+                    ? reponse === bonneReponse
                       ? "bg-green-400 text-black"
                       : reponse === selectedAnswer
                       ? "bg-red-400 text-white"
@@ -89,30 +128,16 @@ export default function Quizz() {
           ))}
         </div>
 
-        {score !== null && (
-          <p className="text-center mt-8 text-2xl font-bold text-white">
-            ✅ Votre score est de {score} / 1
-          </p>
-        )}
-
-        {/* 🔹 Si la réponse est correcte */}
-        {score === 1 && (
-          <div className="mt-10 w-full text-center">
-            <div ref={certificateRef}>
-              <Certificat />
-            </div>
+        {selectedAnswer !== null && (
+          <div className="flex justify-center mt-8">
             <button
-              onClick={handleDownload}
-              className="mt-6 bg-yellow-500 text-white font-bold py-2 px-4 rounded hover:bg-yellow-600 transition"
+              onClick={handleNext}
+              className="rounded-md bg-yellow-400 px-4 py-2 text-sm font-semibold text-black shadow hover:bg-[#8ccf64] focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-600"
             >
-              Télécharger le certificat
+              {currentQuestionIndex + 1 === questions.length ? "Terminer" : "Question suivante"}
             </button>
           </div>
         )}
-
-        <p className="text-[#ffa502] text-lg mt-8 text-center">
-          Question 1 sur {questions.length}
-        </p>
       </div>
     </div>
   );
