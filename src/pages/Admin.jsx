@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from "react";
 import Aside from "../components/Profil/aside";
-import { createCours, getCours, deleteCours } from "../api/cours.api";
+import { createCours, getCours, deleteCours, updateCours } from "../api/cours.api";
 
 export default function Admin() {
   const [showModal, setShowModal] = useState(false);
@@ -27,28 +27,39 @@ export default function Admin() {
   };
 
   const handleSave = async () => {
-    if (!coursName.trim()) {
-      alert("Le nom du cours est obligatoire.");
-      return;
-    }
+  if (!coursName.trim()) {
+    alert("Le nom du cours est obligatoire.");
+    return;
+  }
 
-    const body = {
-      name: coursName,
-      description,
-      link: link.trim() !== "" ? link : undefined,
-    };
+  const body = {
+    name: coursName,
+    description,
+    link: link.trim() !== "" ? link : undefined,
+  };
 
-    try {
+  try {
+    if (editingCoursId) {
+      // ✅ Mise à jour si un ID est présent
+      const updated = await updateCours(editingCoursId, body);
+      setCours((prev) =>
+        prev.map((c) => (c._id === editingCoursId ? updated : c))
+      );
+    } else {
+      // ✅ Création sinon
       const newCours = await createCours(body);
       setCours((prev) => [...prev, newCours]);
-      setCoursName("");
-      setDescription("");
-      setLink("");
-      setShowModal(false);
-    } catch (error) {
-      alert("Erreur lors de la création du cours : " + error.message);
     }
-  };
+
+    setCoursName("");
+    setDescription("");
+    setLink("");
+    setEditingCoursId(null);
+    setShowModal(false);
+  } catch (error) {
+    alert("Erreur : " + error.message);
+  }
+};
 
   const handleDelete = async (id) => {
     if (window.confirm("Êtes-vous sûr de vouloir supprimer ce cours ?")) {

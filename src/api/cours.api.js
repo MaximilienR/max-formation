@@ -51,3 +51,20 @@ export async function deleteCours(id) {
     throw error;
   }
 }
+
+export async function updateCours(id, body) {
+  const response = await fetch(`${BASE_URL}/cours/${id}`, {  // ✅ ICI
+    method: "PUT",
+    headers: {
+      "Content-Type": "application/json",
+    },
+    body: JSON.stringify(body),
+  });
+
+  if (!response.ok) {
+    const err = await response.json();
+    throw new Error(err.message || "Erreur lors de la mise à jour");
+  }
+
+  return await response.json();
+}
