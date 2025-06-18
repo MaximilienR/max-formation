@@ -1,8 +1,9 @@
 import React, { useEffect, useState } from "react";
 import { useParams, useNavigate } from "react-router-dom";
 import { useForm } from "react-hook-form";
-import { getCoursById } from "../api/cours.api"; // crée cette fonction dans l'API si elle n'existe pas
+import { getCoursById } from "../api/cours.api";
 import { shop } from "../api/shop.api";
+import { toast } from "react-hot-toast";
 
 export default function Detail() {
   const { id } = useParams();
@@ -21,7 +22,6 @@ export default function Detail() {
     formState: { errors },
   } = useForm();
 
-  // Récupère les infos du cours via l'ID
   useEffect(() => {
     async function fetchData() {
       try {
@@ -29,7 +29,7 @@ export default function Detail() {
         setCours(data);
         setLoading(false);
       } catch (error) {
-        alert("Erreur lors du chargement du cours : " + error.message);
+        toast.error("Erreur lors du chargement du cours : " + error.message); // ✅ toast d'erreur
         setLoading(false);
       }
     }
@@ -38,7 +38,7 @@ export default function Detail() {
 
   async function handleBuy(data) {
     if (!email) {
-      alert("Veuillez vous connecter.");
+      toast.warning("Veuillez vous connecter."); // ✅ toast d'avertissement
       return;
     }
 
@@ -50,13 +50,13 @@ export default function Detail() {
       };
       const response = await shop(payload);
       if (response?.success) {
-        alert("Merci pour votre achat !");
+        toast.success("Merci pour votre achat !"); // ✅ toast de succès
         navigate("/contenu");
       } else {
-        alert(response?.error || "Une erreur s'est produite.");
+        toast.error(response?.error || "Une erreur s'est produite."); // ✅ toast d'erreur
       }
     } catch (error) {
-      alert("Erreur : " + error.message);
+      toast.error("Erreur : " + error.message); // ✅ toast d'erreur
     }
   }
 
@@ -70,7 +70,6 @@ export default function Detail() {
           {cours.name}
         </h1>
 
-        {/* Image */}
         {cours.image && (
           <div className="flex justify-center mt-6">
             <img
@@ -81,12 +80,10 @@ export default function Detail() {
           </div>
         )}
 
-        {/* Description */}
         <section className="mt-6 text-center">
           <p className="max-w-3xl mx-auto text-lg text-amber-50">{cours.description}</p>
         </section>
 
-        {/* Niveau */}
         <section className="mt-6">
           <h2 className="mb-2 text-xl font-semibold text-white">Niveau :</h2>
           <div className="text-2xl text-yellow-400">
@@ -95,13 +92,11 @@ export default function Detail() {
           </div>
         </section>
 
-        {/* Prix */}
         <section className="mt-6">
           <h2 className="mb-2 text-xl font-semibold text-white">Prix :</h2>
           <div className="text-2xl font-bold text-green-400">GRATUIT</div>
         </section>
 
-        {/* RGPD + Bouton */}
         <form onSubmit={handleSubmit(handleBuy)} className="mt-6">
           <div className="mb-6">
             <label

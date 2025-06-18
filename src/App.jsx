@@ -7,7 +7,7 @@ function App() {
   return (
     <>
       <Header />
-      <main className="w-full flex-1">
+      <main className="flex-1 w-full">
         <Outlet />
       </main>
       <Toaster position="bottom-right" />
