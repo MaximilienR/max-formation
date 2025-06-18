@@ -7,6 +7,8 @@ export default function Admin() {
   const [coursName, setCoursName] = useState("");
   const [description, setDescription] = useState("");
   const [link, setLink] = useState("");
+  const [image, setImage] = useState("");
+  const [niveau, setNiveau] = useState(1);
   const [cours, setCours] = useState([]);
   const [editingCoursId, setEditingCoursId] = useState(null);
 
@@ -15,6 +17,8 @@ export default function Admin() {
     setCoursName("");
     setDescription("");
     setLink("");
+    setImage("");
+    setNiveau(1);
     setShowModal(true);
   };
 
@@ -23,43 +27,47 @@ export default function Admin() {
     setCoursName(cours.name);
     setDescription(cours.description);
     setLink(cours.link || "");
+    setImage(cours.image || "");
+    setNiveau(cours.niveau || 1);
     setShowModal(true);
   };
 
   const handleSave = async () => {
-  if (!coursName.trim()) {
-    alert("Le nom du cours est obligatoire.");
-    return;
-  }
-
-  const body = {
-    name: coursName,
-    description,
-    link: link.trim() !== "" ? link : undefined,
-  };
-
-  try {
-    if (editingCoursId) {
-      // ✅ Mise à jour si un ID est présent
-      const updated = await updateCours(editingCoursId, body);
-      setCours((prev) =>
-        prev.map((c) => (c._id === editingCoursId ? updated : c))
-      );
-    } else {
-      // ✅ Création sinon
-      const newCours = await createCours(body);
-      setCours((prev) => [...prev, newCours]);
+    if (!coursName.trim()) {
+      alert("Le nom du cours est obligatoire.");
+      return;
     }
 
-    setCoursName("");
-    setDescription("");
-    setLink("");
-    setEditingCoursId(null);
-    setShowModal(false);
-  } catch (error) {
-    alert("Erreur : " + error.message);
-  }
-};
+    const body = {
+      name: coursName,
+      description,
+      link: link.trim() !== "" ? link : undefined,
+      image: image.trim(),
+      niveau: Number(niveau),
+    };
+
+    try {
+      if (editingCoursId) {
+        const updated = await updateCours(editingCoursId, body);
+        setCours((prev) =>
+          prev.map((c) => (c._id === editingCoursId ? updated : c))
+        );
+      } else {
+        const newCours = await createCours(body);
+        setCours((prev) => [...prev, newCours]);
+      }
+
+      setCoursName("");
+      setDescription("");
+      setLink("");
+      setImage("");
+      setNiveau(1);
+      setEditingCoursId(null);
+      setShowModal(false);
+    } catch (error) {
+      alert("Erreur : " + error.message);
+    }
+  };
 
   const handleDelete = async (id) => {
     if (window.confirm("Êtes-vous sûr de vouloir supprimer ce cours ?")) {
@@ -165,10 +173,7 @@ export default function Admin() {
                 className="space-y-6 bg-sky-800 p-8 rounded-2xl shadow-xl"
               >
                 <div>
-                  <label
-                    htmlFor="courseName"
-                    className="block text-xl font-semibold mb-2"
-                  >
+                  <label htmlFor="courseName" className="block text-xl font-semibold mb-2">
                     Nom du cours
                   </label>
                   <input
@@ -183,10 +188,7 @@ export default function Admin() {
                 </div>
 
                 <div>
-                  <label
-                    htmlFor="description"
-                    className="block text-xl font-semibold mb-2"
-                  >
+                  <label htmlFor="description" className="block text-xl font-semibold mb-2">
                     Description du cours
                   </label>
                   <textarea
@@ -200,10 +202,7 @@ export default function Admin() {
                 </div>
 
                 <div>
-                  <label
-                    htmlFor="link"
-                    className="block text-xl font-semibold mb-2"
-                  >
+                  <label htmlFor="link" className="block text-xl font-semibold mb-2">
                     Lien du cours (optionnel)
                   </label>
                   <input
@@ -214,6 +213,38 @@ export default function Admin() {
                     className="w-full px-4 py-2 rounded-lg bg-white text-black focus:outline-none focus:ring-4 focus:ring-yellow-400"
                     placeholder="https://exemple.com/ton-cours"
                   />
+                </div>
+
+                <div>
+                  <label htmlFor="image" className="block text-xl font-semibold mb-2">
+                    Image d’illustration
+                  </label>
+                  <input
+                    id="image"
+                    type="url"
+                    value={image}
+                    onChange={(e) => setImage(e.target.value)}
+                    className="w-full px-4 py-2 rounded-lg bg-white text-black focus:outline-none focus:ring-4 focus:ring-yellow-400"
+                    placeholder="https://exemple.com/image.jpg"
+                    required
+                  />
+                </div>
+
+                <div>
+                  <label htmlFor="niveau" className="block text-xl font-semibold mb-2">
+                    Niveau du cours (1 à 5)
+                  </label>
+                  <select
+                    id="niveau"
+                    value={niveau}
+                    onChange={(e) => setNiveau(e.target.value)}
+                    className="w-full px-4 py-2 rounded-lg bg-white text-black focus:outline-none focus:ring-4 focus:ring-yellow-400"
+                    required
+                  >
+                    {[1, 2, 3, 4, 5].map((n) => (
+                      <option key={n} value={n}>Niveau {n}</option>
+                    ))}
+                  </select>
                 </div>
 
                 <div className="flex justify-center gap-6 pt-6">
@@ -228,9 +259,7 @@ export default function Admin() {
                     type="submit"
                     className="px-6 py-2 bg-yellow-400 text-black font-semibold rounded hover:bg-yellow-500"
                   >
-                    {editingCoursId
-                      ? "Enregistrer les modifications"
-                      : "Créer le cours"}
+                    {editingCoursId ? "Enregistrer les modifications" : "Créer le cours"}
                   </button>
                 </div>
               </form>
