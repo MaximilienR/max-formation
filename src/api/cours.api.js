@@ -53,7 +53,8 @@ export async function deleteCours(id) {
 }
 
 export async function updateCours(id, body) {
-  const response = await fetch(`${BASE_URL}/cours/${id}`, {  // ✅ ICI
+  const response = await fetch(`${BASE_URL}/cours/${id}`, {
+    // ✅ ICI
     method: "PUT",
     headers: {
       "Content-Type": "application/json",

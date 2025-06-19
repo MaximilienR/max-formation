@@ -17,7 +17,9 @@ export default function Quizz() {
   const handleAnswerClick = (reponseChoisie) => {
     setSelectedAnswer(reponseChoisie);
 
-    const isCorrect = reponseChoisie === bonneReponse || Number(reponseChoisie) === bonneReponse;
+    const isCorrect =
+      reponseChoisie === bonneReponse ||
+      Number(reponseChoisie) === bonneReponse;
     if (isCorrect) setScore((prev) => prev + 1);
   };
 
@@ -69,7 +71,9 @@ export default function Quizz() {
     return (
       <div className="flex flex-col items-center px-12">
         <div className="container mx-auto p-4 bg-sky-900 rounded-2xl font-['Josefin_Sans'] text-[#dfe4ea] mt-30 mb-30 text-center">
-          <h1 className="mb-6 text-3xl font-bold text-yellow-400">Quiz Terminé !</h1>
+          <h1 className="mb-6 text-3xl font-bold text-yellow-400">
+            Quiz Terminé !
+          </h1>
           <p className="mb-4 text-2xl text-white">
             Votre score final est {score} / {questions.length}
           </p>
@@ -78,12 +82,6 @@ export default function Quizz() {
               <div ref={certificateRef}>
                 <Certificat />
               </div>
-              <button
-                onClick={handleDownload}
-                className="px-4 py-2 mt-6 font-bold text-white transition bg-yellow-500 rounded hover:bg-yellow-600"
-              >
-                Télécharger le certificat
-              </button>
             </>
           )}
         </div>
@@ -134,7 +132,9 @@ export default function Quizz() {
               onClick={handleNext}
               className="rounded-md bg-yellow-400 px-4 py-2 text-sm font-semibold text-black shadow hover:bg-[#8ccf64] focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-600"
             >
-              {currentQuestionIndex + 1 === questions.length ? "Terminer" : "Question suivante"}
+              {currentQuestionIndex + 1 === questions.length
+                ? "Terminer"
+                : "Question suivante"}
             </button>
           </div>
         )}
