@@ -2,11 +2,12 @@ import { useState, useRef, useEffect } from "react";
 import questions from "../data/quizz.json";
 import html2pdf from "html2pdf.js";
 import confetti from "canvas-confetti";
-import Certificat from "./Certificat"; // 🔹 Vérifie le chemin
-
+import { createCertificat } from "../api/certificat.api";
 export default function Quizz() {
   const [currentQuestionIndex, setCurrentQuestionIndex] = useState(0);
   const [selectedAnswer, setSelectedAnswer] = useState(null);
+  const [pseudo, setPseudo] = useState("");
+
   const [score, setScore] = useState(0);
   const [finished, setFinished] = useState(false);
   const certificateRef = useRef(null);
@@ -33,14 +34,18 @@ export default function Quizz() {
     }
   };
 
-  const handleDownload = () => {
-    const element = certificateRef.current;
-    html2pdf().from(element).save("certificat.pdf");
-  };
+  useEffect(() => {
+    const storedUser = localStorage.getItem("user");
+    if (storedUser) {
+      const user = JSON.parse(storedUser);
+      if (user.pseudo) setPseudo(user.pseudo);
+    }
+  }, []);
 
   // 🎆 Feux d’artifice si score parfait et quiz fini
   useEffect(() => {
     if (finished && score === questions.length) {
+      // 🎉 Confettis
       const duration = 2 * 1000;
       const animationEnd = Date.now() + duration;
 
@@ -64,30 +69,19 @@ export default function Quizz() {
       };
 
       frame();
+
+      // 🟢 Enregistrer le certificat en BDD
+      const userName = pseudo;
+      createCertificat({
+        name: userName,
+        date: new Date().toISOString(), // Facultatif si la BDD gère la date
+      })
+        .then(() => console.log("Certificat enregistré 🎓"))
+        .catch((error) =>
+          console.error("Erreur lors de la création du certificat :", error)
+        );
     }
   }, [finished, score]);
-
-  if (finished) {
-    return (
-      <div className="flex flex-col items-center px-12">
-        <div className="container mx-auto p-4 bg-sky-900 rounded-2xl font-['Josefin_Sans'] text-[#dfe4ea] mt-30 mb-30 text-center">
-          <h1 className="mb-6 text-3xl font-bold text-yellow-400">
-            Quiz Terminé !
-          </h1>
-          <p className="mb-4 text-2xl text-white">
-            Votre score final est {score} / {questions.length}
-          </p>
-          {score === questions.length && (
-            <>
-              <div ref={certificateRef}>
-                <Certificat />
-              </div>
-            </>
-          )}
-        </div>
-      </div>
-    );
-  }
 
   return (
     <div className="flex flex-col items-center px-12">
