@@ -52,6 +52,9 @@ function CoursHTMLCSS() {
     w-full
     box-border
     break-words
+
+    max-h-200         // Hauteur max (~16rem)
+    overflow-y-auto  // Scroll vertical si dépasse
   "
         >
           {cours.explication || "Aucune explication fournie."}
