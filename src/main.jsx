@@ -25,7 +25,7 @@ import "./index.css";
 import UserIsAdmin from "./components/secure/UserIsAdmin";
 import Authorized from "./pages/Authorized";
 import CoursHTMLCSS from "./components/Contenu/Contenu";
-
+import Reset from "./pages/Reset";
 const router = createBrowserRouter([
   {
     path: "/",
@@ -50,7 +50,10 @@ const router = createBrowserRouter([
           </UserConnected>
         ),
       },
+
       { path: "Coatch", element: <Coaching /> },
+
+      { path: "reset", element: <Reset /> },
 
       // <-- ici la route detail avec paramètre id
       { path: "cours/:id", element: <CoursHTMLCSS /> },
