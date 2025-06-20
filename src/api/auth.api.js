@@ -16,6 +16,19 @@ export async function updateUser(updatedData) {
   return { ok: response.ok, data };
 }
 
+export async function forgot(data) {
+  const response = await fetch(`${BASE_URL}/user/forgot`, {
+    method: "POST",
+    headers: {
+      "Content-Type": "application/json",
+    },
+    body: JSON.stringify(data),
+  });
+
+  const responseData = await response.json();
+  return { ok: response.ok, data: responseData };
+}
+
 export async function signup(values) {
   console.log(values);
   try {

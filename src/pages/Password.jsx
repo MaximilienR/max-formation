@@ -1,10 +1,10 @@
-import React from "react";
-import { NavLink } from "react-router-dom";
+import React, { useState } from "react";
 import { yupResolver } from "@hookform/resolvers/yup";
 import * as yup from "yup";
 
 import toast from "react-hot-toast";
 import { useForm } from "react-hook-form";
+import { forgot } from "../api/auth.api";
 
 const schema = yup.object({
   email: yup
@@ -14,6 +14,8 @@ const schema = yup.object({
 });
 
 export default function Password() {
+  const [loading, setLoading] = useState(false);
+
   const {
     register,
     handleSubmit,
@@ -25,9 +27,23 @@ export default function Password() {
       email: "",
     },
   });
+
   async function submit(values) {
-    console.log(values);
+    setLoading(true);
+    try {
+      const result = await forgot({ email: values.email });
+      if (result.ok) {
+        toast.success("Email de réinitialisation envoyé !");
+      } else {
+        toast.error(result.data.message || "Erreur lors de l’envoi");
+      }
+    } catch (error) {
+      toast.error("Erreur réseau ou serveur");
+    } finally {
+      setLoading(false);
+    }
   }
+
   return (
     <div className="container flex items-center justify-center p-4 mx-auto bg-sky-900 rounded-2xl mt-50 mb-50">
       <div className="w-full p-4 md:w-1/2 xl:w-1/3">
@@ -47,7 +63,8 @@ export default function Password() {
               id="email"
               className="w-full p-2 bg-gray-100 border rounded"
               {...register("email")}
-              placeholder="veuillez saisir votre texte"
+              placeholder="Veuillez saisir votre email"
+              disabled={loading}
             />
             {errors.email && (
               <p className="text-orange-200">{errors.email.message}</p>
@@ -56,9 +73,10 @@ export default function Password() {
 
           <button
             type="submit"
-            className="rounded-md bg-yellow-400  px-4 py-2 text-sm font-semibold text-white shadow hover:bg-[#8ccf64] focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-600"
+            className="rounded-md bg-yellow-400 px-4 py-2 text-sm font-semibold text-white shadow hover:bg-[#8ccf64] focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-600 disabled:opacity-50"
+            disabled={loading}
           >
-            Envoyer
+            {loading ? "Envoi..." : "Envoyer"}
           </button>
         </form>
       </div>
