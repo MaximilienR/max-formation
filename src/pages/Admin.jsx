@@ -1,11 +1,17 @@
 import React, { useState, useEffect } from "react";
 import Aside from "../components/Profil/aside";
-import { createCours, getCours, deleteCours, updateCours } from "../api/cours.api";
+import {
+  createCours,
+  getCours,
+  deleteCours,
+  updateCours,
+} from "../api/cours.api";
 
 export default function Admin() {
   const [showModal, setShowModal] = useState(false);
   const [coursName, setCoursName] = useState("");
   const [description, setDescription] = useState("");
+  const [explication, setExplication] = useState(""); // <- nouveau champ
   const [link, setLink] = useState("");
   const [image, setImage] = useState("");
   const [niveau, setNiveau] = useState(1);
@@ -16,6 +22,7 @@ export default function Admin() {
     setEditingCoursId(null);
     setCoursName("");
     setDescription("");
+    setExplication(""); // <- reset explication
     setLink("");
     setImage("");
     setNiveau(1);
@@ -26,6 +33,7 @@ export default function Admin() {
     setEditingCoursId(cours._id);
     setCoursName(cours.name);
     setDescription(cours.description);
+    setExplication(cours.explication || ""); // <- charger explication
     setLink(cours.link || "");
     setImage(cours.image || "");
     setNiveau(cours.niveau || 1);
@@ -41,6 +49,7 @@ export default function Admin() {
     const body = {
       name: coursName,
       description,
+      explication, // <- nouveau champ
       link: link.trim() !== "" ? link : undefined,
       image: image.trim(),
       niveau: Number(niveau),
@@ -59,6 +68,7 @@ export default function Admin() {
 
       setCoursName("");
       setDescription("");
+      setExplication(""); // <- reset
       setLink("");
       setImage("");
       setNiveau(1);
@@ -161,8 +171,8 @@ export default function Admin() {
               </h1>
 
               <p className="text-lg text-center mb-10 max-w-2xl mx-auto">
-                Remplis les champs ci-dessous pour créer ou modifier un cours dans
-                ta plateforme.
+                Remplis les champs ci-dessous pour créer ou modifier un cours
+                dans ta plateforme.
               </p>
 
               <form
@@ -173,7 +183,10 @@ export default function Admin() {
                 className="space-y-6 bg-sky-800 p-8 rounded-2xl shadow-xl"
               >
                 <div>
-                  <label htmlFor="courseName" className="block text-xl font-semibold mb-2">
+                  <label
+                    htmlFor="courseName"
+                    className="block text-xl font-semibold mb-2"
+                  >
                     Nom du cours
                   </label>
                   <input
@@ -188,7 +201,10 @@ export default function Admin() {
                 </div>
 
                 <div>
-                  <label htmlFor="description" className="block text-xl font-semibold mb-2">
+                  <label
+                    htmlFor="description"
+                    className="block text-xl font-semibold mb-2"
+                  >
                     Description du cours
                   </label>
                   <textarea
@@ -202,7 +218,27 @@ export default function Admin() {
                 </div>
 
                 <div>
-                  <label htmlFor="link" className="block text-xl font-semibold mb-2">
+                  <label
+                    htmlFor="explication"
+                    className="block text-xl font-semibold mb-2"
+                  >
+                    Explication du cours
+                  </label>
+                  <textarea
+                    id="explication"
+                    rows={4}
+                    value={explication}
+                    onChange={(e) => setExplication(e.target.value)}
+                    className="w-full px-4 py-2 rounded-lg bg-white text-black focus:outline-none focus:ring-4 focus:ring-yellow-400"
+                    placeholder="Ajoute une explication supplémentaire sur le cours"
+                  />
+                </div>
+
+                <div>
+                  <label
+                    htmlFor="link"
+                    className="block text-xl font-semibold mb-2"
+                  >
                     Lien du cours (optionnel)
                   </label>
                   <input
@@ -216,7 +252,10 @@ export default function Admin() {
                 </div>
 
                 <div>
-                  <label htmlFor="image" className="block text-xl font-semibold mb-2">
+                  <label
+                    htmlFor="image"
+                    className="block text-xl font-semibold mb-2"
+                  >
                     Image d’illustration
                   </label>
                   <input
@@ -231,7 +270,10 @@ export default function Admin() {
                 </div>
 
                 <div>
-                  <label htmlFor="niveau" className="block text-xl font-semibold mb-2">
+                  <label
+                    htmlFor="niveau"
+                    className="block text-xl font-semibold mb-2"
+                  >
                     Niveau du cours (1 à 5)
                   </label>
                   <select
@@ -242,7 +284,9 @@ export default function Admin() {
                     required
                   >
                     {[1, 2, 3, 4, 5].map((n) => (
-                      <option key={n} value={n}>Niveau {n}</option>
+                      <option key={n} value={n}>
+                        Niveau {n}
+                      </option>
                     ))}
                   </select>
                 </div>
@@ -259,7 +303,9 @@ export default function Admin() {
                     type="submit"
                     className="px-6 py-2 bg-yellow-400 text-black font-semibold rounded hover:bg-yellow-500"
                   >
-                    {editingCoursId ? "Enregistrer les modifications" : "Créer le cours"}
+                    {editingCoursId
+                      ? "Enregistrer les modifications"
+                      : "Créer le cours"}
                   </button>
                 </div>
               </form>
