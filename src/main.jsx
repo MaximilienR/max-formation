@@ -24,6 +24,7 @@ import Admin from "./pages/Admin";
 import "./index.css";
 import UserIsAdmin from "./components/secure/UserIsAdmin";
 import Authorized from "./pages/Authorized";
+import CoursHTMLCSS from "./components/Contenu/Contenu";
 
 const router = createBrowserRouter([
   {
@@ -52,7 +53,7 @@ const router = createBrowserRouter([
       { path: "Coatch", element: <Coaching /> },
 
       // <-- ici la route detail avec paramètre id
-{ path: "cours/:id", element: <Detail /> },
+      { path: "cours/:id", element: <CoursHTMLCSS /> },
 
       {
         path: "profil",
