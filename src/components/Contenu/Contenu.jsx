@@ -4,43 +4,59 @@ import { getCoursById } from "../../api/cours.api";
 import video from "../../Assets/video/test.mp4";
 
 function CoursHTMLCSS() {
-  const { id } = useParams(); // 🔑 Récupère l'ID depuis l'URL
+  const { id } = useParams();
   const [cours, setCours] = useState(null);
-  const [loading, setLoading] = useState(true);
 
   useEffect(() => {
     async function fetchCours() {
       try {
         const data = await getCoursById(id);
         setCours(data);
-        setLoading(false);
       } catch (error) {
-        console.error("Erreur lors du chargement du cours :", error);
-        setLoading(false);
+        console.error("Erreur de chargement :", error);
       }
     }
-
     fetchCours();
   }, [id]);
 
-  if (loading) {
-    return <p className="text-center text-white">Chargement...</p>;
-  }
-
   if (!cours) {
-    return <p className="text-center text-red-500">Cours introuvable.</p>;
+    return <div className="text-center text-white">Chargement...</div>;
   }
 
   return (
-    <div className="container mx-auto p-6 bg-sky-900 rounded-2xl font-['Josefin_Sans'] text-[#dfe4ea]">
+    <div className="container mx-auto p-6 bg-sky-900 rounded-2xl font-['Josefin_Sans'] text-[#dfe4ea] overflow-hidden">
       <h1 className="mt-4 text-3xl font-bold text-center">
         {cours.name || "Cours HTML & CSS"}
       </h1>
 
-      {/* ✅ Explication du cours */}
-      <div className="mt-6 text-lg whitespace-pre-line">
-        {cours.explication}
-      </div>
+      <section className="mt-6">
+        <h2 className="mb-2 text-2xl font-bold text-yellow-400">Explication</h2>
+        <p
+          className="
+    text-lg 
+    whitespace-pre-line 
+    text-black 
+    font-semibold 
+    tracking-wide 
+    uppercase 
+    bg-gray-100 border rounded
+    border-red-400 
+    rounded-lg 
+    p-4 
+    shadow-lg 
+    hover:bg-red-200 
+    transition 
+    duration-300 
+    ease-in-out
+    max-w-full
+    w-full
+    box-border
+    break-words
+  "
+        >
+          {cours.explication || "Aucune explication fournie."}
+        </p>
+      </section>
 
       <section className="mt-8 text-center">
         <video
