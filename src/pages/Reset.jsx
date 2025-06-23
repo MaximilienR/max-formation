@@ -3,11 +3,12 @@ import { useForm } from "react-hook-form";
 import * as yup from "yup";
 import { yupResolver } from "@hookform/resolvers/yup";
 import toast from "react-hot-toast";
-import { FaEye, FaEyeSlash } from "react-icons/fa"; // import des icônes
+import { FaEye, FaEyeSlash } from "react-icons/fa";
+import { useSearchParams, useNavigate } from "react-router-dom";
+import { BASE_URL } from "../utils/url";
 
 // Schéma yup pour validation du mot de passe et confirmation
 const schema = yup.object().shape({
-  email: yup.string().email("Email invalide").required("Email requis"),
   password: yup
     .string()
     .required("Le mot de passe est obligatoire")
@@ -30,6 +31,9 @@ export default function Reset() {
   const [showPassword, setShowPassword] = useState(false);
   const [showConfirmPassword, setShowConfirmPassword] = useState(false);
 
+  const [searchParams] = useSearchParams();
+  const navigate = useNavigate();
+
   const {
     register,
     handleSubmit,
@@ -43,12 +47,35 @@ export default function Reset() {
     setShowConfirmPassword(!showConfirmPassword);
 
   const submit = async (data) => {
+    const token = searchParams.get("token");
+
+    if (!token) {
+      toast.error("Lien invalide ou expiré");
+      return;
+    }
+
     try {
-      // Exemple d'appel API
-      // await signup(data);
-      toast.success("Mot de passe réinitialisé !");
+      const response = await fetch(`${BASE_URL}/user/resetPassword`, {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({
+          token,
+          newPassword: data.password,
+        }),
+      });
+
+      const result = await response.json();
+
+      if (!response.ok) {
+        throw new Error(result.message || "Erreur lors de la réinitialisation");
+      }
+
+      toast.success("Mot de passe réinitialisé avec succès !");
+      navigate("/login"); // redirige vers la page de connexion
     } catch (error) {
-      toast.error("Erreur lors de la réinitialisation");
+      toast.error(error.message || "Échec de la réinitialisation");
     }
   };
 
@@ -78,15 +105,29 @@ export default function Reset() {
               className="w-full p-2 bg-gray-100 border rounded"
               {...register("password")}
               disabled={isSubmitting}
+              aria-invalid={errors.password ? "true" : "false"}
             />
             <span
               onClick={togglePasswordVisibility}
               className="absolute inset-y-0 right-0 flex items-center pr-3 text-white cursor-pointer top-6"
+              role="button"
+              tabIndex={0}
+              aria-label={
+                showPassword
+                  ? "Masquer le mot de passe"
+                  : "Afficher le mot de passe"
+              }
+              onKeyDown={(e) => {
+                if (e.key === "Enter" || e.key === " ")
+                  togglePasswordVisibility();
+              }}
             >
               {showPassword ? <FaEyeSlash /> : <FaEye />}
             </span>
             {errors.password && (
-              <p className="text-orange-200 mt-1">{errors.password.message}</p>
+              <p className="text-orange-200 mt-1" role="alert">
+                {errors.password.message}
+              </p>
             )}
           </div>
 
@@ -105,15 +146,27 @@ export default function Reset() {
               className="w-full p-2 bg-gray-100 border rounded"
               {...register("confirmPassword")}
               disabled={isSubmitting}
+              aria-invalid={errors.confirmPassword ? "true" : "false"}
             />
             <span
               onClick={toggleConfirmPasswordVisibility}
               className="absolute inset-y-0 right-0 flex items-center pr-3 text-white cursor-pointer top-6"
+              role="button"
+              tabIndex={0}
+              aria-label={
+                showConfirmPassword
+                  ? "Masquer le mot de passe"
+                  : "Afficher le mot de passe"
+              }
+              onKeyDown={(e) => {
+                if (e.key === "Enter" || e.key === " ")
+                  toggleConfirmPasswordVisibility();
+              }}
             >
               {showConfirmPassword ? <FaEyeSlash /> : <FaEye />}
             </span>
             {errors.confirmPassword && (
-              <p className="text-orange-200 mt-1">
+              <p className="text-orange-200 mt-1" role="alert">
                 {errors.confirmPassword.message}
               </p>
             )}
