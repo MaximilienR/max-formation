@@ -79,3 +79,27 @@ export async function getCoursById(id) {
   const data = await response.json();
   return data;
 }
+
+// Créer un quiz (POST)
+export async function createQuiz(values) {
+  try {
+    const response = await fetch(`${BASE_URL}/quizz`, {
+      method: "POST",
+      body: JSON.stringify(values),
+      headers: {
+        "Content-Type": "application/json",
+      },
+    });
+
+    if (!response.ok) {
+      const errorData = await response.json();
+      throw new Error(errorData.message || "Erreur inconnue du serveur");
+    }
+
+    const data = await response.json();
+    return data;
+  } catch (error) {
+    console.error("Erreur API createQuiz:", error);
+    throw error;
+  }
+}

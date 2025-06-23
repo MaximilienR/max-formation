@@ -17,6 +17,9 @@ export default function Admin() {
   const [niveau, setNiveau] = useState(1);
   const [cours, setCours] = useState([]);
   const [editingCoursId, setEditingCoursId] = useState(null);
+  const [quizQuestion, setQuizQuestion] = useState("");
+  const [quizAnswers, setQuizAnswers] = useState(["", "", "", ""]);
+  const [correctAnswerIndex, setCorrectAnswerIndex] = useState(0);
 
   const openAddModal = () => {
     setEditingCoursId(null);
@@ -26,6 +29,10 @@ export default function Admin() {
     setLink("");
     setImage("");
     setNiveau(1);
+    setShowModal(true);
+    setQuizQuestion("");
+    setQuizAnswers(["", "", "", ""]);
+    setCorrectAnswerIndex(0);
     setShowModal(true);
   };
 
@@ -38,6 +45,10 @@ export default function Admin() {
     setImage(cours.image || "");
     setNiveau(cours.niveau || 1);
     setShowModal(true);
+    setQuizQuestion(cours.quiz?.question || "");
+    setQuizAnswers(cours.quiz?.answers || ["", "", "", ""]);
+    setCorrectAnswerIndex(cours.quiz?.correctAnswerIndex ?? 0);
+    setShowModal(true);
   };
 
   const handleSave = async () => {
@@ -49,12 +60,16 @@ export default function Admin() {
     const body = {
       name: coursName,
       description,
-      explication, // <- nouveau champ
+      explication,
       link: link.trim() !== "" ? link : undefined,
       image: image.trim(),
       niveau: Number(niveau),
+      quiz: {
+        question: quizQuestion,
+        answers: quizAnswers,
+        correctAnswerIndex: Number(correctAnswerIndex),
+      },
     };
-
     try {
       if (editingCoursId) {
         const updated = await updateCours(editingCoursId, body);
@@ -286,6 +301,59 @@ export default function Admin() {
                     {[1, 2, 3, 4, 5].map((n) => (
                       <option key={n} value={n}>
                         Niveau {n}
+                      </option>
+                    ))}
+                  </select>
+                </div>
+
+                <div>
+                  <label className="block text-xl font-semibold mb-2">
+                    Question du Quiz
+                  </label>
+                  <input
+                    type="text"
+                    value={quizQuestion}
+                    onChange={(e) => setQuizQuestion(e.target.value)}
+                    className="w-full px-4 py-2 rounded-lg bg-white text-black focus:outline-none focus:ring-4 focus:ring-yellow-400"
+                    placeholder="Ex: Quelle balise permet de créer un lien ?"
+                  />
+                </div>
+
+                <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
+                  {quizAnswers.map((answer, index) => (
+                    <div key={index}>
+                      <label className="block text-sm font-medium mb-1">
+                        Réponse {index + 1}
+                      </label>
+                      <input
+                        type="text"
+                        value={answer}
+                        onChange={(e) => {
+                          const updated = [...quizAnswers];
+                          updated[index] = e.target.value;
+                          setQuizAnswers(updated);
+                        }}
+                        className="w-full px-3 py-2 rounded-lg bg-white text-black"
+                        placeholder={`Réponse ${index + 1}`}
+                      />
+                    </div>
+                  ))}
+                </div>
+
+                <div className="mt-4">
+                  <label className="block text-xl font-semibold mb-2">
+                    Numéro de la bonne réponse (1 à 4)
+                  </label>
+                  <select
+                    value={correctAnswerIndex}
+                    onChange={(e) =>
+                      setCorrectAnswerIndex(Number(e.target.value))
+                    }
+                    className="w-full px-4 py-2 rounded-lg bg-white text-black focus:outline-none focus:ring-4 focus:ring-yellow-400"
+                  >
+                    {[0, 1, 2, 3].map((i) => (
+                      <option key={i} value={i}>
+                        Réponse {i + 1}
                       </option>
                     ))}
                   </select>
