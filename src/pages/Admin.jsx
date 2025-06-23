@@ -12,7 +12,7 @@ export default function Admin() {
   const [coursName, setCoursName] = useState("");
   const [description, setDescription] = useState("");
   const [explication, setExplication] = useState(""); // <- nouveau champ
-  const [link, setLink] = useState("");
+  const [video, setVideo] = useState("");
   const [image, setImage] = useState("");
   const [niveau, setNiveau] = useState(1);
   const [cours, setCours] = useState([]);
@@ -26,7 +26,7 @@ export default function Admin() {
     setCoursName("");
     setDescription("");
     setExplication(""); // <- reset explication
-    setLink("");
+    setVideo("");
     setImage("");
     setNiveau(1);
     setShowModal(true);
@@ -41,7 +41,7 @@ export default function Admin() {
     setCoursName(cours.name);
     setDescription(cours.description);
     setExplication(cours.explication || ""); // <- charger explication
-    setLink(cours.link || "");
+    setVideo(cours.video || "");
     setImage(cours.image || "");
     setNiveau(cours.niveau || 1);
     setShowModal(true);
@@ -61,7 +61,7 @@ export default function Admin() {
       name: coursName,
       description,
       explication,
-      link: link.trim() !== "" ? link : undefined,
+      video: video.trim() !== "" ? video : undefined,
       image: image.trim(),
       niveau: Number(niveau),
       quiz: {
@@ -84,7 +84,7 @@ export default function Admin() {
       setCoursName("");
       setDescription("");
       setExplication(""); // <- reset
-      setLink("");
+      setVideo("");
       setImage("");
       setNiveau(1);
       setEditingCoursId(null);
@@ -257,10 +257,10 @@ export default function Admin() {
                     Lien du cours (optionnel)
                   </label>
                   <input
-                    id="link"
+                    id="video"
                     type="url"
-                    value={link}
-                    onChange={(e) => setLink(e.target.value)}
+                    value={video}
+                    onChange={(e) => setVideo(e.target.value)}
                     className="w-full px-4 py-2 rounded-lg bg-white text-black focus:outline-none focus:ring-4 focus:ring-yellow-400"
                     placeholder="https://exemple.com/ton-cours"
                   />
