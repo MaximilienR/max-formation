@@ -103,3 +103,15 @@ export async function createQuiz(values) {
     throw error;
   }
 }
+
+// Récupérer le quiz par ID du cours (GET)
+export async function getQuizzByCoursId(coursId) {
+  const response = await fetch(`${BASE_URL}/cours/quizz/cours/${coursId}`);
+
+  if (!response.ok) {
+    throw new Error("Erreur lors de la récupération du quiz.");
+  }
+
+  const data = await response.json();
+  return data;
+}

@@ -74,7 +74,7 @@ function CoursHTMLCSS() {
       </section>
 
       <div className="mt-8 text-center">
-        <Link to="/quizz">
+        <Link to={`/quizz/${cours._id}`}>
           <button className="rounded-md bg-yellow-400 px-6 py-3 text-sm font-semibold text-black shadow hover:bg-[#8ccf64] focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-600">
             Passer au Quizz
           </button>

@@ -1,10 +1,15 @@
 import { useState, useRef, useEffect } from "react";
-import questions from "../data/quizz.json";
-import html2pdf from "html2pdf.js";
+import { useParams } from "react-router-dom";
 import confetti from "canvas-confetti";
 import { createCertificat } from "../api/certificat.api";
+import { getQuizzByCoursId } from "../api/cours.api";
+
 export default function Quizz() {
-  const [currentQuestionIndex, setCurrentQuestionIndex] = useState(0);
+  const { coursId } = useParams();
+  const [quizz, setQuizz] = useState(null);
+  const [loading, setLoading] = useState(true);
+  const [error, setError] = useState(null);
+
   const [selectedAnswer, setSelectedAnswer] = useState(null);
   const [pseudo, setPseudo] = useState("");
 
@@ -12,27 +17,20 @@ export default function Quizz() {
   const [finished, setFinished] = useState(false);
   const certificateRef = useRef(null);
 
-  const question = questions[currentQuestionIndex];
-  const { question: intitule, reponses, bonneReponse } = question;
-
-  const handleAnswerClick = (reponseChoisie) => {
-    setSelectedAnswer(reponseChoisie);
-
-    const isCorrect =
-      reponseChoisie === bonneReponse ||
-      Number(reponseChoisie) === bonneReponse;
-    if (isCorrect) setScore((prev) => prev + 1);
-  };
-
-  const handleNext = () => {
-    setSelectedAnswer(null);
-
-    if (currentQuestionIndex + 1 < questions.length) {
-      setCurrentQuestionIndex(currentQuestionIndex + 1);
-    } else {
-      setFinished(true);
+  useEffect(() => {
+    async function fetchQuizz() {
+      try {
+        setLoading(true);
+        const data = await getQuizzByCoursId(coursId);
+        setQuizz(data);
+        setLoading(false);
+      } catch (err) {
+        setError("Erreur lors du chargement du quiz.");
+        setLoading(false);
+      }
     }
-  };
+    fetchQuizz();
+  }, [coursId]);
 
   useEffect(() => {
     const storedUser = localStorage.getItem("user");
@@ -42,20 +40,13 @@ export default function Quizz() {
     }
   }, []);
 
-  // 🎆 Feux d’artifice si score parfait et quiz fini
   useEffect(() => {
-    if (finished && score === questions.length) {
-      // 🎉 Confettis
-      const duration = 2 * 1000;
+    if (finished && score === 1) {
+      const duration = 2000;
       const animationEnd = Date.now() + duration;
 
       const frame = () => {
-        confetti({
-          particleCount: 5,
-          angle: 60,
-          spread: 55,
-          origin: { x: 0 },
-        });
+        confetti({ particleCount: 5, angle: 60, spread: 55, origin: { x: 0 } });
         confetti({
           particleCount: 5,
           angle: 120,
@@ -63,25 +54,38 @@ export default function Quizz() {
           origin: { x: 1 },
         });
 
-        if (Date.now() < animationEnd) {
-          requestAnimationFrame(frame);
-        }
+        if (Date.now() < animationEnd) requestAnimationFrame(frame);
       };
 
       frame();
 
-      // 🟢 Enregistrer le certificat en BDD
-      const userName = pseudo;
       createCertificat({
-        name: userName,
-        date: new Date().toISOString(), // Facultatif si la BDD gère la date
-      })
-        .then(() => console.log("Certificat enregistré 🎓"))
-        .catch((error) =>
-          console.error("Erreur lors de la création du certificat :", error)
-        );
+        name: pseudo,
+        date: new Date().toISOString(),
+      }).catch((err) =>
+        console.error("Erreur lors de la création du certificat :", err)
+      );
     }
-  }, [finished, score]);
+  }, [finished, score, pseudo]);
+
+  if (loading) return <p>Chargement du quiz...</p>;
+  if (error) return <p>{error}</p>;
+  if (!quizz) return <p>Aucune question disponible pour ce quiz.</p>;
+
+  const {
+    question: intitule,
+    reponse: reponses,
+    reponseCorrect: indexBonneReponse,
+  } = quizz;
+
+  const handleAnswerClick = (reponse, index) => {
+    setSelectedAnswer(index);
+    setScore(index === indexBonneReponse ? 1 : 0);
+  };
+
+  const handleFinish = () => {
+    setFinished(true);
+  };
 
   return (
     <div className="flex flex-col items-center px-12">
@@ -90,26 +94,26 @@ export default function Quizz() {
           Quizz
         </h1>
         <p className="mt-1 text-sm text-center text-amber-50">
-          Question {currentQuestionIndex + 1} sur {questions.length}
+          Question 1 sur 1
         </p>
 
         <h2 className="text-2xl font-bold text-[#ffa502] text-center mt-10 mb-8">
           {intitule}
         </h2>
 
-        <div className="flex flex-wrap justify-center max-w-xl gap-4 mx-auto">
+        <div className="flex flex-wrap justify-center max-w-xl gap-10 mx-auto">
           {reponses.map((reponse, index) => (
             <button
               key={index}
-              onClick={() => handleAnswerClick(reponse)}
+              onClick={() => handleAnswerClick(reponse, index)}
               disabled={selectedAnswer !== null}
-              className={`flex-1 basis-[45%] min-w-[200px] h-20 rounded px-4 py-2 font-semibold text-lg transition duration-500 active:scale-90
+              className={`flex-1 basis-[45%] min-w-[140px] h-60 rounded px-6 py-4 font-semibold text-lg transition duration-500 active:scale-90
                 ${
-                  selectedAnswer
-                    ? reponse === bonneReponse
-                      ? "bg-green-400 text-black"
-                      : reponse === selectedAnswer
+                  selectedAnswer !== null
+                    ? index === selectedAnswer && index !== indexBonneReponse
                       ? "bg-red-400 text-white"
+                      : index === indexBonneReponse
+                      ? "bg-green-400 text-black"
                       : "bg-[#dfe4ea] text-black"
                     : "bg-[#dfe4ea] text-black hover:bg-[#ffa502]"
                 }
@@ -123,12 +127,10 @@ export default function Quizz() {
         {selectedAnswer !== null && (
           <div className="flex justify-center mt-8">
             <button
-              onClick={handleNext}
+              onClick={handleFinish}
               className="rounded-md bg-yellow-400 px-4 py-2 text-sm font-semibold text-black shadow hover:bg-[#8ccf64] focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-600"
             >
-              {currentQuestionIndex + 1 === questions.length
-                ? "Terminer"
-                : "Question suivante"}
+              Terminer
             </button>
           </div>
         )}

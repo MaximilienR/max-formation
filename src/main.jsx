@@ -71,7 +71,7 @@ const router = createBrowserRouter([
         element: <Achat />,
       },
       {
-        path: "quizz",
+        path: "quizz/:coursId",
         element: (
           <UserConnected>
             <Quizz />
