@@ -195,12 +195,12 @@ export default function Admin() {
                   e.preventDefault();
                   handleSave();
                 }}
-                className="space-y-6 bg-sky-800 p-8 rounded-2xl shadow-xl"
+                className="space-y-6 bg-gray-300 p-8 rounded-2xl shadow-xl"
               >
                 <div>
                   <label
                     htmlFor="courseName"
-                    className="block text-xl font-semibold mb-2"
+                    className="block text-xl font-semibold mb-2 text-sky-900"
                   >
                     Nom du cours
                   </label>
@@ -218,7 +218,7 @@ export default function Admin() {
                 <div>
                   <label
                     htmlFor="description"
-                    className="block text-xl font-semibold mb-2"
+                    className="block text-xl font-semibold mb-2 text-sky-900"
                   >
                     Description du cours
                   </label>
@@ -235,7 +235,7 @@ export default function Admin() {
                 <div>
                   <label
                     htmlFor="explication"
-                    className="block text-xl font-semibold mb-2"
+                    className="block text-xl font-semibold mb-2 text-sky-900"
                   >
                     Explication du cours
                   </label>
@@ -252,7 +252,7 @@ export default function Admin() {
                 <div>
                   <label
                     htmlFor="link"
-                    className="block text-xl font-semibold mb-2"
+                    className="block text-xl font-semibold mb-2 text-sky-900"
                   >
                     Lien du cours (optionnel)
                   </label>
@@ -269,7 +269,7 @@ export default function Admin() {
                 <div>
                   <label
                     htmlFor="image"
-                    className="block text-xl font-semibold mb-2"
+                    className="block text-xl font-semibold mb-2 text-sky-900"
                   >
                     Image d’illustration
                   </label>
@@ -287,7 +287,7 @@ export default function Admin() {
                 <div>
                   <label
                     htmlFor="niveau"
-                    className="block text-xl font-semibold mb-2"
+                    className="block text-xl font-semibold mb-2 text-sky-900"
                   >
                     Niveau du cours (1 à 5)
                   </label>
@@ -307,7 +307,7 @@ export default function Admin() {
                 </div>
 
                 <div>
-                  <label className="block text-xl font-semibold mb-2">
+                  <label className="block text-xl font-semibold mb-2 text-sky-900">
                     Question du Quiz
                   </label>
                   <input
@@ -322,7 +322,7 @@ export default function Admin() {
                 <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
                   {quizAnswers.map((answer, index) => (
                     <div key={index}>
-                      <label className="block text-sm font-medium mb-1">
+                      <label className="block text-xl font-semibold mb-2 text-sky-900">
                         Réponse {index + 1}
                       </label>
                       <input
@@ -341,7 +341,7 @@ export default function Admin() {
                 </div>
 
                 <div className="mt-4">
-                  <label className="block text-xl font-semibold mb-2">
+                  <label className="block text-xl font-semibold mb-2 text-sky-900">
                     Numéro de la bonne réponse (1 à 4)
                   </label>
                   <select
