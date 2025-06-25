@@ -68,11 +68,11 @@ export default function Detail() {
           coursId: id,
           nom: cours.name,
           date: new Date().toLocaleDateString(),
-          lien: `/contenu/${id}`, // lien vers le contenu
+          lien: `/contenu/${id}`,
         });
         localStorage.setItem("achats", JSON.stringify(allAchats));
         setAlreadyBought(true);
-        navigate("/contenu");
+        navigate(`/contenu/${id}`); // ✅ redirige vers le bon contenu
       } else {
         toast.error(response?.error || "Une erreur s'est produite.");
       }
@@ -119,7 +119,7 @@ export default function Detail() {
         {alreadyBought ? (
           <div className="flex justify-center mt-6">
             <button
-              onClick={() => navigate("/contenu")}
+              onClick={() => navigate(`/contenu/${id}`)} // ✅ Reprendre vers bon contenu
               className="px-4 py-2 text-sm font-semibold text-white bg-green-500 rounded-md shadow hover:bg-green-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-green-600"
             >
               Reprendre le cours

@@ -1,4 +1,3 @@
-// main.jsx
 import { UserProvider } from "./components/Context/userContext";
 import React from "react";
 import ReactDOM from "react-dom/client";
@@ -24,8 +23,8 @@ import Admin from "./pages/Admin";
 import "./index.css";
 import UserIsAdmin from "./components/secure/UserIsAdmin";
 import Authorized from "./pages/Authorized";
-import CoursHTMLCSS from "./components/Contenu/Contenu";
 import Reset from "./pages/Reset";
+
 const router = createBrowserRouter([
   {
     path: "/",
@@ -35,61 +34,44 @@ const router = createBrowserRouter([
       { index: true, element: <Home /> },
       { path: "contact", element: <Contact /> },
       { path: "register", element: <Register /> },
-
-      {
-        path: "login",
-        element: <Login />,
-      },
+      { path: "login", element: <Login /> },
       { path: "cours", element: <Cours /> },
+      { path: "cours/:id", element: <Detail /> }, // ✅ vers page détail
       { path: "password", element: <Password /> },
-      {
-        path: "contenu",
-        element: (
+      { path: "contenu", element: (
           <UserConnected>
             <Contenu />
           </UserConnected>
         ),
       },
-
+      { path: "contenu/:id", element: ( // ✅ route dynamique pour un cours
+          <UserConnected>
+            <Contenu />
+          </UserConnected>
+        ),
+      },
       { path: "Coatch", element: <Coaching /> },
-
       { path: "reset", element: <Reset /> },
-
-      // <-- ici la route detail avec paramètre id
-      { path: "cours/:id", element: <CoursHTMLCSS /> },
-
-      {
-        path: "profil",
-        element: (
+      { path: "profil", element: (
           <UserConnected>
             <Profil />
           </UserConnected>
         ),
       },
-      {
-        path: "achat",
-        element: <Achat />,
-      },
-      {
-        path: "quizz/:coursId",
-        element: (
+      { path: "achat", element: <Achat /> },
+      { path: "quizz/:coursId", element: (
           <UserConnected>
             <Quizz />
           </UserConnected>
         ),
       },
-      {
-        path: "admin",
-        element: (
+      { path: "admin", element: (
           <UserIsAdmin>
             <Admin />
           </UserIsAdmin>
         ),
       },
-      {
-        path: "certificat",
-        element: <Certificat />,
-      },
+      { path: "certificat", element: <Certificat /> },
       { path: "Authorized", element: <Authorized /> },
     ],
   },
