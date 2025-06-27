@@ -38,13 +38,18 @@ const router = createBrowserRouter([
       { path: "cours", element: <Cours /> },
       { path: "cours/:id", element: <Detail /> }, // ✅ vers page détail
       { path: "password", element: <Password /> },
-      { path: "contenu", element: (
+      {
+        path: "contenu",
+        element: (
           <UserConnected>
             <Contenu />
           </UserConnected>
         ),
       },
-      { path: "contenu/:id", element: ( // ✅ route dynamique pour un cours
+      {
+        path: "contenu/:id",
+        // ✅ route dynamique pour un cours
+        element: (
           <UserConnected>
             <Contenu />
           </UserConnected>
@@ -52,26 +57,32 @@ const router = createBrowserRouter([
       },
       { path: "Coatch", element: <Coaching /> },
       { path: "reset", element: <Reset /> },
-      { path: "profil", element: (
+      {
+        path: "profil",
+        element: (
           <UserConnected>
             <Profil />
           </UserConnected>
         ),
       },
       { path: "achat", element: <Achat /> },
-      { path: "quizz/:coursId", element: (
+      {
+        path: "quizz/:coursId",
+        element: (
           <UserConnected>
             <Quizz />
           </UserConnected>
         ),
       },
-      { path: "admin", element: (
+      {
+        path: "admin",
+        element: (
           <UserIsAdmin>
             <Admin />
           </UserIsAdmin>
         ),
       },
-      { path: "certificat", element: <Certificat /> },
+      { path: "certificat/:id", element: <Certificat /> },
       { path: "Authorized", element: <Authorized /> },
     ],
   },

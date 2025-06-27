@@ -1,6 +1,5 @@
 import { BASE_URL } from "../utils/url";
 
-// Fonction pour créer un cours (POST)
 export async function createCours(values) {
   try {
     const response = await fetch(`${BASE_URL}/cours`, {
@@ -24,16 +23,14 @@ export async function createCours(values) {
   }
 }
 
-// Fonction pour récupérer les cours (GET)
 export async function getCours() {
-  const response = await fetch(`${BASE_URL}/cours`); // Vérifie que BASE_URL est défini correctement
+  const response = await fetch(`${BASE_URL}/cours`);
   if (!response.ok) throw new Error("Erreur lors du chargement des cours");
   const data = await response.json();
-  console.log("Cours reçus :", data); // pour debug
+  console.log("Cours reçus :", data);
   return data;
 }
 
-// Fonction pour supprimer un cours (DELETE)
 export async function deleteCours(id) {
   try {
     const response = await fetch(`${BASE_URL}/cours/${id}`, {
@@ -45,7 +42,7 @@ export async function deleteCours(id) {
       throw new Error(errorData.message || "Erreur lors de la suppression");
     }
 
-    return await response.json(); // optionnel, selon ce que ton backend renvoie
+    return await response.json();
   } catch (error) {
     console.error("Erreur API deleteCours:", error);
     throw error;
@@ -54,7 +51,6 @@ export async function deleteCours(id) {
 
 export async function updateCours(id, body) {
   const response = await fetch(`${BASE_URL}/cours/${id}`, {
-    // ✅ ICI
     method: "PUT",
     headers: {
       "Content-Type": "application/json",
@@ -69,6 +65,7 @@ export async function updateCours(id, body) {
 
   return await response.json();
 }
+
 export async function getCoursById(id) {
   const response = await fetch(`${BASE_URL}/cours/${id}`);
 
@@ -77,10 +74,11 @@ export async function getCoursById(id) {
   }
 
   const data = await response.json();
+  console.log("getCoursById data:", data); // 👈 AJOUTE CECI
+
   return data;
 }
 
-// Créer un quiz (POST)
 export async function createQuiz(values) {
   try {
     const response = await fetch(`${BASE_URL}/quizz`, {
@@ -104,7 +102,6 @@ export async function createQuiz(values) {
   }
 }
 
-// Récupérer le quiz par ID du cours (GET)
 export async function getQuizzByCoursId(coursId) {
   const response = await fetch(`${BASE_URL}/cours/quizz/cours/${coursId}`);
 

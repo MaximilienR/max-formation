@@ -11,28 +11,36 @@ export default function Admin() {
   const [showModal, setShowModal] = useState(false);
   const [coursName, setCoursName] = useState("");
   const [description, setDescription] = useState("");
-  const [explication, setExplication] = useState(""); // <- nouveau champ
+  const [explication, setExplication] = useState("");
   const [video, setVideo] = useState("");
   const [image, setImage] = useState("");
   const [niveau, setNiveau] = useState(1);
   const [cours, setCours] = useState([]);
   const [editingCoursId, setEditingCoursId] = useState(null);
-  const [quizQuestion, setQuizQuestion] = useState("");
-  const [quizAnswers, setQuizAnswers] = useState(["", "", "", ""]);
-  const [correctAnswerIndex, setCorrectAnswerIndex] = useState(0);
+
+  const [quiz, setQuiz] = useState([
+    {
+      question: "",
+      answers: ["", "", "", ""],
+      correctAnswerIndex: 0,
+    },
+  ]);
 
   const openAddModal = () => {
     setEditingCoursId(null);
     setCoursName("");
     setDescription("");
-    setExplication(""); // <- reset explication
+    setExplication("");
     setVideo("");
     setImage("");
     setNiveau(1);
-    setShowModal(true);
-    setQuizQuestion("");
-    setQuizAnswers(["", "", "", ""]);
-    setCorrectAnswerIndex(0);
+    setQuiz([
+      {
+        question: "",
+        answers: ["", "", "", ""],
+        correctAnswerIndex: 0,
+      },
+    ]);
     setShowModal(true);
   };
 
@@ -40,15 +48,26 @@ export default function Admin() {
     setEditingCoursId(cours._id);
     setCoursName(cours.name);
     setDescription(cours.description);
-    setExplication(cours.explication || ""); // <- charger explication
+    setExplication(cours.explication || "");
     setVideo(cours.video || "");
     setImage(cours.image || "");
     setNiveau(cours.niveau || 1);
+    setQuiz(
+      cours.quiz || [
+        {
+          question: "",
+          answers: ["", "", "", ""],
+          correctAnswerIndex: 0,
+        },
+      ]
+    );
     setShowModal(true);
-    setQuizQuestion(cours.quiz?.question || "");
-    setQuizAnswers(cours.quiz?.answers || ["", "", "", ""]);
-    setCorrectAnswerIndex(cours.quiz?.correctAnswerIndex ?? 0);
-    setShowModal(true);
+  };
+
+  const duplicateQuiz = (index) => {
+    const questionToDuplicate = quiz[index];
+    const newQuiz = [...quiz, { ...questionToDuplicate }];
+    setQuiz(newQuiz);
   };
 
   const handleSave = async () => {
@@ -64,12 +83,9 @@ export default function Admin() {
       video: video.trim() !== "" ? video : undefined,
       image: image.trim(),
       niveau: Number(niveau),
-      quiz: {
-        question: quizQuestion,
-        answers: quizAnswers,
-        correctAnswerIndex: Number(correctAnswerIndex),
-      },
+      quiz,
     };
+
     try {
       if (editingCoursId) {
         const updated = await updateCours(editingCoursId, body);
@@ -83,10 +99,17 @@ export default function Admin() {
 
       setCoursName("");
       setDescription("");
-      setExplication(""); // <- reset
+      setExplication("");
       setVideo("");
       setImage("");
       setNiveau(1);
+      setQuiz([
+        {
+          question: "",
+          answers: ["", "", "", ""],
+          correctAnswerIndex: 0,
+        },
+      ]);
       setEditingCoursId(null);
       setShowModal(false);
     } catch (error) {
@@ -175,7 +198,6 @@ export default function Admin() {
           </tbody>
         </table>
 
-        {/* Modal */}
         {showModal && (
           <div className="fixed inset-0 bg-sky-900 text-[#dfe4ea] z-50 overflow-auto font-['Josefin_Sans']">
             <div className="max-w-4xl mx-auto p-8">
@@ -197,106 +219,82 @@ export default function Admin() {
                 }}
                 className="space-y-6 bg-gray-300 p-8 rounded-2xl shadow-xl"
               >
+                {/* Nom, description, explication, video, image, niveau */}
                 <div>
-                  <label
-                    htmlFor="courseName"
-                    className="block text-xl font-semibold mb-2 text-sky-900"
-                  >
+                  <label className="block text-xl font-semibold mb-2 text-sky-900">
                     Nom du cours
                   </label>
                   <input
-                    id="courseName"
                     type="text"
                     value={coursName}
                     onChange={(e) => setCoursName(e.target.value)}
-                    className="w-full px-4 py-2 rounded-lg bg-white text-black focus:outline-none focus:ring-4 focus:ring-yellow-400"
+                    className="w-full px-4 py-2 rounded-lg bg-white text-black"
                     placeholder="Ex : HTML & CSS - Débutant"
                     required
                   />
                 </div>
 
                 <div>
-                  <label
-                    htmlFor="description"
-                    className="block text-xl font-semibold mb-2 text-sky-900"
-                  >
+                  <label className="block text-xl font-semibold mb-2 text-sky-900">
                     Description du cours
                   </label>
                   <textarea
-                    id="description"
-                    rows={6}
+                    rows={4}
                     value={description}
                     onChange={(e) => setDescription(e.target.value)}
-                    className="w-full px-4 py-2 rounded-lg bg-white text-black focus:outline-none focus:ring-4 focus:ring-yellow-400"
-                    placeholder="Décris le contenu du cours, les objectifs, etc."
+                    className="w-full px-4 py-2 rounded-lg bg-white text-black"
+                    placeholder="Décris le contenu du cours"
                   />
                 </div>
 
                 <div>
-                  <label
-                    htmlFor="explication"
-                    className="block text-xl font-semibold mb-2 text-sky-900"
-                  >
+                  <label className="block text-xl font-semibold mb-2 text-sky-900">
                     Explication du cours
                   </label>
                   <textarea
-                    id="explication"
                     rows={4}
                     value={explication}
                     onChange={(e) => setExplication(e.target.value)}
-                    className="w-full px-4 py-2 rounded-lg bg-white text-black focus:outline-none focus:ring-4 focus:ring-yellow-400"
-                    placeholder="Ajoute une explication supplémentaire sur le cours"
+                    className="w-full px-4 py-2 rounded-lg bg-white text-black"
+                    placeholder="Ajoute une explication supplémentaire"
                   />
                 </div>
 
                 <div>
-                  <label
-                    htmlFor="link"
-                    className="block text-xl font-semibold mb-2 text-sky-900"
-                  >
+                  <label className="block text-xl font-semibold mb-2 text-sky-900">
                     Lien du cours (optionnel)
                   </label>
                   <input
-                    id="video"
                     type="url"
                     value={video}
                     onChange={(e) => setVideo(e.target.value)}
-                    className="w-full px-4 py-2 rounded-lg bg-white text-black focus:outline-none focus:ring-4 focus:ring-yellow-400"
-                    placeholder="https://exemple.com/ton-cours"
+                    className="w-full px-4 py-2 rounded-lg bg-white text-black"
+                    placeholder="https://exemple.com/video"
                   />
                 </div>
 
                 <div>
-                  <label
-                    htmlFor="image"
-                    className="block text-xl font-semibold mb-2 text-sky-900"
-                  >
+                  <label className="block text-xl font-semibold mb-2 text-sky-900">
                     Image d’illustration
                   </label>
                   <input
-                    id="image"
                     type="url"
                     value={image}
                     onChange={(e) => setImage(e.target.value)}
-                    className="w-full px-4 py-2 rounded-lg bg-white text-black focus:outline-none focus:ring-4 focus:ring-yellow-400"
+                    className="w-full px-4 py-2 rounded-lg bg-white text-black"
                     placeholder="https://exemple.com/image.jpg"
                     required
                   />
                 </div>
 
                 <div>
-                  <label
-                    htmlFor="niveau"
-                    className="block text-xl font-semibold mb-2 text-sky-900"
-                  >
+                  <label className="block text-xl font-semibold mb-2 text-sky-900">
                     Niveau du cours (1 à 5)
                   </label>
                   <select
-                    id="niveau"
                     value={niveau}
                     onChange={(e) => setNiveau(e.target.value)}
-                    className="w-full px-4 py-2 rounded-lg bg-white text-black focus:outline-none focus:ring-4 focus:ring-yellow-400"
-                    required
+                    className="w-full px-4 py-2 rounded-lg bg-white text-black"
                   >
                     {[1, 2, 3, 4, 5].map((n) => (
                       <option key={n} value={n}>
@@ -306,57 +304,106 @@ export default function Admin() {
                   </select>
                 </div>
 
-                <div>
-                  <label className="block text-xl font-semibold mb-2 text-sky-900">
-                    Question du Quiz
-                  </label>
-                  <input
-                    type="text"
-                    value={quizQuestion}
-                    onChange={(e) => setQuizQuestion(e.target.value)}
-                    className="w-full px-4 py-2 rounded-lg bg-white text-black focus:outline-none focus:ring-4 focus:ring-yellow-400"
-                    placeholder="Ex: Quelle balise permet de créer un lien ?"
-                  />
-                </div>
+                {/* Gestion du quiz */}
+                {quiz.map((q, index) => (
+                  <div
+                    key={index}
+                    className="border-2 border-sky-900 p-4 rounded-xl mb-6 bg-gray-200"
+                  >
+                    <h3 className="text-xl font-bold mb-4">
+                      Question {index + 1}
+                    </h3>
 
-                <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
-                  {quizAnswers.map((answer, index) => (
-                    <div key={index}>
-                      <label className="block text-xl font-semibold mb-2 text-sky-900">
-                        Réponse {index + 1}
+                    <div>
+                      <label className="block text-lg font-semibold mb-2 text-sky-900">
+                        Question du Quiz
                       </label>
                       <input
                         type="text"
-                        value={answer}
+                        value={q.question}
                         onChange={(e) => {
-                          const updated = [...quizAnswers];
-                          updated[index] = e.target.value;
-                          setQuizAnswers(updated);
+                          const updatedQuiz = [...quiz];
+                          updatedQuiz[index].question = e.target.value;
+                          setQuiz(updatedQuiz);
                         }}
-                        className="w-full px-3 py-2 rounded-lg bg-white text-black"
-                        placeholder={`Réponse ${index + 1}`}
+                        className="w-full px-4 py-2 rounded-lg bg-white text-black"
+                        placeholder="Ex: Quelle balise permet de créer un lien ?"
                       />
                     </div>
-                  ))}
-                </div>
 
-                <div className="mt-4">
-                  <label className="block text-xl font-semibold mb-2 text-sky-900">
-                    Numéro de la bonne réponse (1 à 4)
-                  </label>
-                  <select
-                    value={correctAnswerIndex}
-                    onChange={(e) =>
-                      setCorrectAnswerIndex(Number(e.target.value))
+                    <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 mt-4">
+                      {q.answers.map((answer, i) => (
+                        <div key={i}>
+                          <label className="block text-lg font-semibold mb-2 text-sky-900">
+                            Réponse {i + 1}
+                          </label>
+                          <input
+                            type="text"
+                            value={answer}
+                            onChange={(e) => {
+                              const updatedQuiz = [...quiz];
+                              updatedQuiz[index].answers[i] = e.target.value;
+                              setQuiz(updatedQuiz);
+                            }}
+                            className="w-full px-3 py-2 rounded-lg bg-white text-black"
+                            placeholder={`Réponse ${i + 1}`}
+                          />
+                        </div>
+                      ))}
+                    </div>
+
+                    <div className="mt-4">
+                      <label className="block text-lg font-semibold mb-2 text-sky-900">
+                        Numéro de la bonne réponse (1 à 4)
+                      </label>
+                      <select
+                        value={q.correctAnswerIndex}
+                        onChange={(e) => {
+                          const updatedQuiz = [...quiz];
+                          updatedQuiz[index].correctAnswerIndex = Number(
+                            e.target.value
+                          );
+                          setQuiz(updatedQuiz);
+                        }}
+                        className="w-full px-4 py-2 rounded-lg bg-white text-black"
+                      >
+                        {[0, 1, 2, 3].map((i) => (
+                          <option key={i} value={i}>
+                            Réponse {i + 1}
+                          </option>
+                        ))}
+                      </select>
+                    </div>
+
+                    <div className="mt-4 flex justify-end">
+                      <button
+                        type="button"
+                        onClick={() => duplicateQuiz(index)}
+                        className="bg-yellow-400 text-black font-semibold px-4 py-2 rounded hover:bg-yellow-500"
+                      >
+                        Dupliquer cette question
+                      </button>
+                    </div>
+                  </div>
+                ))}
+
+                <div className="flex justify-center mt-6">
+                  <button
+                    type="button"
+                    onClick={() =>
+                      setQuiz([
+                        ...quiz,
+                        {
+                          question: "",
+                          answers: ["", "", "", ""],
+                          correctAnswerIndex: 0,
+                        },
+                      ])
                     }
-                    className="w-full px-4 py-2 rounded-lg bg-white text-black focus:outline-none focus:ring-4 focus:ring-yellow-400"
+                    className="bg-green-500 text-white font-semibold px-6 py-2 rounded hover:bg-green-600"
                   >
-                    {[0, 1, 2, 3].map((i) => (
-                      <option key={i} value={i}>
-                        Réponse {i + 1}
-                      </option>
-                    ))}
-                  </select>
+                    Ajouter une nouvelle question
+                  </button>
                 </div>
 
                 <div className="flex justify-center gap-6 pt-6">

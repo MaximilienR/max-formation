@@ -48,7 +48,7 @@ export default function Detail() {
 
   async function handleBuy(data) {
     if (!email) {
-      toast.warning("Veuillez vous connecter.");
+      toast.error("Tu dois être connecté pour acheter ce cours.");
       return;
     }
 
@@ -81,13 +81,17 @@ export default function Detail() {
     }
   }
 
-  if (loading) return <p className="mt-8 text-center text-white">Chargement...</p>;
-  if (!cours) return <p className="mt-8 text-center text-red-400">Cours introuvable.</p>;
+  if (loading)
+    return <p className="mt-8 text-center text-white">Chargement...</p>;
+  if (!cours)
+    return <p className="mt-8 text-center text-red-400">Cours introuvable.</p>;
 
   return (
     <div className="flex justify-center px-12">
       <div className="container mx-auto p-4 bg-sky-900 rounded-2xl font-['Josefin_Sans'] text-[#dfe4ea]">
-        <h1 className="mt-4 text-3xl font-bold text-center text-yellow-400">{cours.name}</h1>
+        <h1 className="mt-4 text-3xl font-bold text-center text-yellow-400">
+          {cours.name}
+        </h1>
 
         {cours.image && (
           <div className="flex justify-center mt-6">
@@ -100,7 +104,9 @@ export default function Detail() {
         )}
 
         <section className="mt-6 text-center">
-          <p className="max-w-3xl mx-auto text-lg text-amber-50">{cours.description}</p>
+          <p className="max-w-3xl mx-auto text-lg text-amber-50">
+            {cours.description}
+          </p>
         </section>
 
         <section className="mt-6">
@@ -140,9 +146,14 @@ export default function Detail() {
                   })}
                   className="mr-2 leading-tight"
                 />
-                J'accepte les conditions d'utilisation et la politique de confidentialité
+                J'accepte les conditions d'utilisation et la politique de
+                confidentialité
               </label>
-              {errors.rgpd && <p className="mt-1 text-xs text-red-600">{errors.rgpd.message}</p>}
+              {errors.rgpd && (
+                <p className="mt-1 text-xs text-red-600">
+                  {errors.rgpd.message}
+                </p>
+              )}
             </div>
 
             <div className="flex justify-center">
