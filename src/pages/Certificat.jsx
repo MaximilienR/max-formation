@@ -6,6 +6,7 @@ export default function Certificat() {
   const [certificateId, setCertificateId] = useState("");
   const [pseudo, setPseudo] = useState("");
   const [currentDate, setCurrentDate] = useState("");
+  const [coursName, setCoursName] = useState(""); // <-- Ajout
 
   useEffect(() => {
     const storedUser = localStorage.getItem("user");
@@ -20,6 +21,12 @@ export default function Certificat() {
 
     const uniqueId = crypto.randomUUID();
     setCertificateId(uniqueId);
+
+    // Récupérer le nom du cours stocké dans localStorage
+    const storedCoursName = localStorage.getItem("selectedCourseName");
+    if (storedCoursName) {
+      setCoursName(storedCoursName);
+    }
   }, []);
 
   useEffect(() => {
@@ -50,7 +57,7 @@ export default function Certificat() {
         <p className="text-amber-50 text-lg mb-10">
           Pour avoir complété avec succès la formation{" "}
           <span className="font-semibold text-orange-500">
-            "[Nom de la formation]"
+            {coursName || "[Nom de la formation]"}
           </span>
           , démontrant engagement et excellence.
         </p>

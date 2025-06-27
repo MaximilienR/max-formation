@@ -80,7 +80,12 @@ function Tableau() {
                     {cours.name}
                   </h2>
                   <Link to={`/cours/${cours._id}`}>
-                    <button className="rounded-md bg-yellow-400 px-4 py-2 text-sm font-semibold text-black shadow hover:bg-[#8ccf64] focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-600">
+                    <button
+                      onClick={() =>
+                        localStorage.setItem("selectedCourseName", cours.name)
+                      }
+                      className="rounded-md bg-yellow-400 px-4 py-2 text-sm font-semibold text-black shadow hover:bg-[#8ccf64] focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-600"
+                    >
                       En savoir +
                     </button>
                   </Link>
