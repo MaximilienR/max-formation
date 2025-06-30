@@ -24,6 +24,7 @@ import "./index.css";
 import UserIsAdmin from "./components/secure/UserIsAdmin";
 import Authorized from "./pages/Authorized";
 import Reset from "./pages/Reset";
+import Parcours from "./pages/Parcours";
 
 const router = createBrowserRouter([
   {
@@ -62,6 +63,14 @@ const router = createBrowserRouter([
         element: (
           <UserConnected>
             <Profil />
+          </UserConnected>
+        ),
+      },
+      {
+        path: "parcours",
+        element: (
+          <UserConnected>
+            <Parcours />
           </UserConnected>
         ),
       },

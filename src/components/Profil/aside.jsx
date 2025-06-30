@@ -14,7 +14,7 @@ export default function Aside() {
           Mes achats
         </button>
       </Link>
-      <Link to="/profil/parcours" className="block">
+      <Link to="/parcours" className="block">
         <button className="w-full px-4 py-2 mt-4 font-bold text-left text-white bg-yellow-400 rounded hover:bg-yellow-500">
           Mon parcours
         </button>
