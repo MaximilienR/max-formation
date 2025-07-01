@@ -45,7 +45,6 @@ export default function Detail() {
     }
     fetchData();
   }, [id, email]);
-
   async function handleBuy(data) {
     if (!email) {
       toast.error("Tu dois être connecté pour acheter ce cours.");
@@ -61,6 +60,7 @@ export default function Detail() {
       const response = await shop(payload);
       if (response?.success) {
         toast.success("Merci pour votre achat !");
+
         // Ajouter achat localement (localStorage)
         const allAchats = JSON.parse(localStorage.getItem("achats")) || [];
         allAchats.push({
@@ -72,7 +72,19 @@ export default function Detail() {
         });
         localStorage.setItem("achats", JSON.stringify(allAchats));
         setAlreadyBought(true);
-        navigate(`/contenu/${id}`); // ✅ redirige vers le bon contenu
+
+        // ✅ Ajouter ce cours à currentCourses
+        const currentCourses =
+          JSON.parse(localStorage.getItem("currentCourses")) || [];
+        if (!currentCourses.includes(cours.name)) {
+          currentCourses.push(cours.name);
+          localStorage.setItem(
+            "currentCourses",
+            JSON.stringify(currentCourses)
+          );
+        }
+
+        navigate(`/contenu/${id}`);
       } else {
         toast.error(response?.error || "Une erreur s'est produite.");
       }

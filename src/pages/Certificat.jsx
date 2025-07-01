@@ -33,7 +33,24 @@ export default function Certificat() {
       setCoursName(storedCoursName);
     }
   }, []);
+  useEffect(() => {
+    const storedCoursName = localStorage.getItem("selectedCourseName");
+    if (storedCoursName) {
+      setCoursName(storedCoursName);
 
+      // 🔑 Mettre à jour la liste des cours terminés
+      const finishedCourses = JSON.parse(
+        localStorage.getItem("finishedCourses") || "[]"
+      );
+      if (!finishedCourses.includes(storedCoursName)) {
+        finishedCourses.push(storedCoursName);
+        localStorage.setItem(
+          "finishedCourses",
+          JSON.stringify(finishedCourses)
+        );
+      }
+    }
+  }, []);
   useEffect(() => {
     const today = new Date();
     const formattedDate = today.toLocaleDateString("fr-FR", {
