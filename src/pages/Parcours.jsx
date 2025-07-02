@@ -1,42 +1,54 @@
 import React, { useEffect, useState } from "react";
+import { getUserProgressions } from "../api/progression.api";
 
 export default function Parcours() {
   const [finishedCourses, setFinishedCourses] = useState([]);
   const [currentCourses, setCurrentCourses] = useState([]);
+  const [loading, setLoading] = useState(true);
+  const [error, setError] = useState(null);
+
+  // Remplace par la vraie récupération de ton token (context, localStorage...)
+  const token = localStorage.getItem("token");
 
   useEffect(() => {
-    // Récupérer la liste des cours terminés
-    const storedFinished = localStorage.getItem("finishedCourses");
-    if (storedFinished) {
-      setFinishedCourses(JSON.parse(storedFinished));
+    if (!token) {
+      setError("Utilisateur non connecté");
+      setLoading(false);
+      return;
     }
 
-    // Récupérer la liste des cours en cours
-    const storedCurrent = localStorage.getItem("currentCourses");
-    if (storedCurrent) {
-      setCurrentCourses(JSON.parse(storedCurrent));
-    }
-  }, []);
+    async function fetchProgressions() {
+      try {
+        setLoading(true);
+        const progressions = await getUserProgressions(token);
 
-  useEffect(() => {
-    // 🔥 Supprimer de currentCourses les cours qui sont dans finishedCourses
-    const updatedCurrentCourses = currentCourses.filter(
-      (course) => !finishedCourses.includes(course)
-    );
+        // Séparer les cours terminés et en cours
+        const finished = progressions
+          .filter((p) => p.etat === "terminé")
+          .map((p) => p.coursId); // ou p.cours.nom si tu joins les données cours côté back
 
-    if (updatedCurrentCourses.length !== currentCourses.length) {
-      setCurrentCourses(updatedCurrentCourses);
-      localStorage.setItem(
-        "currentCourses",
-        JSON.stringify(updatedCurrentCourses)
-      );
+        const current = progressions
+          .filter((p) => p.etat !== "terminé")
+          .map((p) => p.coursId);
+
+        setFinishedCourses(finished);
+        setCurrentCourses(current);
+        setLoading(false);
+      } catch (err) {
+        setError(err.message || "Erreur lors du chargement des progressions");
+        setLoading(false);
+      }
     }
-  }, [finishedCourses, currentCourses]);
+
+    fetchProgressions();
+  }, [token]);
+
+  if (loading) return <div>Chargement...</div>;
+  if (error) return <div className="text-red-600">Erreur : {error}</div>;
 
   return (
     <div className="min-h-screen flex flex-col">
       <div className="container mx-auto p-4 bg-sky-900 rounded-2xl">
-        {/* Contenu principal */}
         <main className="flex-1 flex items-center justify-center">
           <div className="container mx-auto p-4 bg-[#8ccf64] rounded-2xl">
             <div className="w-full p-2 text-center text-white font-bold rounded">
@@ -45,14 +57,13 @@ export default function Parcours() {
           </div>
         </main>
 
-        {/* Liste dynamique des cours terminés */}
         {finishedCourses.length > 0 ? (
-          finishedCourses.map((course, index) => (
+          finishedCourses.map((coursId, index) => (
             <div
               key={index}
               className="mx-auto mt-4 w-40 p-2 text-center text-black bg-amber-50 font-semibold rounded shadow"
             >
-              {course}
+              {coursId}
             </div>
           ))
         ) : (
@@ -61,21 +72,19 @@ export default function Parcours() {
           </div>
         )}
 
-        {/* Section En cours */}
         <div className="container mx-auto p-4 bg-yellow-400 rounded-2xl mt-4">
           <div className="w-full p-2 text-center text-white font-bold rounded">
             En cours
           </div>
         </div>
 
-        {/* Liste dynamique des cours en cours */}
         {currentCourses.length > 0 ? (
-          currentCourses.map((course, index) => (
+          currentCourses.map((coursId, index) => (
             <div
               key={index}
               className="mx-auto mt-4 w-40 p-2 text-center text-black bg-amber-50 font-semibold rounded shadow mb-2"
             >
-              {course}
+              {coursId}
             </div>
           ))
         ) : (

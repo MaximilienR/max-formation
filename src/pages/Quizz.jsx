@@ -3,15 +3,16 @@ import { useParams } from "react-router-dom";
 import confetti from "canvas-confetti";
 import { createCertificat } from "../api/certificat.api";
 import { getQuizzByCoursId } from "../api/cours.api";
-import Certificat from "./Certificat"; // ✅ IMPORT ICI
+import { updateProgression } from "../api/progression.api";
+import Certificat from "./Certificat";
 
 export default function Quizz() {
   const { coursId } = useParams();
-  const [quizz, setQuizz] = useState([]); // tableau de questions
+  const [quizz, setQuizz] = useState([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
 
-  const [currentQuestionIndex, setCurrentQuestionIndex] = useState(0); // index question en cours
+  const [currentQuestionIndex, setCurrentQuestionIndex] = useState(0);
   const [selectedAnswer, setSelectedAnswer] = useState(null);
   const [pseudo, setPseudo] = useState("");
 
@@ -20,12 +21,13 @@ export default function Quizz() {
 
   const certificateRef = useRef(null);
 
+  // Récupération des questions du quiz
   useEffect(() => {
     async function fetchQuizz() {
       try {
         setLoading(true);
         const data = await getQuizzByCoursId(coursId);
-        setQuizz(data); // on suppose que data est un tableau de questions
+        setQuizz(data);
         setLoading(false);
       } catch (err) {
         setError("Erreur lors du chargement du quiz.");
@@ -35,6 +37,7 @@ export default function Quizz() {
     fetchQuizz();
   }, [coursId]);
 
+  // Récupération du pseudo
   useEffect(() => {
     const storedUser = localStorage.getItem("user");
     if (storedUser) {
@@ -43,34 +46,43 @@ export default function Quizz() {
     }
   }, []);
 
+  // Gère la fin du quiz : confetti, certificat, progression
   useEffect(() => {
     if (finished && score === quizz.length) {
-      // confetti seulement si score parfait
       const duration = 2000;
       const animationEnd = Date.now() + duration;
 
       const frame = () => {
         confetti({ particleCount: 5, angle: 60, spread: 55, origin: { x: 0 } });
-        confetti({
-          particleCount: 5,
-          angle: 120,
-          spread: 55,
-          origin: { x: 1 },
-        });
+        confetti({ particleCount: 5, angle: 120, spread: 55, origin: { x: 1 } });
 
         if (Date.now() < animationEnd) requestAnimationFrame(frame);
       };
 
       frame();
 
+      // Création du certificat
       createCertificat({
         name: pseudo,
         date: new Date().toISOString(),
-      }).catch((err) =>
-        console.error("Erreur lors de la création du certificat :", err)
-      );
+      }).catch((err) => {
+        console.error("Erreur création certificat :", err);
+      });
+
+      // Mise à jour de la progression
+      const token = localStorage.getItem("token");
+      const user = JSON.parse(localStorage.getItem("user"));
+      const userId = user?._id;
+
+      if (token && userId) {
+        updateProgression({ userId, coursId, etat: "terminé" })
+          .then(() => console.log("Progression mise à jour"))
+          .catch((err) =>
+            console.error("Erreur mise à jour progression :", err)
+          );
+      }
     }
-  }, [finished, score, pseudo, quizz.length]);
+  }, [finished, score, pseudo, quizz.length, coursId]);
 
   if (loading) return <p>Chargement du quiz...</p>;
   if (error) return <p>{error}</p>;
@@ -98,7 +110,7 @@ export default function Quizz() {
   return (
     <div className="flex flex-col items-center px-12">
       {finished && score === quizz.length ? (
-        <Certificat /> // ✅ AFFICHAGE DU CERTIFICAT SI SCORE PARFAIT
+        <Certificat />
       ) : (
         <div className="container mx-auto p-4 bg-sky-900 rounded-2xl font-['Josefin_Sans'] text-[#dfe4ea] mt-30 mb-30">
           <h1 className="mt-4 text-3xl font-bold text-center text-yellow-400">
@@ -119,17 +131,17 @@ export default function Quizz() {
                 onClick={() => handleAnswerClick(index)}
                 disabled={selectedAnswer !== null}
                 className={`flex-1 basis-[45%] min-w-[140px] h-60 rounded px-6 py-4 font-semibold text-lg transition duration-500 active:scale-90
-                ${
-                  selectedAnswer !== null
-                    ? index === selectedAnswer &&
-                      index !== currentQuestion.reponseCorrect
-                      ? "bg-red-400 text-white"
-                      : index === currentQuestion.reponseCorrect
-                      ? "bg-green-400 text-black"
-                      : "bg-[#dfe4ea] text-black"
-                    : "bg-[#dfe4ea] text-black hover:bg-[#ffa502]"
-                }
-              `}
+                  ${
+                    selectedAnswer !== null
+                      ? index === selectedAnswer &&
+                        index !== currentQuestion.reponseCorrect
+                        ? "bg-red-400 text-white"
+                        : index === currentQuestion.reponseCorrect
+                        ? "bg-green-400 text-black"
+                        : "bg-[#dfe4ea] text-black"
+                      : "bg-[#dfe4ea] text-black hover:bg-[#ffa502]"
+                  }
+                `}
               >
                 {reponse}
               </button>

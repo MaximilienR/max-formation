@@ -112,3 +112,4 @@ export async function getQuizzByCoursId(coursId) {
   const data = await response.json();
   return data;
 }
+
