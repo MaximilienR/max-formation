@@ -1,10 +1,11 @@
 import React from "react";
+import video from "../Assets/video/cours git .mp4";
 
 export default function Coaching() {
   return (
     <div className="container mx-auto py-8 px-4 md:px-8 lg:px-12">
       <h1 className="text-3xl font-bold text-gray-900 mb-6 text-center">
-        À Propos de Notre Coaching en Insertion Professionnelle
+        À Propos de Notre Coaching  
       </h1>
 
       <section className="mb-8">
@@ -12,12 +13,9 @@ export default function Coaching() {
           Notre Mission
         </h2>
         <p className="text-gray-700 leading-relaxed">
-          Notre mission est de vous accompagner de manière personnalisée et
-          efficace dans votre parcours d'insertion ou de réorientation
-          professionnelle. Nous comprenons les défis et les incertitudes liés à
-          la recherche d'emploi et nous sommes là pour vous donner les outils,
-          la confiance et la motivation nécessaires pour atteindre vos objectifs
-          de carrière.
+        Notre mission est de vous accompagner de manière personnalisée et efficace dans l’apprentissage de l’informatique, quel que soit votre niveau de départ. Nous vous aidons à développer des compétences numériques solides, pratiques et valorisables, pour atteindre vos objectifs personnels, scolaires ou professionnels.
+
+
         </p>
       </section>
 
@@ -38,7 +36,7 @@ export default function Coaching() {
           <li>
             **Optimisation de Votre Recherche d'Emploi :**
             <ul className="list-disc list-inside ml-6 mt-2">
-              <li>Rédaction de CV et de lettres de motivation percutants.</li>
+              <li>Création d'un portfolio professionnel.</li>
               <li>
                 Préparation aux entretiens d'embauche (simulations, techniques
                 de communication).
@@ -72,7 +70,7 @@ export default function Coaching() {
       <section className="mb-8">
         <h2 className="text-xl font-semibold text-gray-800 mb-3">Pour Qui ?</h2>
         <p className="text-gray-700 leading-relaxed">
-          Notre coaching en insertion professionnelle s'adresse à toute personne
+          Notre coaching s'adresse à toute personne
           se trouvant dans une phase de transition professionnelle, notamment :
         </p>
         <ul className="list-disc list-inside text-gray-700 leading-relaxed">
@@ -95,7 +93,7 @@ export default function Coaching() {
 
       <section className="mb-8">
         <h2 className="text-xl font-semibold text-gray-800 mb-3">
-          Notre Approche
+Ils nous ont fait confiance 
         </h2>
         <p className="text-gray-700 leading-relaxed">
           Nous adoptons une approche holistique et centrée sur la personne. Nous
@@ -106,10 +104,22 @@ export default function Coaching() {
         </p>
       </section>
 
+         <section className="mt-8 text-center">
+              <video
+                width="560"
+                height="315"
+                controls
+                className="mx-auto rounded-lg shadow-lg"
+              >
+                <source src={video} type="video/mp4" />
+                Votre navigateur ne supporte pas la lecture de vidéos HTML5.
+              </video>
+            </section>
+
       <section className="text-center">
         <p className="text-gray-700 mb-4">
           Prêt(e) à donner un nouvel élan à votre carrière ?
-        </p>
+          </p>
         <a
           href="/contact"
           className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-3 px-6 rounded-full"

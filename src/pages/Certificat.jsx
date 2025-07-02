@@ -1,7 +1,7 @@
 import React, { useEffect, useState, useRef } from "react";
 import jsPDF from "jspdf";
 import html2canvas from "html2canvas";
-import logo from "../Assets/logo.png";
+import logo from "../Assets/M.png";
 import signature from "../Assets/mysign.png";
 
 export default function Certificat() {
