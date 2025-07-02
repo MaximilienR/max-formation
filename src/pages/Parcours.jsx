@@ -10,38 +10,38 @@ export default function Parcours() {
   // Remplace par la vraie récupération de ton token (context, localStorage...)
   const token = localStorage.getItem("token");
 
-  useEffect(() => {
-    if (!token) {
-      setError("Utilisateur non connecté");
+useEffect(() => {
+  if (!token) {
+    setError("Utilisateur non connecté");
+    setLoading(false);
+    return;
+  }
+
+  async function fetchProgressions() {
+    try {
+      setLoading(true);
+      const progressions = await getUserProgressions(token);
+
+      const finished = progressions
+        .filter((p) => p.etat === "terminé")
+        .map((p) => p.coursId.name);
+
+      const current = progressions
+        .filter((p) => p.etat !== "terminé")
+        .map((p) => p.coursId.name);
+
+      setFinishedCourses(finished);
+      setCurrentCourses(current);
       setLoading(false);
-      return;
+    } catch (err) {
+      setError(err.message || "Erreur lors du chargement des progressions");
+      setLoading(false);
     }
+  }
 
-    async function fetchProgressions() {
-      try {
-        setLoading(true);
-        const progressions = await getUserProgressions(token);
+  fetchProgressions();
+}, [token]);
 
-        // Séparer les cours terminés et en cours
-        const finished = progressions
-          .filter((p) => p.etat === "terminé")
-          .map((p) => p.coursId); // ou p.cours.nom si tu joins les données cours côté back
-
-        const current = progressions
-          .filter((p) => p.etat !== "terminé")
-          .map((p) => p.coursId);
-
-        setFinishedCourses(finished);
-        setCurrentCourses(current);
-        setLoading(false);
-      } catch (err) {
-        setError(err.message || "Erreur lors du chargement des progressions");
-        setLoading(false);
-      }
-    }
-
-    fetchProgressions();
-  }, [token]);
 
   if (loading) return <div>Chargement...</div>;
   if (error) return <div className="text-red-600">Erreur : {error}</div>;

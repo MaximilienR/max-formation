@@ -21,20 +21,15 @@ export async function updateProgression(payload) {
 }
 
 
-export async function getUserProgressions(userId) {
-  const token = localStorage.getItem("token");
-
-  const response = await fetch(`${BASE_URL}/progression/user/${userId}`, {
+export async function getUserProgressions(token) {
+  const response = await fetch(`${BASE_URL}/progression`, {
     headers: {
-      "Content-Type": "application/json",
       Authorization: `Bearer ${token}`,
     },
   });
 
   if (!response.ok) {
-    const errorText = await response.text();
-    throw new Error(errorText || "Erreur récupération progression");
+    throw new Error("Erreur lors de la récupération des progressions");
   }
-
   return response.json();
 }
