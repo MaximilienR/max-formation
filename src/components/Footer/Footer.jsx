@@ -1,13 +1,14 @@
 import React from "react";
+import { Link } from "react-router-dom";
 
 export default function Footer() {
   return (
     <div>
-      <footer className="bg-yellow-400 text-white py-4 mt-3 rounded-t-2xl   left-0 w-full">
-        <div className="container mx-auto p-4">
+      <footer className="left-0 w-full py-4 mt-3 text-white bg-yellow-400 rounded-t-2xl">
+        <div className="container p-4 mx-auto">
           <div className="flex flex-wrap justify-center">
-            <div className="w-full md:w-1/3 xl:w-1/3 p-4">
-              <h4 className="text-lg font-bold mb-2">Conditions Générales</h4>
+            <div className="w-full p-4 md:w-1/3 xl:w-1/3">
+              <h4 className="mb-2 text-lg font-bold">Conditions Générales</h4>
               <ul>
                 <li>
                   <a href="#" className="text-gray-600 hover:text-gray-900">
@@ -16,7 +17,12 @@ export default function Footer() {
                 </li>
                 <li>
                   <a href="#" className="text-gray-600 hover:text-gray-900">
-                    Propriété intellectuelle
+                                <Link to="/Mention" className="text-white hover:text-gray-300">Propriété intellectuelle</Link>
+                  </a>
+                </li>
+                <li>
+                  <a href="#" className="text-gray-600 hover:text-gray-900">
+                    Cookies
                   </a>
                 </li>
                 <li>
@@ -31,8 +37,8 @@ export default function Footer() {
                 </li>
               </ul>
             </div>
-            <div className="w-full md:w-1/3 xl:w-1/3 p-4">
-              <h4 className="text-lg font-bold mb-2">Mentions Légales</h4>
+            <div className="w-full p-4 md:w-1/3 xl:w-1/3">
+              <h4 className="mb-2 text-lg font-bold">Mentions Légales</h4>
               <ul>
                 <li>
                   <a href="#" className="text-gray-600 hover:text-gray-900">
@@ -56,8 +62,8 @@ export default function Footer() {
                 </li>
               </ul>
             </div>
-            <div className="w-full md:w-1/3 xl:w-1/3 p-4">
-              <h4 className="text-lg font-bold mb-2">Liens Utiles</h4>
+            <div className="w-full p-4 md:w-1/3 xl:w-1/3">
+              <h4 className="mb-2 text-lg font-bold">Liens Utiles</h4>
               <ul>
                 <li>
                   <a href="#" className="text-gray-600 hover:text-gray-900">

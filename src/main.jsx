@@ -25,7 +25,7 @@ import UserIsAdmin from "./components/secure/UserIsAdmin";
 import Authorized from "./pages/Authorized";
 import Reset from "./pages/Reset";
 import Parcours from "./pages/Parcours";
-
+import Mention from "./pages/Mention";
 const router = createBrowserRouter([
   {
     path: "/",
@@ -92,6 +92,7 @@ const router = createBrowserRouter([
         ),
       },
       { path: "certificat/:id", element: <Certificat /> },
+      { path: "mention", element: <Mention /> },
       { path: "Authorized", element: <Authorized /> },
     ],
   },
