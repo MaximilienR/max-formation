@@ -5,7 +5,7 @@ import UserNotConnected from "./components/secure/UserNotConnected";
 import UserConnected from "./components/secure/UserConnected";
 import { RouterProvider, createBrowserRouter } from "react-router-dom";
 import App from "./App";
-import Contact from "../src/pages/Contact";
+import Contact from "./pages/Contact";
 import Error from "./pages/Error";
 import Home from "./components/Home/Home";
 import Register from "./components/Register/Register";
@@ -32,13 +32,15 @@ const router = createBrowserRouter([
     element: <App />,
     errorElement: <Error />,
     children: [
-      { index: true, element: <Home /> },
-      { path: "contact", element: <Contact /> },
-      { path: "register", element: <Register /> },
-      { path: "login", element: <Login /> },
-      { path: "cours", element: <Cours /> },
-      { path: "cours/:id", element: <Detail /> }, // ✅ vers page détail
-      { path: "password", element: <Password /> },
+      {
+        path: "admin",
+        element: (
+          <UserIsAdmin>
+            <Admin />
+          </UserIsAdmin>
+        ),
+      },
+
       {
         path: "contenu",
         element: (
@@ -47,9 +49,18 @@ const router = createBrowserRouter([
           </UserConnected>
         ),
       },
+      { path: "contact", element: <Contact /> },
+
+      { index: true, element: <Home /> },
+
+      { path: "register", element: <Register /> },
+      { path: "login", element: <Login /> },
+      { path: "cours", element: <Cours /> },
+      { path: "cours/:id", element: <Detail /> }, // ✅ vers page détail
+      { path: "password", element: <Password /> },
+
       {
         path: "contenu/:id",
-        // ✅ route dynamique pour un cours
         element: (
           <UserConnected>
             <Contenu />
@@ -83,14 +94,7 @@ const router = createBrowserRouter([
           </UserConnected>
         ),
       },
-      {
-        path: "admin",
-        element: (
-          <UserIsAdmin>
-            <Admin />
-          </UserIsAdmin>
-        ),
-      },
+
       { path: "certificat/:id", element: <Certificat /> },
       { path: "mention", element: <Mention /> },
       { path: "Authorized", element: <Authorized /> },

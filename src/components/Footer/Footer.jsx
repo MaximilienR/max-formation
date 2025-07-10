@@ -1,4 +1,3 @@
-import React from "react";
 import { Link } from "react-router-dom";
 
 export default function Footer() {
@@ -17,7 +16,12 @@ export default function Footer() {
                 </li>
                 <li>
                   <a href="#" className="text-gray-600 hover:text-gray-900">
-                                <Link to="/Mention" className="text-white hover:text-gray-300">Propriété intellectuelle</Link>
+                    <Link
+                      to="/Mention"
+                      className="text-white hover:text-gray-300"
+                    >
+                      Propriété intellectuelle
+                    </Link>
                   </a>
                 </li>
                 <li>

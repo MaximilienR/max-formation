@@ -11,7 +11,6 @@ export default function UserIsAdmin({ children }) {
   }
 
   if (user.role !== "admin") {
-    // return <Navigate to="/" />;
     return <Error />;
   }
 

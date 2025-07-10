@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from "react";
 import { Link } from "react-router-dom";
-import { getCours } from "../../api/cours.api"; // <-- Assure-toi que ce chemin est correct
+import { getCours } from "../../api/cours.api";
 
 function Tableau() {
   const [cours, setCours] = useState([]);
