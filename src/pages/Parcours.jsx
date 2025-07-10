@@ -24,11 +24,15 @@ export default function Parcours() {
 
         const finished = progressions
           .filter((p) => p.etat === "terminé")
-          .map((p) => p.coursId.name);
+          .map((p) =>
+            p.coursId && p.coursId.name ? p.coursId.name : "Cours supprimé"
+          );
 
         const current = progressions
           .filter((p) => p.etat !== "terminé")
-          .map((p) => p.coursId.name);
+          .map((p) =>
+            p.coursId && p.coursId.name ? p.coursId.name : "Cours supprimé"
+          );
 
         setFinishedCourses(finished);
         setCurrentCourses(current);
