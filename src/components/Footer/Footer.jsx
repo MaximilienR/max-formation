@@ -6,11 +6,8 @@ export default function Footer() {
     <div>
       <footer className="left-0 w-full py-4 mt-3 text-white bg-yellow-400 rounded-t-2xl">
         <div className="container p-4 mx-auto">
-          <div className="mb-4">
-            <img src={logo} alt="Logo" className="h-16" />
-          </div>
-
-          <div className="flex flex-wrap justify-center">
+          {/* Les colonnes */}
+          <div className="flex flex-wrap justify-center mb-4">
             <div className="w-full p-4 md:w-1/3 xl:w-1/3">
               <h4 className="mb-2 text-lg font-bold">Conditions Générales</h4>
               <ul>
@@ -91,6 +88,14 @@ export default function Footer() {
                 </li>
               </ul>
             </div>
+          </div>
+
+          {/* Ligne horizontale */}
+          <hr className="border-gray-700 mb-4" />
+
+          {/* Logo centré sous la ligne */}
+          <div className="flex justify-center">
+            <img src={logo} alt="Logo" className="h-16" />
           </div>
         </div>
       </footer>
