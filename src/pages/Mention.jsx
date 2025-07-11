@@ -4,7 +4,7 @@ export default function Mention() {
       <h1 className="mb-4 text-3xl font-bold">Mentions Légales</h1>
 
       <p>
-        <strong>Dernière mise à jour :</strong> mardi 8 juillet 2025
+        <strong>Dernière mise à jour :</strong> mardi 11 février 2025
       </p>
 
       <p>

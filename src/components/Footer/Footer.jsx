@@ -1,10 +1,15 @@
 import { Link } from "react-router-dom";
+import logo from "../../Assets/MBL.png";
 
 export default function Footer() {
   return (
     <div>
       <footer className="left-0 w-full py-4 mt-3 text-white bg-yellow-400 rounded-t-2xl">
         <div className="container p-4 mx-auto">
+          <div className="mb-4">
+            <img src={logo} alt="Logo" className="h-16" />
+          </div>
+
           <div className="flex flex-wrap justify-center">
             <div className="w-full p-4 md:w-1/3 xl:w-1/3">
               <h4 className="mb-2 text-lg font-bold">Conditions Générales</h4>
@@ -15,14 +20,12 @@ export default function Footer() {
                   </a>
                 </li>
                 <li>
-                  <a href="#" className="text-gray-600 hover:text-gray-900">
-                    <Link
-                      to="/Mention"
-                      className="text-white hover:text-gray-300"
-                    >
-                      Propriété intellectuelle
-                    </Link>
-                  </a>
+                  <Link
+                    to="/Mention"
+                    className="text-gray-600 hover:text-gray-900"
+                  >
+                    Propriété intellectuelle
+                  </Link>
                 </li>
                 <li>
                   <a href="#" className="text-gray-600 hover:text-gray-900">
@@ -41,6 +44,7 @@ export default function Footer() {
                 </li>
               </ul>
             </div>
+
             <div className="w-full p-4 md:w-1/3 xl:w-1/3">
               <h4 className="mb-2 text-lg font-bold">Mentions Légales</h4>
               <ul>
@@ -66,6 +70,7 @@ export default function Footer() {
                 </li>
               </ul>
             </div>
+
             <div className="w-full p-4 md:w-1/3 xl:w-1/3">
               <h4 className="mb-2 text-lg font-bold">Liens Utiles</h4>
               <ul>
