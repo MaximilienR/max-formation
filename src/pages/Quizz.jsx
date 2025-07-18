@@ -19,8 +19,6 @@ export default function Quizz() {
   const [score, setScore] = useState(0);
   const [finished, setFinished] = useState(false);
 
-  const certificateRef = useRef(null);
-
   // Récupération des questions du quiz
   useEffect(() => {
     async function fetchQuizz() {
@@ -28,16 +26,16 @@ export default function Quizz() {
         setLoading(true);
         const data = await getQuizzByCoursId(coursId);
         setQuizz(data);
-        setLoading(false);
       } catch (err) {
         setError("Erreur lors du chargement du quiz.");
+      } finally {
         setLoading(false);
       }
     }
     fetchQuizz();
   }, [coursId]);
 
-  // Récupération du pseudo
+  // Récupération du pseudo depuis le localStorage
   useEffect(() => {
     const storedUser = localStorage.getItem("user");
     if (storedUser) {
@@ -48,29 +46,40 @@ export default function Quizz() {
 
   // Gère la fin du quiz : confetti, certificat, progression
   useEffect(() => {
-    if (finished && score === quizz.length) {
+    if (finished && score === quizz.length && quizz.length > 0) {
+      // Lancer le confetti pendant 2 secondes
       const duration = 2000;
       const animationEnd = Date.now() + duration;
 
       const frame = () => {
         confetti({ particleCount: 5, angle: 60, spread: 55, origin: { x: 0 } });
-        confetti({ particleCount: 5, angle: 120, spread: 55, origin: { x: 1 } });
-
+        confetti({
+          particleCount: 5,
+          angle: 120,
+          spread: 55,
+          origin: { x: 1 },
+        });
         if (Date.now() < animationEnd) requestAnimationFrame(frame);
       };
-
       frame();
 
-      // Création du certificat
-      createCertificat({
-        name: pseudo,
-        date: new Date().toISOString(),
-      }).catch((err) => {
-        console.error("Erreur création certificat :", err);
-      });
-
-      // Mise à jour de la progression
       const token = localStorage.getItem("token");
+      console.log("🔑 Token récupéré :", token); // <-- AJOUT ICI
+
+      // Création du certificat uniquement si pseudo existe
+      if (pseudo && token) {
+        createCertificat(
+          {
+            name: pseudo,
+            date: new Date().toISOString(),
+          },
+          token
+        ).catch((err) => {
+          console.error("Erreur création certificat :", err);
+        });
+      }
+
+      // Mise à jour de la progression utilisateur
       const user = JSON.parse(localStorage.getItem("user"));
       const userId = user?._id;
 
@@ -92,6 +101,8 @@ export default function Quizz() {
   const currentQuestion = quizz[currentQuestionIndex];
 
   const handleAnswerClick = (index) => {
+    if (selectedAnswer !== null) return; // éviter plusieurs clics
+
     setSelectedAnswer(index);
     if (index === currentQuestion.reponseCorrect) {
       setScore((prev) => prev + 1);
@@ -100,7 +111,7 @@ export default function Quizz() {
 
   const handleNext = () => {
     if (currentQuestionIndex < quizz.length - 1) {
-      setCurrentQuestionIndex(currentQuestionIndex + 1);
+      setCurrentQuestionIndex((prev) => prev + 1);
       setSelectedAnswer(null);
     } else {
       setFinished(true);
@@ -125,27 +136,27 @@ export default function Quizz() {
           </h2>
 
           <div className="flex flex-wrap justify-center max-w-xl gap-10 mx-auto">
-            {currentQuestion.reponse.map((reponse, index) => (
-              <button
-                key={index}
-                onClick={() => handleAnswerClick(index)}
-                disabled={selectedAnswer !== null}
-                className={`flex-1 basis-[45%] min-w-[140px] h-60 rounded px-6 py-4 font-semibold text-lg transition duration-500 active:scale-90
-                  ${
-                    selectedAnswer !== null
-                      ? index === selectedAnswer &&
-                        index !== currentQuestion.reponseCorrect
-                        ? "bg-red-400 text-white"
-                        : index === currentQuestion.reponseCorrect
-                        ? "bg-green-400 text-black"
-                        : "bg-[#dfe4ea] text-black"
-                      : "bg-[#dfe4ea] text-black hover:bg-[#ffa502]"
-                  }
-                `}
-              >
-                {reponse}
-              </button>
-            ))}
+            {currentQuestion.reponse.map((reponse, index) => {
+              const isSelected = selectedAnswer === index;
+              const isCorrect = index === currentQuestion.reponseCorrect;
+              let bgColor = "bg-[#dfe4ea] text-black hover:bg-[#ffa502]";
+              if (selectedAnswer !== null) {
+                if (isSelected && !isCorrect) bgColor = "bg-red-400 text-white";
+                else if (isCorrect) bgColor = "bg-green-400 text-black";
+                else bgColor = "bg-[#dfe4ea] text-black";
+              }
+
+              return (
+                <button
+                  key={index}
+                  onClick={() => handleAnswerClick(index)}
+                  disabled={selectedAnswer !== null}
+                  className={`flex-1 basis-[45%] min-w-[140px] h-60 rounded px-6 py-4 font-semibold text-lg transition duration-500 active:scale-90 ${bgColor}`}
+                >
+                  {reponse}
+                </button>
+              );
+            })}
           </div>
 
           {selectedAnswer !== null && !finished && (
