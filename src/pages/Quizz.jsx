@@ -1,9 +1,9 @@
-import { useState, useRef, useEffect } from "react";
+import { useState, useEffect } from "react";
 import { useParams } from "react-router-dom";
 import confetti from "canvas-confetti";
 import { createCertificat } from "../api/certificat.api";
 import { getQuizzByCoursId } from "../api/cours.api";
-import { updateProgression } from "../api/progression.api";
+import { updateProgression, getUserProgressions } from "../api/progression.api";
 import Certificat from "./Certificat";
 
 export default function Quizz() {
@@ -18,6 +18,32 @@ export default function Quizz() {
 
   const [score, setScore] = useState(0);
   const [finished, setFinished] = useState(false);
+  const [alreadyFinished, setAlreadyFinished] = useState(false);
+
+  const token = localStorage.getItem("token");
+
+  // Vérifie si le cours est déjà terminé
+  useEffect(() => {
+    async function checkProgression() {
+      if (!token) {
+        setError("Utilisateur non connecté");
+        setLoading(false);
+        return;
+      }
+      try {
+        const progressions = await getUserProgressions(token);
+        const progressionForThisCourse = progressions.find(
+          (p) => p.coursId?._id === coursId && p.etat === "terminé"
+        );
+        if (progressionForThisCourse) {
+          setAlreadyFinished(true);
+        }
+      } catch (err) {
+        setError("Erreur lors de la vérification de la progression.");
+      }
+    }
+    checkProgression();
+  }, [coursId, token]);
 
   // Récupération des questions du quiz
   useEffect(() => {
@@ -47,7 +73,6 @@ export default function Quizz() {
   // Gère la fin du quiz : confetti, certificat, progression
   useEffect(() => {
     if (finished && score === quizz.length && quizz.length > 0) {
-      // Lancer le confetti pendant 2 secondes
       const duration = 2000;
       const animationEnd = Date.now() + duration;
 
@@ -63,23 +88,13 @@ export default function Quizz() {
       };
       frame();
 
-      const token = localStorage.getItem("token");
-      console.log("🔑 Token récupéré :", token); // <-- AJOUT ICI
-
-      // Création du certificat uniquement si pseudo existe
       if (pseudo && token) {
         createCertificat(
-          {
-            name: pseudo,
-            date: new Date().toISOString(),
-          },
+          { name: pseudo, date: new Date().toISOString() },
           token
-        ).catch((err) => {
-          console.error("Erreur création certificat :", err);
-        });
+        ).catch((err) => console.error("Erreur création certificat :", err));
       }
 
-      // Mise à jour de la progression utilisateur
       const user = JSON.parse(localStorage.getItem("user"));
       const userId = user?._id;
 
@@ -91,18 +106,27 @@ export default function Quizz() {
           );
       }
     }
-  }, [finished, score, pseudo, quizz.length, coursId]);
+  }, [finished, score, pseudo, quizz.length, coursId, token]);
 
   if (loading) return <p>Chargement du quiz...</p>;
   if (error) return <p>{error}</p>;
+  if (alreadyFinished)
+    return (
+      <div className="text-center mt-10">
+        <h2 className="text-2xl font-bold text-green-600">
+          Ce cours a déjà été terminé.
+        </h2>
+        <p className="mt-4">Vous ne pouvez pas repasser le quiz.</p>
+        <Certificat />
+      </div>
+    );
   if (!quizz || quizz.length === 0)
     return <p>Aucune question disponible pour ce quiz.</p>;
 
   const currentQuestion = quizz[currentQuestionIndex];
 
   const handleAnswerClick = (index) => {
-    if (selectedAnswer !== null) return; // éviter plusieurs clics
-
+    if (selectedAnswer !== null) return;
     setSelectedAnswer(index);
     if (index === currentQuestion.reponseCorrect) {
       setScore((prev) => prev + 1);
