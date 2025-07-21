@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from "react";
 import { useParams, Link } from "react-router-dom";
 import { getCoursById } from "../../api/cours.api";
-import videoDefault from "../../Assets/video/test.mp4";
+import videoDefault from "../../Assets/video/html_base.mp4";
 
 function CoursHTMLCSS() {
   const { id } = useParams();
